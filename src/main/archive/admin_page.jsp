@@ -9,7 +9,7 @@
 </head>
 <body>
     <c:set var="pageID" value="admin_page.jsp" scope="request"/>
-    <jsp:include page="header.jsp"/>
+    <jsp:include page="../webapp/jsp/header.jsp"/>
     <h1><fmt:message key="admin_page.greeting"/></h1>
 </body>
 </html>
