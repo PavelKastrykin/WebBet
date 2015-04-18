@@ -17,4 +17,22 @@
         <url-pattern>/webBetController</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>register.jsp</servlet-name>
+        <jsp-file>/jsp/register.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>register.jsp</servlet-name>
+        <url-pattern>/register.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>header.jsp</servlet-name>
+        <jsp-file>/jsp/header.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>header.jsp</servlet-name>
+        <url-pattern>/header.jsp</url-pattern>
+    </servlet-mapping>
+
 </web-app>

@@ -27,6 +27,7 @@
         <br>
         <fmt:message key="login.button.submit" var="buttonValue"/>
         <input type="submit" name="submit" value="${buttonValue}">
+        <a href="register.jsp"><fmt:message key="register.button.submit" /> </a>
     </form>
 </body>
 </html>

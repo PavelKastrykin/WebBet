@@ -4,7 +4,7 @@
 <fmt:setBundle basename="resources.locale.text"/>
 <html>
 <body>
-    <form action="webBetController" method="post">
+    <form action="webBetController" method="get">
         <label><fmt:message key="header.language" /></label>
         <input type="hidden" name="command" value="LOCALE_COMMAND"/>
         <input type="hidden" name="hiddenPageID" value="${pageID}" />

@@ -1,12 +1,10 @@
 package com.pavel.webbet.service.impl;
 
-import com.pavel.webbet.dao.mysqldao.MySqlDao;
 import com.pavel.webbet.dao.mysqldao.impl.LoginDao;
 import com.pavel.webbet.entity.userbean.UserBean;
 import com.pavel.webbet.service.ICommand;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.sql.Connection;
 import java.util.List;
 
 public class DoLoginCommand implements ICommand{

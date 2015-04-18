@@ -10,8 +10,32 @@
         <title></title>
     </head>
     <body>
-    <c:set var="pageID" value="jsp/home.jsp" scope="request" />
-    <jsp:include page="header.jsp"/>
+        <c:set var="pageID" value="jsp/register.jsp" scope="request" />
+        <jsp:include page="header.jsp"/>
+        <form action="webBetController" method="get">
+            <input type="hidden" name="command" value="REGISTER_COMMAND"/>
+            <table>
+                <tr>
+                    <td><label for="registerLogin"><fmt:message key="register.label.login"/> </label> </td>
+                    <td><input type="text" id="registerLogin" name="registerLogin" /></td>
+                </tr>
+                <tr>
+                    <td><label for="registerPassword"><fmt:message key="register.label.password"/> </label> </td>
+                    <td><input type="text" id="registerPassword" name="registerPassword" /></td>
+                </tr>
+                <tr>
+                    <td><label for="registerConfirm"><fmt:message key="register.label.confirm"/> </label> </td>
+                    <td><input type="text" id="registerConfirm" name="registerConfirm" /></td>
+                </tr>
+                <tr>
+                    <td><label for="registerName"><fmt:message key="register.label.name"/> </label> </td>
+                    <td><input type="text" id="registerName" name="registerName" /></td>
+                </tr>
+            <table/>
+            <fmt:message key="register.button.submit" var="buttonValue"/>
+            <input type="submit" name="submit" value="${buttonValue}">
+
+        </form>
 
     </body>
 </html>
