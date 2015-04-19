@@ -12,6 +12,7 @@
 <body>
     <c:set var="pageID" value="index.jsp" scope="request" />
     <jsp:include page="jsp/header.jsp"/>
+    <jsp:include page="jsp/loginLogoutHeader.jsp" />
     <form action="webBetController" method="post" >
         <input type="hidden" name="command" value="LOGIN_COMMAND"/>
         <table>
@@ -26,7 +27,7 @@
         </table>
         <br>
         <fmt:message key="login.button.submit" var="buttonValue"/>
-        <input type="submit" name="submit" value="${buttonValue}">
+        <input type="submit" name="submit" value="${buttonValue}" />
         <a href="register.jsp"><fmt:message key="register.button.submit" /> </a>
     </form>
 </body>

@@ -10,47 +10,17 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.MessageFormat;
 import java.util.ArrayList;
 import java.util.List;
 
 public class UserBeanDao {
 
     private static final UserBeanDao instance = new UserBeanDao();
-    public UserBeanDao getInstance() {
+    public static UserBeanDao getInstance() {
         return instance;
     }
 
-    private String queryForLoginAndPassword(String userNameParameter, String userPasswordParameter) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_LOGIN_QUERY, userNameParameter, userPasswordParameter);
-        return query;
-    }
-
-    private String queryForUserType(String type) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_BY_USER_TYPE_QUERY, type);
-        return query;
-    }
-
-    private String queryForUserInsert(UserBean userBean) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_REGISTER_QUERY, userBean.getLogin(), userBean.getPassword(),
-        "user", userBean.getName());
-        return query;
-    }
-
-    private String queryForUserDelete(int id) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_DELETE_USER_QUERY, id);
-        return query;
-    }
-
-    private String queryForUserUpdate(UserBean bean) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_UPDATE_USER_QUERY,
-        bean.getLogin(), bean.getPassword(), bean.getUserRole().toString().toLowerCase(), bean.getName(), bean.getUserID());
-        return query;
-    }
-
-
-    public UserBean getBeanByLoginAndPassword (String login, String password) {
-
+    public UserBean getBeanByLogin (String login) {
         UserBean userBean = null;
         Connection connection = null;
         Statement statement = null;
@@ -59,11 +29,11 @@ public class UserBeanDao {
             userBean = new UserBean();
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(queryForLoginAndPassword(login, password));
+            resultSet = statement.executeQuery(QueryConstants.queryForLogin(login));
             boolean hasResult = resultSet.next();
 
             if (!hasResult) {
-                return userBean;
+                return null;
             } else {
                 userBean.setUserID(resultSet.getInt(1));
                 userBean.setLogin(resultSet.getString(2));
@@ -84,7 +54,45 @@ public class UserBeanDao {
             catch (SQLException e) {
             }
         }
-        return userBean;
+        return null;
+    }
+
+    public UserBean getBeanByLoginAndPassword (String login, String password) {
+
+        UserBean userBean = null;
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
+        try {
+            userBean = new UserBean();
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
+            resultSet = statement.executeQuery(QueryConstants.queryForLoginAndPassword(login, password));
+            boolean hasResult = resultSet.next();
+
+            if (!hasResult) {
+                return null;
+            } else {
+                userBean.setUserID(resultSet.getInt(1));
+                userBean.setLogin(resultSet.getString(2));
+                userBean.setPassword(resultSet.getString(3));
+                userBean.setUserRole(UserRole.valueOf(resultSet.getString(4).toUpperCase()));
+                userBean.setName(resultSet.getString(5));
+                return userBean;
+            }
+        }
+        catch (ConnectionPoolException e){}
+        catch (SQLException e){}
+        finally {
+            try {
+                if (resultSet != null){resultSet.close();}
+                if (statement != null){statement.close();}
+                if (connection != null){connection.close();}
+            }
+            catch (SQLException e) {
+            }
+        }
+        return null;
     }
 
     public List<UserBean> getListByUserType (String type) {
@@ -96,7 +104,7 @@ public class UserBeanDao {
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(queryForUserType(type));
+            resultSet = statement.executeQuery(QueryConstants.queryForUserType(type));
             while (resultSet.next()){
                 UserBean userBean = new UserBean();
                 userBean.setUserID(resultSet.getInt(1));
@@ -119,7 +127,7 @@ public class UserBeanDao {
             catch (SQLException e) {
             }
         }
-        return userList;
+        return null;
     }
 
     public List<UserBean> getAllUsersList() {
@@ -153,7 +161,7 @@ public class UserBeanDao {
             catch (SQLException e) {
             }
         }
-        return userList;
+        return null;
     }
 
     public void insert(UserBean bean) {
@@ -162,7 +170,7 @@ public class UserBeanDao {
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
-            int x = statement.executeUpdate(queryForUserInsert(bean));
+            int x = statement.executeUpdate(QueryConstants.queryForUserInsert(bean));
         }
         catch (ConnectionPoolException e){}
         catch (SQLException e){}
@@ -182,7 +190,7 @@ public class UserBeanDao {
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
-            int x = statement.executeUpdate(queryForUserDelete(bean.getUserID()));
+            int x = statement.executeUpdate(QueryConstants.queryForUserDelete(bean.getUserID()));
         }
         catch (ConnectionPoolException e){}
         catch (SQLException e){}
@@ -202,7 +210,7 @@ public class UserBeanDao {
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
-            int x = statement.executeUpdate(queryForUserUpdate(bean));
+            int x = statement.executeUpdate(QueryConstants.queryForUserUpdate(bean));
         }
         catch (ConnectionPoolException e){}
         catch (SQLException e){}
@@ -215,5 +223,4 @@ public class UserBeanDao {
             }
         }
     }
-
 }

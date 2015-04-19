@@ -12,6 +12,7 @@
 <body>
     <c:set var="pageID" value="jsp/home.jsp" scope="request" />
     <jsp:include page="header.jsp"/>
+    <jsp:include page="loginLogoutHeader.jsp" />
 
 </body>
 </html>

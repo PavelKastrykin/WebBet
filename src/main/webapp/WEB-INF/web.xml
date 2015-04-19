@@ -35,4 +35,13 @@
         <url-pattern>/header.jsp</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>loginLogoutHeader.jsp</servlet-name>
+        <jsp-file>/jsp/loginLogoutHeader.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>loginLogoutHeader.jsp</servlet-name>
+        <url-pattern>/loginLogoutHeader.jsp</url-pattern>
+    </servlet-mapping>
+
 </web-app>

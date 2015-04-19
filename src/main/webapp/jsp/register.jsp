@@ -11,6 +11,7 @@
     </head>
     <body>
         <c:set var="pageID" value="jsp/register.jsp" scope="request" />
+        <c:set var="registerWarning" value="project.empty" scope="application" />
         <jsp:include page="header.jsp"/>
         <form action="webBetController" method="get">
             <input type="hidden" name="command" value="REGISTER_COMMAND"/>
@@ -21,11 +22,11 @@
                 </tr>
                 <tr>
                     <td><label for="registerPassword"><fmt:message key="register.label.password"/> </label> </td>
-                    <td><input type="text" id="registerPassword" name="registerPassword" /></td>
+                    <td><input type="password" id="registerPassword" name="registerPassword" /></td>
                 </tr>
                 <tr>
                     <td><label for="registerConfirm"><fmt:message key="register.label.confirm"/> </label> </td>
-                    <td><input type="text" id="registerConfirm" name="registerConfirm" /></td>
+                    <td><input type="password" id="registerConfirm" name="registerConfirm" /></td>
                 </tr>
                 <tr>
                     <td><label for="registerName"><fmt:message key="register.label.name"/> </label> </td>
@@ -35,7 +36,7 @@
             <fmt:message key="register.button.submit" var="buttonValue"/>
             <input type="submit" name="submit" value="${buttonValue}">
 
-        </form>
-
+        </form><br/>
+        <label><fmt:message key="${registerWarning}"/></label>
     </body>
 </html>
