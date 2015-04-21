@@ -1,11 +1,13 @@
-package archive;
+package com.pavel.webbet.entity.match;
 
 import java.sql.Time;
+import java.sql.Timestamp;
+import java.util.Date;
 
 public class FootballMatch {
     private int matchId;
     private String matchName;
-    private Time startTime;
+    private Date startTime;
     private String matchScore;
     private float winCoef;
     private float drawCoef;
@@ -18,7 +20,7 @@ public class FootballMatch {
     public String getMatchName() {
         return matchName;
     }
-    public Time getStartTime() {
+    public Date getStartTime() {
         return startTime;
     }
     public String getMatchScore() {
@@ -42,8 +44,8 @@ public class FootballMatch {
     public void setMatchName(String matchName) {
         this.matchName = matchName;
     }
-    public void setStartTime(Time startTime) {
-        this.startTime = startTime;
+    public void setStartTime(Timestamp timestamp) {
+        this.startTime = new Date(timestamp.getTime());
     }
     public void setMatchScore(String matchScore) {
         this.matchScore = matchScore;

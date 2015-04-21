@@ -1,9 +1,6 @@
 package com.pavel.webbet.service;
 
-import com.pavel.webbet.service.impl.DoLocaleCommand;
-import com.pavel.webbet.service.impl.DoLoginCommand;
-import com.pavel.webbet.service.impl.DoLogoutCommand;
-import com.pavel.webbet.service.impl.DoRegisterCommand;
+import com.pavel.webbet.service.impl.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -17,6 +14,8 @@ public class CommandDispatcher {
         commands.put(CommandType.LOCALE_COMMAND, new DoLocaleCommand());
         commands.put(CommandType.REGISTER_COMMAND, new DoRegisterCommand());
         commands.put(CommandType.LOGOUT_COMMAND, new DoLogoutCommand());
+        commands.put(CommandType.DISPLAY_MATCHES_COMMAND, new DoDisplayMatchesCommand());
+        commands.put(CommandType.ADD_MATCH_COMMAND, new DoAddMatchCommand());
     }
 
     public static CommandDispatcher getInstance(){

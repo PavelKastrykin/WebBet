@@ -44,4 +44,30 @@
         <url-pattern>/loginLogoutHeader.jsp</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>home.jsp</servlet-name>
+        <jsp-file>/jsp/home.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>home.jsp</servlet-name>
+        <url-pattern>/home.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>addMatch.jsp</servlet-name>
+        <jsp-file>/jsp/addMatch.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>addMatch.jsp</servlet-name>
+        <url-pattern>/addMatch.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>datePicker.jsp</servlet-name>
+        <jsp-file>/jsp/datePicker.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>datePicker.jsp</servlet-name>
+        <url-pattern>/datePicker.jsp</url-pattern>
+    </servlet-mapping>
 </web-app>

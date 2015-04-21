@@ -1,4 +1,10 @@
-package archive;
+package com.pavel.webbet.dao.mysqldao.impl;
+
+import com.pavel.webbet.dao.mysqldao.QueryConstants;
+import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPool;
+import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPoolException;
+import com.pavel.webbet.entity.match.FootballMatch;
+import com.pavel.webbet.entity.match.MatchStatus;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -8,31 +14,31 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class FootballMatchDAO {
+
+    private static final FootballMatchDAO instance = new FootballMatchDAO();
+    public static FootballMatchDAO getInstance() {
+        return instance;
+    }
+
     Connection connection;
     Statement statement;
-    private int noOfRecords;
+    private int numberOfRecords;
 
     public FootballMatchDAO(){}
 
-    private static Connection getConnection() throws SQLException, ClassNotFoundException{
-        Connection con = SqlWebBetConnectionFactory.getInstance().getConnection();
-        return con;
-    }
-
     public List<FootballMatch> viewAllMatches(int offset, int noOfRecords){
-        String query = "select SQL_CALC_FOUND_ROWS * from football_match " + offset + ", "
-                + noOfRecords;
+
         List<FootballMatch> list = new ArrayList<FootballMatch>();
         FootballMatch match = null;
         try {
-            connection = getConnection();
+            connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(query);
+            ResultSet rs = statement.executeQuery(QueryConstants.queryForAllMatchesWithLimit(offset, noOfRecords));
             while (rs.next()){
                 match = new FootballMatch();
                 match.setMatchId(rs.getInt("football_matchid"));
                 match.setMatchName(rs.getString("name"));
-                match.setStartTime(rs.getTime("time_start"));
+                match.setStartTime(rs.getTimestamp("time_start"));
                 match.setMatchScore(rs.getString("score"));
                 match.setWinCoef(rs.getFloat("coef_win"));
                 match.setDrawCoef(rs.getFloat("coef_draw"));
@@ -44,13 +50,11 @@ public class FootballMatchDAO {
 
             rs = statement.executeQuery("select FOUND_ROWS()");
             if (rs.next()){
-                this.noOfRecords = rs.getInt(1);
+                this.numberOfRecords = rs.getInt(1);
             }
         }
+        catch (ConnectionPoolException e) {}
         catch (SQLException e){
-            e.printStackTrace();
-        }
-        catch (ClassNotFoundException e){
             e.printStackTrace();
         }
         finally {
@@ -68,7 +72,7 @@ public class FootballMatchDAO {
         }
         return list;
     }
-    public int getNoOfRecords(){
-        return noOfRecords;
+    public int getNumberOfRecords(){
+        return numberOfRecords;
     }
 }

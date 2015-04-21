@@ -2,7 +2,7 @@ package com.pavel.webbet.service.impl;
 
 import com.pavel.webbet.dao.mysqldao.impl.UserBeanDao;
 import com.pavel.webbet.entity.userbean.UserBean;
-import com.pavel.webbet.service.CommandConstants;
+import com.pavel.webbet.service.CommandStringConstants;
 import com.pavel.webbet.service.ICommand;
 
 import javax.servlet.http.HttpServletRequest;
@@ -16,12 +16,12 @@ public class DoRegisterCommand implements ICommand {
         String realName = request.getParameter("registerName");
 
         if (login == "" || password=="" || confirm=="" || realName==""){
-            request.setAttribute("registerWarning", CommandConstants.EMPTY_FIELDS_WARNING);
+            request.setAttribute("registerWarning", CommandStringConstants.EMPTY_FIELDS_WARNING);
             return "jsp/register.jsp";
         }
 
         if (!password.equals(confirm)){
-            request.setAttribute("registerWarning", CommandConstants.PASSWORD_CONFIRM_WARNING);
+            request.setAttribute("registerWarning", CommandStringConstants.PASSWORD_CONFIRM_WARNING);
             return "jsp/register.jsp";
         }
 
@@ -37,7 +37,7 @@ public class DoRegisterCommand implements ICommand {
             return "index.jsp";
         }
         else {
-            request.setAttribute("registerWarning", CommandConstants.SAME_LOGIN_WARNING);
+            request.setAttribute("registerWarning", CommandStringConstants.SAME_LOGIN_WARNING);
             return "jsp/register.jsp";
         }
     }

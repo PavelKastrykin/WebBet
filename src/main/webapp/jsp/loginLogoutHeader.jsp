@@ -10,20 +10,19 @@
     </head>
     <body>
         <c:choose>
-            <c:when test="${userValue.login} == null || ${userValue.login} == '' ">
+            <c:when test="${sessionScope.userValue != null}">
                 <form>
-                    <a href="index.jsp"><fmt:message key="loginLogoutHeader.login.reff" /></a>
-                    <br/>
+                    <form action="webBetController" method="get">
+                        <input type="hidden" name="command" value="LOGOUT_COMMAND"/>
+                        <label for="logout" >${userValue.login}</label>
+                        <fmt:message key="loginLogoutHeader.logout.button" var="logoutButton" />
+                        <input type="submit" id="logout" name="logout" value="${logoutButton}">
+                    </form>
                 </form>
             </c:when>
             <c:otherwise>
-                <form action="webBetController" method="get">
-                    <input type="hidden" name="command" value="LOGOUT_COMMAND"/>
-                    <label for="logout" >${userValue.login}</label>
-                    <fmt:message key="loginLogoutHeader.logout.button" var="logoutButton" />
-                    <input type="submit" id="logout" name="logout" value="${logoutButton}">
-                </form>
-
+                <a href="index.jsp"><fmt:message key="loginLogoutHeader.login.reff" /></a>
+                <br/>
             </c:otherwise>
         </c:choose>
     </body>

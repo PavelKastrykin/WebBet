@@ -12,6 +12,7 @@ public class QueryConstants {
     public static final String MYSQL_ALL_USER_LIST_QUERY = "select * from users";
     public static final String MYSQL_DELETE_USER_QUERY = "delete from users where userid = ''{0}''";
     public static final String MYSQL_UPDATE_USER_QUERY = "UPDATE users SET `login`=''{0}'', `password`=''{1}'', `user_role`=''{2}'', `user_name`=''{3}'' WHERE `userid`=''{4}'';";
+    public static final String MYSQL_ALL_MATCHES_LIST_QUERY = "select SQL_CALC_FOUND_ROWS * from (select * from football_match order by football_matchid desc) as A limit {0}, {1}";
 
     public static String queryForLoginAndPassword(String userNameParameter, String userPasswordParameter) {
         String query = MessageFormat.format(QueryConstants.MYSQL_LOGIN_QUERY, userNameParameter, userPasswordParameter);
@@ -44,4 +45,10 @@ public class QueryConstants {
                 bean.getLogin(), bean.getPassword(), bean.getUserRole().toString().toLowerCase(), bean.getName(), bean.getUserID());
         return query;
     }
+
+    public static String queryForAllMatchesWithLimit(int offset, int numberOfRecords) {
+        String query = MessageFormat.format(QueryConstants.MYSQL_ALL_MATCHES_LIST_QUERY, offset, numberOfRecords);
+        return query;
+    }
+
 }
