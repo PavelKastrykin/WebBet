@@ -36,12 +36,18 @@
                 <tr>
                     <td>${match.matchId}</td>
                     <td>${match.matchName}</td>
-                    <td><fmt:formatDate value="${match.startTime}" type="both" dateStyle="short" timeStyle="short"/></td>
+                    <td><fmt:formatDate value="${match.startTime}" dateStyle="short"/></td>
                     <td>${match.matchScore}</td>
                     <td>${match.winCoef}</td>
                     <td>${match.drawCoef}</td>
                     <td>${match.looseCoef}</td>
                     <td>${match.status}</td>
+                    <c:if test="${match.status == 'ACTIVE' && sessionScope.userValue != null}">
+                        <td>
+                            <a href="makeBet.jsp?matchId=${match.matchId}" >Bet!</a>
+                        </td>
+                    </c:if>
+
                 </tr>
             </c:forEach>
         </table>

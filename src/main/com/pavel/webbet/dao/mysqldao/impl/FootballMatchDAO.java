@@ -38,7 +38,7 @@ public class FootballMatchDAO {
                 match = new FootballMatch();
                 match.setMatchId(rs.getInt("football_matchid"));
                 match.setMatchName(rs.getString("name"));
-                match.setStartTime(rs.getTimestamp("time_start"));
+                match.setStartTime(rs.getDate("time_start"));
                 match.setMatchScore(rs.getString("score"));
                 match.setWinCoef(rs.getFloat("coef_win"));
                 match.setDrawCoef(rs.getFloat("coef_draw"));
@@ -71,6 +71,26 @@ public class FootballMatchDAO {
             }
         }
         return list;
+    }
+
+    public void insert(FootballMatch match) {
+        Connection connection = null;
+        Statement statement = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
+            int x = statement.executeUpdate(QueryConstants.queryForMatchInsert(match));
+        }
+        catch (ConnectionPoolException e){}
+        catch (SQLException e){}
+        finally {
+            try {
+                if (statement != null){statement.close();}
+                if (connection != null){connection.close();}
+            }
+            catch (SQLException e) {
+            }
+        }
     }
     public int getNumberOfRecords(){
         return numberOfRecords;

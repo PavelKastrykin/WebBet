@@ -1,27 +1,50 @@
 package com.pavel.webbet.service.impl;
 
+import com.pavel.webbet.dao.mysqldao.impl.FootballMatchDAO;
+import com.pavel.webbet.entity.match.FootballMatch;
 import com.pavel.webbet.entity.userbean.UserBean;
 import com.pavel.webbet.service.CommandStringConstants;
 import com.pavel.webbet.service.ICommand;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class DoAddMatchCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request) {
         String matchName = request.getParameter("matchName");
-        String matchDate = request.getParameter("matchDate");
+        String matchDateAsString = request.getParameter("matchDate");
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+        Date matchDate = null;
+        try {
+            matchDate = df.parse(matchDateAsString);
+        }
+        catch (ParseException e){
+            e.printStackTrace();
+        }
+
         HttpSession session = request.getSession(true);
         String userRole = ((UserBean)session.getAttribute("userValue")).getUserRole().toString();
-        if ("ADMIN".equals(userRole) || "BOOK".equals(userRole)){
+        if (!("ADMIN".equals(userRole) || "BOOK".equals(userRole))){
             request.setAttribute("addMatchWarning", CommandStringConstants.VALIDATION_ADMIN_BOOK_WARNING);
             return "jsp/addMatch.jsp";
         }
-        if (matchName.equals("") || matchDate.equals("")){
+        if (matchName.equals("") || matchDateAsString.equals("")){
             request.setAttribute("addMatchWarning", CommandStringConstants.EMPTY_FIELDS_WARNING);
             return "jsp/addMatch.jsp";
         }
-        return null;
+
+        FootballMatch match = new FootballMatch();
+        match.setMatchName(matchName);
+        match.setStartTime(matchDate);
+        FootballMatchDAO dao = FootballMatchDAO.getInstance();
+        dao.insert(match);
+        request.setAttribute("addMatchWarning", CommandStringConstants.MATCH_ADDED_WARNING);
+
+        return "jsp/addMatch.jsp";
     }
 }

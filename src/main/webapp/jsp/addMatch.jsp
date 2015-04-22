@@ -25,12 +25,13 @@
             </tr>
             <tr>
                 <td><label for="matchDate"><fmt:message key="addmatch.label.date"/> </label> </td>
-                <td><input type="datetime" id="matchDate" name="matchDate" /></td>
+                <td><input type="date" id="matchDate" name="matchDate" /></td>
             </tr>
         <table/>
         <fmt:message key="addmatch.button.add" var="buttonValue"/>
         <input type="submit" name="submit" value="${buttonValue}">
     </form><br/>
+    <a href="home.jsp"><fmt:message key="login.home.reff" /> </a><br/>
     <label><fmt:message key="${addMatchWarning}"/></label>
 </body>
 </html>

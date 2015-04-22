@@ -44,8 +44,8 @@ public class FootballMatch {
     public void setMatchName(String matchName) {
         this.matchName = matchName;
     }
-    public void setStartTime(Timestamp timestamp) {
-        this.startTime = new Date(timestamp.getTime());
+    public void setStartTime(Date date) {
+        this.startTime = date;
     }
     public void setMatchScore(String matchScore) {
         this.matchScore = matchScore;

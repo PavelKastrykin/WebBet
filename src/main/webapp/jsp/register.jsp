@@ -37,6 +37,8 @@
             <input type="submit" name="submit" value="${buttonValue}">
 
         </form><br/>
+        <a href="home.jsp"><fmt:message key="login.home.reff" /> </a>
         <label><fmt:message key="${registerWarning}"/></label>
+
     </body>
 </html>

@@ -1,8 +1,10 @@
 package com.pavel.webbet.dao.mysqldao;
 
+import com.pavel.webbet.entity.match.FootballMatch;
 import com.pavel.webbet.entity.userbean.UserBean;
 
 import java.text.MessageFormat;
+import java.util.Date;
 
 public class QueryConstants {
     public static final String MYSQL_LOGIN_QUERY = "select * from users where login = ''{0}'' and password = ''{1}''";
@@ -13,6 +15,7 @@ public class QueryConstants {
     public static final String MYSQL_DELETE_USER_QUERY = "delete from users where userid = ''{0}''";
     public static final String MYSQL_UPDATE_USER_QUERY = "UPDATE users SET `login`=''{0}'', `password`=''{1}'', `user_role`=''{2}'', `user_name`=''{3}'' WHERE `userid`=''{4}'';";
     public static final String MYSQL_ALL_MATCHES_LIST_QUERY = "select SQL_CALC_FOUND_ROWS * from (select * from football_match order by football_matchid desc) as A limit {0}, {1}";
+    public static final String MYSQL_ADD_MATCH_QUERY = "INSERT INTO football_match (`name`, `time_start`) values (''{0}'', ''{1}'')";
 
     public static String queryForLoginAndPassword(String userNameParameter, String userPasswordParameter) {
         String query = MessageFormat.format(QueryConstants.MYSQL_LOGIN_QUERY, userNameParameter, userPasswordParameter);
@@ -48,6 +51,12 @@ public class QueryConstants {
 
     public static String queryForAllMatchesWithLimit(int offset, int numberOfRecords) {
         String query = MessageFormat.format(QueryConstants.MYSQL_ALL_MATCHES_LIST_QUERY, offset, numberOfRecords);
+        return query;
+    }
+
+    public static String queryForMatchInsert(FootballMatch match) {
+        String query = MessageFormat.format(QueryConstants.MYSQL_ADD_MATCH_QUERY, match.getMatchName(),
+                new java.sql.Date((match.getStartTime()).getTime()).toString());
         return query;
     }
 
