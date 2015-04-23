@@ -29,7 +29,7 @@
             </tr>
         <table/>
         <fmt:message key="addmatch.button.add" var="buttonValue"/>
-        <input type="submit" name="submit" value="${buttonValue}">
+        <input type="submit" name="submit" value="${buttonValue}" onclick="return confirm('Confirm?')" />
     </form><br/>
     <a href="home.jsp"><fmt:message key="login.home.reff" /> </a><br/>
     <label><fmt:message key="${addMatchWarning}"/></label>

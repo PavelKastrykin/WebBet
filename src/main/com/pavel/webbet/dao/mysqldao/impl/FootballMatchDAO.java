@@ -20,18 +20,14 @@ public class FootballMatchDAO {
         return instance;
     }
 
-//    Connection connection;
-//    Statement statement;
     private int numberOfRecords;
-
-    public FootballMatchDAO(){}
 
     public List<FootballMatch> viewAllMatches(int offset, int noOfRecords){
 
         Connection connection = null;
         Statement statement = null;
 
-        List<FootballMatch> list = new ArrayList<FootballMatch>();
+        List<FootballMatch> list = new ArrayList<>();
         FootballMatch match = null;
         try {
             connection = ConnectionPool.getInstance().takeConnection();

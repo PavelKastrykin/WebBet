@@ -17,6 +17,8 @@ public class QueryConstants {
     public static final String MYSQL_ALL_MATCHES_LIST_QUERY = "select SQL_CALC_FOUND_ROWS * from (select * from football_match order by football_matchid desc) as A limit {0}, {1}";
     public static final String MYSQL_ADD_MATCH_QUERY = "INSERT INTO football_match (`name`, `time_start`) values (''{0}'', ''{1}'')";
     public static final String MYSQL_GET_MATCH_ID_QUERY = "select * from football_match where football_matchid = ''{0}''";
+//    INSERT INTO `webbet`.`bets` (`login`, `football_matchid`, `bet_prediction`, `sum`, `current_coef`) VALUES ('Pachon', '34', 'draw', '200', '3.5');
+
 
     public static String queryForLoginAndPassword(String userNameParameter, String userPasswordParameter) {
         String query = MessageFormat.format(QueryConstants.MYSQL_LOGIN_QUERY, userNameParameter, userPasswordParameter);

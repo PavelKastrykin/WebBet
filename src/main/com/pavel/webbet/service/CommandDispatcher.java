@@ -17,6 +17,7 @@ public class CommandDispatcher {
         commands.put(CommandType.DISPLAY_MATCHES_COMMAND, new DoDisplayMatchesCommand());
         commands.put(CommandType.ADD_MATCH_COMMAND, new DoAddMatchCommand());
         commands.put(CommandType.CREATE_BET_FORM, new DoCreateBetForm());
+        commands.put(CommandType.ADD_BET_COMMAND, new DoAddBetCommand());
     }
 
     public static CommandDispatcher getInstance(){
