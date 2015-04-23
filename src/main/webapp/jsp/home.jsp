@@ -1,4 +1,3 @@
-<%@ page isELIgnored="false" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -44,7 +43,7 @@
                     <td>${match.status}</td>
                     <c:if test="${match.status == 'ACTIVE' && sessionScope.userValue != null}">
                         <td>
-                            <a href="makeBet.jsp?matchId=${match.matchId}" >Bet!</a>
+                            <a href="webBetController?matchId=${match.matchId}&command=CREATE_BET_FORM" >Bet!</a>
                         </td>
                     </c:if>
 

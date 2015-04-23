@@ -20,19 +20,23 @@ public class FootballMatchDAO {
         return instance;
     }
 
-    Connection connection;
-    Statement statement;
+//    Connection connection;
+//    Statement statement;
     private int numberOfRecords;
 
     public FootballMatchDAO(){}
 
     public List<FootballMatch> viewAllMatches(int offset, int noOfRecords){
 
+        Connection connection = null;
+        Statement statement = null;
+
         List<FootballMatch> list = new ArrayList<FootballMatch>();
         FootballMatch match = null;
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
+
             ResultSet rs = statement.executeQuery(QueryConstants.queryForAllMatchesWithLimit(offset, noOfRecords));
             while (rs.next()){
                 match = new FootballMatch();
@@ -50,7 +54,7 @@ public class FootballMatchDAO {
 
             rs = statement.executeQuery("select FOUND_ROWS()");
             if (rs.next()){
-                this.numberOfRecords = rs.getInt(1);
+                numberOfRecords = rs.getInt(1);
             }
         }
         catch (ConnectionPoolException e) {}
@@ -71,6 +75,46 @@ public class FootballMatchDAO {
             }
         }
         return list;
+    }
+
+    public FootballMatch getMatchById (int id) {
+        Connection connection = null;
+        Statement statement = null;
+        FootballMatch match = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(QueryConstants.queryForGetMatchById(id));
+            while (rs.next()){
+                match = new FootballMatch();
+                match.setMatchId(rs.getInt("football_matchid"));
+                match.setMatchName(rs.getString("name"));
+                match.setStartTime(rs.getDate("time_start"));
+                match.setMatchScore(rs.getString("score"));
+                match.setWinCoef(rs.getFloat("coef_win"));
+                match.setDrawCoef(rs.getFloat("coef_draw"));
+                match.setLooseCoef(rs.getFloat("coef_lost"));
+                match.setStatus(MatchStatus.valueOf(rs.getString("status").toUpperCase()));
+            }
+        }
+        catch (ConnectionPoolException e) {}
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (statement != null){
+                    statement.close();
+                }
+                if (connection != null){
+                    connection.close();
+                }
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return match;
     }
 
     public void insert(FootballMatch match) {
