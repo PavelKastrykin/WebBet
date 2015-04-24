@@ -7,12 +7,23 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <script>
+        function submitLogin()
+        {
+            if (document.getElementById("username").value == "" || document.getElementById("password").value == ""){
+                alert("Insert all fields!")
+                return false;
+            }
+            document.forms["loginForm"].submit();
+            return true;
+        }
+    </script>
     <title><fmt:message key="title.index" /></title>
 </head>
 <body>
     <c:set var="pageID" value="index.jsp" scope="request" />
     <jsp:include page="jsp/header.jsp"/>
-    <form action="webBetController" method="post" >
+    <form id="loginForm" action="webBetController" method="post" >
         <input type="hidden" name="command" value="LOGIN_COMMAND"/>
         <table>
             <tr>
@@ -26,7 +37,7 @@
         </table>
         <br>
         <fmt:message key="login.button.submit" var="buttonValue"/>
-        <input type="submit" name="submit" value="${buttonValue}" />
+        <input type="submit" name="submit" value="${buttonValue}" onclick="return submitLogin()"/>
         <a href="register.jsp"><fmt:message key="register.button.submit" /> </a>
     </form>
     <a href="home.jsp"><fmt:message key="login.home.reff" /> </a>

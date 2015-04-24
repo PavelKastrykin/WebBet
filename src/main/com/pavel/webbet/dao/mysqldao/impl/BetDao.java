@@ -17,23 +17,23 @@ public class BetDao {
         return instance;
     }
 
-//    public void insert(BetBean bean) {
-//        Connection connection = null;
-//        Statement statement = null;
-//        try {
-//            connection = ConnectionPool.getInstance().takeConnection();
-//            statement = connection.createStatement();
-//            int x = statement.executeUpdate(QueryConstants.queryForMatchInsert(match));
-//        }
-//        catch (ConnectionPoolException e){}
-//        catch (SQLException e){}
-//        finally {
-//            try {
-//                if (statement != null){statement.close();}
-//                if (connection != null){connection.close();}
-//            }
-//            catch (SQLException e) {
-//            }
-//        }
-//    }
+    public void insert(BetBean bean) {
+        Connection connection = null;
+        Statement statement = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
+            int x = statement.executeUpdate(QueryConstants.queryForBetInsert(bean));
+        }
+        catch (ConnectionPoolException e){}
+        catch (SQLException e){}
+        finally {
+            try {
+                if (statement != null){statement.close();}
+                if (connection != null){connection.close();}
+            }
+            catch (SQLException e) {
+            }
+        }
+    }
 }

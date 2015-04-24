@@ -9,7 +9,10 @@
     <script>
         function setBetNum(betNum, betCoef)
         {
-            alert("Я зашёл, ура!");
+            if (document.getElementById("moneySum").value == ""){
+                alert("Sum is empty")
+                return false;
+            }
             document.getElementById("selectedBetNum").value = betNum;
             document.getElementById("selectedBetCoef").value = betCoef;
             document.forms["betForm"].submit();
@@ -26,6 +29,7 @@
         <input type="hidden" name="command" value="ADD_BET_COMMAND">
         <input type="hidden" id="selectedBetNum" name="selectedBetNum">
         <input type="hidden" id="selectedBetCoef" name="selectedBetCoef">
+        <input type="hidden" id="idOfMatch" name="idOfMatch" value="${matchToBet.matchId}">
         <table border="1" cellpadding="5" cellspacing="5">
             <tr>
                 <th>#id</th>
