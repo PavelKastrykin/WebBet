@@ -6,6 +6,7 @@
 <fmt:setBundle basename="resources.locale.text"/>
 <html>
 <head>
+    <meta http-equiv="Refresh" content="10;url=home.jsp" >
     <script>
         function setBetNum(betNum, betCoef)
         {
@@ -32,7 +33,6 @@
         <input type="hidden" id="idOfMatch" name="idOfMatch" value="${matchToBet.matchId}">
         <table border="1" cellpadding="5" cellspacing="5">
             <tr>
-                <th>#id</th>
                 <th>Name</th>
                 <th>Date</th>
                 <th>Win1</th>
@@ -40,7 +40,6 @@
                 <th>Win2</th>
             </tr>
             <tr>
-                <td>${matchToBet.matchId}</td>
                 <td>${matchToBet.matchName}</td>
                 <td>${matchToBet.startTime}</td>
                 <td><input type="button" value="${matchToBet.winCoef}" onclick="setBetNum('first', '${matchToBet.winCoef}');"></td>
@@ -52,6 +51,15 @@
         <input type="text" id="moneySum" name="moneySum"/>
     </form>
     <br/>
+    You have <span id="seconds">10</span> seconds to make bet.
+    <script>
+        var seconds = 10;
+        setInterval(
+                function(){
+                    document.getElementById('seconds').innerHTML = --seconds;
+                }, 1000
+        );
+    </script>
     <a href="home.jsp"><fmt:message key="login.home.reff" /> </a>
 </body>
 </html>

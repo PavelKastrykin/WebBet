@@ -11,46 +11,9 @@
         <servlet-name>webBetController</servlet-name>
         <servlet-class>com.pavel.webbet.controller.WebBetController</servlet-class>
     </servlet>
-
     <servlet-mapping>
         <servlet-name>webBetController</servlet-name>
         <url-pattern>/webBetController</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>register.jsp</servlet-name>
-        <jsp-file>/jsp/register.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>register.jsp</servlet-name>
-        <url-pattern>/register.jsp</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>header.jsp</servlet-name>
-        <jsp-file>/jsp/header.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>header.jsp</servlet-name>
-        <url-pattern>/header.jsp</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>loginLogoutHeader.jsp</servlet-name>
-        <jsp-file>/jsp/loginLogoutHeader.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>loginLogoutHeader.jsp</servlet-name>
-        <url-pattern>/loginLogoutHeader.jsp</url-pattern>
-    </servlet-mapping>
-
-    <servlet>
-        <servlet-name>home.jsp</servlet-name>
-        <jsp-file>/jsp/home.jsp</jsp-file>
-    </servlet>
-    <servlet-mapping>
-        <servlet-name>home.jsp</servlet-name>
-        <url-pattern>/home.jsp</url-pattern>
     </servlet-mapping>
 
     <servlet>
@@ -72,6 +35,42 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>editMatch.jsp</servlet-name>
+        <jsp-file>/jsp/editMatch.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editMatch.jsp</servlet-name>
+        <url-pattern>/editMatch.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>header.jsp</servlet-name>
+        <jsp-file>/jsp/header.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>header.jsp</servlet-name>
+        <url-pattern>/header.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>home.jsp</servlet-name>
+        <jsp-file>/jsp/home.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>home.jsp</servlet-name>
+        <url-pattern>/home.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>loginLogoutHeader.jsp</servlet-name>
+        <jsp-file>/jsp/loginLogoutHeader.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>loginLogoutHeader.jsp</servlet-name>
+        <url-pattern>/loginLogoutHeader.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>makeBet.jsp</servlet-name>
         <jsp-file>/jsp/makeBet.jsp</jsp-file>
     </servlet>
@@ -80,4 +79,30 @@
         <url-pattern>/makeBet.jsp</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>myBets.jsp</servlet-name>
+        <jsp-file>/jsp/myBets.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>myBets.jsp</servlet-name>
+        <url-pattern>/myBets.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>myBetsHeader.jsp</servlet-name>
+        <jsp-file>/jsp/myBetsHeader.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>myBetsHeader.jsp</servlet-name>
+        <url-pattern>/myBetsHeader.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>register.jsp</servlet-name>
+        <jsp-file>/jsp/register.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>register.jsp</servlet-name>
+        <url-pattern>/register.jsp</url-pattern>
+    </servlet-mapping>
 </web-app>

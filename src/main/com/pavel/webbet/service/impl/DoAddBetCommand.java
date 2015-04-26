@@ -2,6 +2,7 @@ package com.pavel.webbet.service.impl;
 
 import com.pavel.webbet.dao.mysqldao.impl.BetDao;
 import com.pavel.webbet.entity.bet.BetBean;
+import com.pavel.webbet.entity.bet.BetPrediction;
 import com.pavel.webbet.entity.bet.BetStatus;
 import com.pavel.webbet.entity.userbean.UserBean;
 import com.pavel.webbet.service.ICommand;
@@ -14,21 +15,20 @@ public class DoAddBetCommand implements ICommand {
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
         double moneySum = Double.parseDouble(request.getParameter("moneySum"));
-        BetStatus status = BetStatus.valueOf(request.getParameter("selectedBetNum").toUpperCase());
+        BetPrediction prediction = BetPrediction.valueOf((request.getParameter("selectedBetNum")).toUpperCase());
         Float selectedBetCoef = Float.parseFloat(request.getParameter("selectedBetCoef"));
         String login = ((UserBean)(session.getAttribute("userValue"))).getLogin();
         int idOfMatch = Integer.parseInt(request.getParameter("idOfMatch"));
 
         BetBean betBean = new BetBean();
         betBean.setSum(moneySum);
-        betBean.setStatus(status);
+        betBean.setPrediction(prediction);
         betBean.setCurrentCoef(selectedBetCoef);
         betBean.setLogin(login);
         betBean.setFootballMatchId(idOfMatch);
+
         BetDao dao = BetDao.getInstance();
-
-
-
-        return null;
+        dao.insert(betBean);
+        return "jsp/home.jsp";
     }
 }

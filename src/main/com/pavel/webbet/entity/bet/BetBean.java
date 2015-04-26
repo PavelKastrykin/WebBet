@@ -1,14 +1,18 @@
 package com.pavel.webbet.entity.bet;
 
+import java.util.Date;
+
 public class BetBean {
     private int betId;
     private String login;
     private int footballMatchId;
+    private String footballMatchName;
+    private Date footballMatchDate;
     private BetPrediction prediction;
     private boolean moneyCharge;
     private double sum;
     private float currentCoef;
-    private boolean isWon;
+    private boolean won;
     private BetStatus status;
 
     public int getBetId() {
@@ -20,6 +24,8 @@ public class BetBean {
     public int getFootballMatchId() {
         return footballMatchId;
     }
+    public String getFootballMatchName() {return footballMatchName; }
+    public Date getFootballMatchDate() {return footballMatchDate; }
     public BetPrediction getPrediction() {
         return prediction;
     }
@@ -33,7 +39,7 @@ public class BetBean {
         return currentCoef;
     }
     public boolean isWon() {
-        return isWon;
+        return won;
     }
     public BetStatus getStatus() {
         return status;
@@ -48,6 +54,8 @@ public class BetBean {
     public void setFootballMatchId(int footballMatchId) {
         this.footballMatchId = footballMatchId;
     }
+    public void setFootballMatchName(String footballMatchName) {this.footballMatchName = footballMatchName; }
+    public void setFootballMatchDate(Date date) {this.footballMatchDate = date; }
     public void setPrediction(BetPrediction prediction) {
         this.prediction = prediction;
     }
@@ -61,7 +69,7 @@ public class BetBean {
         this.currentCoef = currentCoef;
     }
     public void setWon(boolean isWon) {
-        this.isWon = isWon;
+        this.won = isWon;
     }
     public void setStatus(BetStatus status) {
         this.status = status;

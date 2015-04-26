@@ -16,6 +16,7 @@
     <c:if test="${sessionScope.userValue.userRole == 'ADMIN' || sessionScope.userValue.userRole == 'BOOK'}" >
         <jsp:include page="bookmakerPanel.jsp" />
     </c:if>
+    <jsp:include page="myBetsHeader.jsp"/>
     <form action="webBetController" method="get">
         <input type="hidden" name="command" value="DISPLAY_MATCHES_COMMAND" />
         <fmt:message key="matches.button.show" var="buttonShow" />
@@ -41,12 +42,16 @@
                     <td>${match.drawCoef}</td>
                     <td>${match.looseCoef}</td>
                     <td>${match.status}</td>
-                    <c:if test="${match.status == 'ACTIVE' && sessionScope.userValue != null}">
+                    <c:if test="${match.status == 'ACTIVE' && sessionScope.userValue != null && sessionScope.userValue.userRole != 'BOOK'}">
                         <td>
-                            <a href="webBetController?matchId=${match.matchId}&command=CREATE_BET_FORM" >Bet!</a>
+                            <a href="webBetController?matchId=${match.matchId}&command=CREATE_BET_FORM_COMMAND" >Bet!</a>
                         </td>
                     </c:if>
-
+                    <c:if test="${sessionScope.userValue.userRole == 'BOOK' && match.status != 'CLOSED'}">
+                        <td>
+                            <a href="webBetController?matchId=${match.matchId}&command=CREATE_MATCH_EDIT_FORM_COMMAND">Edit</a>
+                        </td>
+                    </c:if>
                 </tr>
             </c:forEach>
         </table>

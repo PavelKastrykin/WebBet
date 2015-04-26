@@ -6,13 +6,13 @@ import com.pavel.webbet.service.ICommand;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class DoCreateBetForm implements ICommand {
+public class DoCreateMatchEdit implements ICommand {
     @Override
     public String execute(HttpServletRequest request) {
         int id = Integer.parseInt(request.getParameter("matchId"));
         FootballMatchDAO dao = FootballMatchDAO.getInstance();
         FootballMatch match = dao.getMatchById(id);
-        request.setAttribute("matchToBet", match);
+        request.setAttribute("matchToEdit", match);
         return "jsp/editMatch.jsp";
     }
 }

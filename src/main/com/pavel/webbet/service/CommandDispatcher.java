@@ -16,8 +16,11 @@ public class CommandDispatcher {
         commands.put(CommandType.LOGOUT_COMMAND, new DoLogoutCommand());
         commands.put(CommandType.DISPLAY_MATCHES_COMMAND, new DoDisplayMatchesCommand());
         commands.put(CommandType.ADD_MATCH_COMMAND, new DoAddMatchCommand());
-        commands.put(CommandType.CREATE_BET_FORM, new DoCreateBetForm());
+        commands.put(CommandType.CREATE_BET_FORM_COMMAND, new DoCreateBetForm());
         commands.put(CommandType.ADD_BET_COMMAND, new DoAddBetCommand());
+        commands.put(CommandType.SHOW_MY_BETS_COMMAND, new DoShowMyBetsCommand());
+        commands.put(CommandType.CREATE_MATCH_EDIT_FORM_COMMAND, new DoCreateMatchEdit());
+        commands.put(CommandType.EDIT_MATCH_COMMAND, new DoEditMatchCommand());
     }
 
     public static CommandDispatcher getInstance(){
