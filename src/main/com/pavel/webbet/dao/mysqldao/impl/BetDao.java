@@ -7,6 +7,7 @@ import com.pavel.webbet.entity.bet.BetBean;
 import com.pavel.webbet.entity.bet.BetPrediction;
 import com.pavel.webbet.entity.bet.BetStatus;
 import com.pavel.webbet.entity.match.FootballMatch;
+import com.pavel.webbet.entity.match.MatchStatus;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -20,6 +21,58 @@ public class BetDao {
     private static final BetDao instance = new BetDao();
     public static BetDao getInstance() {
         return instance;
+    }
+
+    private int numberOfRecords;
+
+    public List<BetBean> viewAllBets(int offset, int noOfRecords){
+
+        Connection connection = null;
+        Statement statement = null;
+
+        List<BetBean> list = new ArrayList<>();
+        BetBean bet = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
+
+            ResultSet rs = statement.executeQuery(QueryConstants.queryForAllBetsWithLimit(offset, noOfRecords));
+            while (rs.next()){
+                bet = new BetBean();
+                bet.setBetId(rs.getInt("betid"));
+                bet.setLogin(rs.getString("login"));
+                bet.setFootballMatchName(rs.getString("name"));
+                bet.setFootballMatchDate(rs.getDate("time_start"));
+                bet.setMatchScore(rs.getString("score"));
+                bet.setPrediction(BetPrediction.valueOf(rs.getString("bet_prediction").toUpperCase()));
+                bet.setMoneyCharge(rs.getBoolean("money_charge"));
+                bet.setSum(rs.getDouble("sum"));
+                bet.setCurrentCoef(rs.getFloat("current_coef"));
+                bet.setWon(rs.getBoolean("is_won"));
+                bet.setStatus(BetStatus.valueOf(rs.getString("bet_status").toUpperCase()));
+                list.add(bet);
+            }
+            rs.close();
+
+            rs = statement.executeQuery("select FOUND_ROWS()");
+            if (rs.next()){
+                numberOfRecords = rs.getInt(1);
+            }
+        }
+        catch (ConnectionPoolException e) {}
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (statement != null){statement.close();}
+                if (connection != null){connection.close();}
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return list;
     }
 
     public void insert(BetBean bean) {
@@ -71,4 +124,48 @@ public class BetDao {
         catch (SQLException e) {}
         return list;
     }
+
+    public BetBean getBetById(int id) {
+
+        Connection connection = null;
+        Statement statement = null;
+        BetBean bet = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
+
+            ResultSet rs = statement.executeQuery(QueryConstants.queryForGetBetById(id));
+            while (rs.next()){
+                bet = new BetBean();
+                bet.setBetId(rs.getInt("betid"));
+                bet.setLogin(rs.getString("login"));
+                bet.setFootballMatchName(rs.getString("name"));
+                bet.setFootballMatchDate(rs.getDate("time_start"));
+                bet.setMatchScore(rs.getString("score"));
+                bet.setPrediction(BetPrediction.valueOf(rs.getString("bet_prediction").toUpperCase()));
+                bet.setMoneyCharge(rs.getBoolean("money_charge"));
+                bet.setSum(rs.getDouble("sum"));
+                bet.setCurrentCoef(rs.getFloat("current_coef"));
+                bet.setWon(rs.getBoolean("is_won"));
+                bet.setStatus(BetStatus.valueOf(rs.getString("bet_status").toUpperCase()));
+            }
+            rs.close();
+        }
+        catch (ConnectionPoolException e) {}
+        catch (SQLException e){
+            e.printStackTrace();
+        }
+        finally {
+            try {
+                if (statement != null){statement.close();}
+                if (connection != null){connection.close();}
+            }
+            catch (SQLException e){
+                e.printStackTrace();
+            }
+        }
+        return bet;
+    }
+
+    public int getNumberOfRecords() {return numberOfRecords; }
 }

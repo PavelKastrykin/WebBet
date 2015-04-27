@@ -10,17 +10,38 @@ import java.util.Date;
 public class QueryConstants {
     public static final String MYSQL_LOGIN_QUERY = "select * from users where login = ''{0}'' and password = ''{1}''";
     public static final String MYSQL_GET_BY_LOGIN_QUERY = "select * from users where login = ''{0}''";
-    public static final String MYSQL_REGISTER_QUERY = "insert into users (`login`, `password`, `user_role`, `user_name`) values (''{0}'', ''{1}'', ''user'', ''{2}'')";
+    public static final String MYSQL_REGISTER_QUERY = "insert into users (`login`, `password`, `user_role`, `user_name`) " +
+            "values (''{0}'', ''{1}'', ''user'', ''{2}'')";
     public static final String MYSQL_BY_USER_TYPE_QUERY = "select * from users where user_role = ''{0}''";
     public static final String MYSQL_ALL_USER_LIST_QUERY = "select * from users";
     public static final String MYSQL_DELETE_USER_QUERY = "delete from users where userid = ''{0}''";
-    public static final String MYSQL_UPDATE_USER_QUERY = "UPDATE users SET `login`=''{0}'', `password`=''{1}'', `user_role`=''{2}'', `user_name`=''{3}'' WHERE `userid`=''{4}'';";
-    public static final String MYSQL_ALL_MATCHES_LIST_QUERY = "select SQL_CALC_FOUND_ROWS * from (select * from football_match order by football_matchid desc) as A limit {0}, {1}";
+    public static final String MYSQL_UPDATE_USER_QUERY = "UPDATE users SET `login`=''{0}'', `password`=''{1}'', " +
+            "`user_role`=''{2}'', `user_name`=''{3}'' WHERE `userid`=''{4}'';";
+    public static final String MYSQL_ALL_MATCHES_LIST_QUERY = "select SQL_CALC_FOUND_ROWS * from (select * from " +
+            "football_match order by football_matchid desc) as A limit {0}, {1}";
     public static final String MYSQL_ADD_MATCH_QUERY = "INSERT INTO football_match (`name`, `time_start`) values (''{0}'', ''{1}'')";
     public static final String MYSQL_GET_MATCH_ID_QUERY = "select * from football_match where football_matchid = ''{0}''";
-    public static final String MYSQL_ADD_BET_QUERY = "INSERT INTO bets (`login`, `football_matchid`, `bet_prediction`, `sum`, `current_coef`) VALUES (''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'')";
-    public static final String MYSQL_GET_BETS_BY_LOGIN = "select football_match.name, football_match.time_start, bet_prediction, sum, current_coef, is_won, bet_status, money_charge from bets join football_match on bets.football_matchid = football_match.football_matchid where login = ''{0}''";
-    public static final String MYSQL_UPDATE_MATCH_QUERY = "UPDATE football_match SET `score`=''{0}'', `coef_win`=''{1}'', `coef_draw`=''{2}'', `coef_lost`=''{3}'', `status`=''{4}'' WHERE `football_matchid`=''{5}'';";
+    public static final String MYSQL_ADD_BET_QUERY = "INSERT INTO bets (`login`, `football_matchid`, `bet_prediction`, " +
+            "`sum`, `current_coef`) VALUES (''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'')";
+    public static final String MYSQL_GET_BETS_BY_LOGIN = "select football_match.name, football_match.time_start, " +
+            "bet_prediction, sum, current_coef, is_won, bet_status, money_charge from bets join football_match " +
+            "on bets.football_matchid = football_match.football_matchid where login = ''{0}''";
+    public static final String MYSQL_UPDATE_MATCH_QUERY = "UPDATE football_match SET `score`=''{0}'', `coef_win`=''{1}''," +
+            " `coef_draw`=''{2}'', `coef_lost`=''{3}'', `status`=''{4}'' WHERE `football_matchid`=''{5}'';";
+    public static final String MYSQL_ALL_BETS_LIST_QUERY = "select SQL_CALC_FOUND_ROWS betid, login, name, time_start, score, " +
+            "bet_prediction, money_charge, sum, current_coef, is_won, bet_status " +
+            "from (select betid, login, football_match.name, football_match.time_start, football_match.score, " +
+            "bet_prediction, money_charge, sum, current_coef, is_won, bet_status " +
+            "from bets join football_match on bets.football_matchid = football_match.football_matchid " +
+            "order by betid desc) as A limit {0}, {1}";
+
+    public static String MYSQL_GET_BET_BY_ID = "select betid, login, football_match.name, football_match.time_start, " +
+            "football_match.score, bet_prediction, money_charge, sum, current_coef, is_won, bet_status " +
+            "from bets join football_match on bets.football_matchid = football_match.football_matchid " +
+            "where betid=''{0}''";
+
+    public static String MYSQL_UPDATE_BET_QUERY = "UPDATE bets SET `money_charge`=''{0}'', `is_won`=''{1}'', " +
+            "`bet_status`=''{2}'' WHERE `betid`=''{3}''";
 
     public static String queryForLoginAndPassword(String userNameParameter, String userPasswordParameter) {
         String query = MessageFormat.format(QueryConstants.MYSQL_LOGIN_QUERY, userNameParameter, userPasswordParameter);
@@ -87,4 +108,21 @@ public class QueryConstants {
                 match.getDrawCoef(), match.getLooseCoef(), match.getStatus().toString().toLowerCase(), match.getMatchId());
         return  query;
     }
+
+    public static String queryForAllBetsWithLimit(int offset, int numberOfRecords) {
+        String query = MessageFormat.format(QueryConstants.MYSQL_ALL_BETS_LIST_QUERY, offset, numberOfRecords);
+        return query;
+    }
+
+    public static String queryForGetBetById(int id) {
+        String query = MessageFormat.format(QueryConstants.MYSQL_GET_BET_BY_ID, id);
+        return query;
+    }
+
+    public static String queryForBetUpdate(BetBean bet) {
+        String query = MessageFormat.format(QueryConstants.MYSQL_UPDATE_BET_QUERY, bet.isMoneyCharge(), bet.isWon(),
+                bet.getStatus().toString().toLowerCase(), bet.getBetId());
+        return query;
+    }
+
 }

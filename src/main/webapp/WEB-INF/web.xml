@@ -26,12 +26,30 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>adminBetPage.jsp</servlet-name>
+        <jsp-file>/jsp/adminBetPage.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>adminBetPage.jsp</servlet-name>
+        <url-pattern>/adminBetPage.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>bookmakerPanel.jsp</servlet-name>
         <jsp-file>/jsp/bookmakerPanel.jsp</jsp-file>
     </servlet>
     <servlet-mapping>
         <servlet-name>bookmakerPanel.jsp</servlet-name>
         <url-pattern>/bookmakerPanel.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>editBet.jsp</servlet-name>
+        <jsp-file>/jsp/editBet.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>editBet.jsp</servlet-name>
+        <url-pattern>/editBet.jsp</url-pattern>
     </servlet-mapping>
 
     <servlet>
