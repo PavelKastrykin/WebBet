@@ -13,6 +13,6 @@ public class DoCreateBetForm implements ICommand {
         FootballMatchDAO dao = FootballMatchDAO.getInstance();
         FootballMatch match = dao.getMatchById(id);
         request.setAttribute("matchToBet", match);
-        return "jsp/editMatch.jsp";
+        return "jsp/makeBet.jsp";
     }
 }

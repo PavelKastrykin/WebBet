@@ -21,6 +21,8 @@ public class CommandDispatcher {
         commands.put(CommandType.SHOW_MY_BETS_COMMAND, new DoShowMyBetsCommand());
         commands.put(CommandType.CREATE_MATCH_EDIT_FORM_COMMAND, new DoCreateMatchEdit());
         commands.put(CommandType.EDIT_MATCH_COMMAND, new DoEditMatchCommand());
+        commands.put(CommandType.CREATE_USER_LIST, new DoCreateUserListCommand());
+        commands.put(CommandType.CREATE_BET_LIST, new DoCreateBetListCommand());
     }
 
     public static CommandDispatcher getInstance(){

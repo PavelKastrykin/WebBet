@@ -20,6 +20,7 @@ public class QueryConstants {
     public static final String MYSQL_GET_MATCH_ID_QUERY = "select * from football_match where football_matchid = ''{0}''";
     public static final String MYSQL_ADD_BET_QUERY = "INSERT INTO bets (`login`, `football_matchid`, `bet_prediction`, `sum`, `current_coef`) VALUES (''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'')";
     public static final String MYSQL_GET_BETS_BY_LOGIN = "select football_match.name, football_match.time_start, bet_prediction, sum, current_coef, is_won, bet_status, money_charge from bets join football_match on bets.football_matchid = football_match.football_matchid where login = ''{0}''";
+    public static final String MYSQL_UPDATE_MATCH_QUERY = "UPDATE football_match SET `score`=''{0}'', `coef_win`=''{1}'', `coef_draw`=''{2}'', `coef_lost`=''{3}'', `status`=''{4}'' WHERE `football_matchid`=''{5}'';";
 
     public static String queryForLoginAndPassword(String userNameParameter, String userPasswordParameter) {
         String query = MessageFormat.format(QueryConstants.MYSQL_LOGIN_QUERY, userNameParameter, userPasswordParameter);
@@ -79,5 +80,11 @@ public class QueryConstants {
     public static String queryForGetBetsByLogin (String login) {
         String query = MessageFormat.format(QueryConstants.MYSQL_GET_BETS_BY_LOGIN, login);
         return query;
+    }
+
+    public static String queryForMatchUpdate(FootballMatch match) {
+        String query = MessageFormat.format(QueryConstants.MYSQL_UPDATE_MATCH_QUERY, match.getMatchScore(), match.getWinCoef(),
+                match.getDrawCoef(), match.getLooseCoef(), match.getStatus().toString().toLowerCase(), match.getMatchId());
+        return  query;
     }
 }

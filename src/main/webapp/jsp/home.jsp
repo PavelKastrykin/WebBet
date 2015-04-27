@@ -16,7 +16,12 @@
     <c:if test="${sessionScope.userValue.userRole == 'ADMIN' || sessionScope.userValue.userRole == 'BOOK'}" >
         <jsp:include page="bookmakerPanel.jsp" />
     </c:if>
-    <jsp:include page="myBetsHeader.jsp"/>
+    <c:if test="${sessionScope.userValue.userRole == 'ADMIN' || sessionScope.userValue.userRole == 'USER'}" >
+        <jsp:include page="myBetsHeader.jsp"/>
+    </c:if>
+    <c:if test="${sessionScope.userValue.userRole == 'ADMIN'}" >
+        <jsp:include page="adminHeader.jsp"/>
+    </c:if>
     <form action="webBetController" method="get">
         <input type="hidden" name="command" value="DISPLAY_MATCHES_COMMAND" />
         <fmt:message key="matches.button.show" var="buttonShow" />

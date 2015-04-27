@@ -14,6 +14,7 @@
     <jsp:include page="loginLogoutHeader.jsp" />
     <form id="editMatchForm" action="webBetController" method="get">
         <input type="hidden" name="command" value="EDIT_MATCH_COMMAND">
+        <input type="hidden" name="matchid" value="${matchToEdit.matchId}">
         <table border="1" cellpadding="5" cellspacing="5">
             <tr>
                 <th>#id</th>
