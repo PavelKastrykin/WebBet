@@ -15,9 +15,9 @@
     <table border="1" cellpadding="5" cellspacing="5">
         <tr>
             <th>#id</th>
-            <th>Login</th>
-            <th>Name</th>
-            <th>Role</th>
+            <th><fmt:message key="admin.user.table.login"/></th>
+            <th><fmt:message key="admin.user.table.name"/></th>
+            <th><fmt:message key="admin.user.table.role"/></th>
         </tr>
         <c:forEach var="user" items="${userList}">
             <tr>
@@ -25,7 +25,7 @@
                 <td>${user.login}</td>
                 <td>${user.name}</td>
                 <td>${user.userRole}</td>
-                <td><a href="webBetController?userLogin=${user.login}&command=EDIT_USER_COMMAND" >Edit</a> </td>
+                <td><a href="webBetController?userLogin=${user.login}&command=EDIT_USER_COMMAND" ><fmt:message key="admin.bet.table.edit"/></a> </td>
             </tr>
         </c:forEach>
     </table>

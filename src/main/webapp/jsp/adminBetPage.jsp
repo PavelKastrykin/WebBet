@@ -15,16 +15,16 @@
     <table border="1" cellpadding="5" cellspacing="5">
         <tr>
             <th>#id</th>
-            <th>Login</th>
-            <th>Match</th>
-            <th>Date</th>
-            <th>Score</th>
-            <th>Prediction</th>
-            <th>Charge</th>
-            <th>Sum</th>
-            <th>Coef</th>
-            <th>Won</th>
-            <th>Status</th>
+            <th><fmt:message key="admin.bet.table.login"/></th>
+            <th><fmt:message key="admin.bet.table.match"/></th>
+            <th><fmt:message key="admin.bet.table.date"/></th>
+            <th><fmt:message key="admin.bet.table.score"/></th>
+            <th><fmt:message key="admin.bet.table.prediction"/></th>
+            <th><fmt:message key="admin.bet.table.charge"/></th>
+            <th><fmt:message key="admin.bet.table.sum"/></th>
+            <th><fmt:message key="admin.bet.table.coef"/></th>
+            <th><fmt:message key="admin.bet.table.won"/></th>
+            <th><fmt:message key="admin.bet.table.status"/></th>
         </tr>
         <c:forEach var="bet" items="${betList}">
             <tr>
@@ -39,7 +39,7 @@
                 <td>${bet.currentCoef}</td>
                 <td>${bet.won}</td>
                 <td>${bet.status}</td>
-                <td><a href="webBetController?betId=${bet.betId}&command=EDIT_BET_COMMAND" >Edit</a> </td>
+                <td><a href="webBetController?betId=${bet.betId}&command=EDIT_BET_COMMAND" ><fmt:message key="admin.bet.table.edit"/></a> </td>
             </tr>
         </c:forEach>
     </table>

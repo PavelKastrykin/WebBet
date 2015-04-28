@@ -36,9 +36,9 @@
                 <td><input type="text" name="looseCoef" value="${matchToEdit.looseCoef}"></td>
                 <td>
                     <select id="status" name="status">
-                        <option value="ACTIVE" ${matchToEdit.status == 'ACTIVE' ? 'selected' : ''}>ACTIVE</option>
-                        <option value="SOON" ${matchToEdit.status == 'SOON' ? 'selected' : ''}>SOON</option>
-                        <option value="CLOSED" ${matchToEdit.status == 'CLOSED' ? 'selected' : ''}>CLOSED</option>
+                        <option value="ACTIVE" ${matchToEdit.status == 'ACTIVE' ? 'selected' : ''}><fmt:message key="edit.active"/></option>
+                        <option value="SOON" ${matchToEdit.status == 'SOON' ? 'selected' : ''}><fmt:message key="edit.soon"/></option>
+                        <option value="CLOSED" ${matchToEdit.status == 'CLOSED' ? 'selected' : ''}><fmt:message key="edit.closed"/></option>
                     </select>
                 </td>
             </tr>

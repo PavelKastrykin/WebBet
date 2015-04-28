@@ -19,6 +19,6 @@ public class DoEditMatchCommand implements ICommand {
         match.setStatus(MatchStatus.valueOf(request.getParameter("status")));
         FootballMatchDAO dao = FootballMatchDAO.getInstance();
         dao.update(match);
-        return "jsp/home.jsp";
+        return "webBetController?command=DISPLAY_MATCHES_COMMAND";
     }
 }

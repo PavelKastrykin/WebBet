@@ -18,9 +18,9 @@
         <table border="1" cellpadding="5" cellspacing="5">
             <tr>
                 <th>#id</th>
-                <th>Login</th>
-                <th>Name</th>
-                <th>Role</th>
+                <th><fmt:message key="admin.user.table.login" /></th>
+                <th><fmt:message key="admin.user.table.name" /></th>
+                <th><fmt:message key="admin.user.table.role" /></th>
             </tr>
             <tr>
                 <td>${userToEdit.userID}</td>
@@ -28,10 +28,10 @@
                 <td>${userToEdit.name}</td>
                 <td>
                     <select id="role" name="role">
-                        <option value="ADMIN" ${userToEdit.userRole == 'ADMIN' ? 'selected' : ''}>ADMIN</option>
-                        <option value="BOOK" ${userToEdit.userRole == 'BOOK' ? 'selected' : ''}>BOOK</option>
-                        <option value="USER" ${userToEdit.userRole == 'USER' ? 'selected' : ''}>USER</option>
-                        <option value="BLOCKED" ${userToEdit.userRole == 'BLOCKED' ? 'selected' : ''}>BLOCKED</option>
+                        <option value="ADMIN" ${userToEdit.userRole == 'ADMIN' ? 'selected' : ''}><fmt:message key="edit.admin" /></option>
+                        <option value="BOOK" ${userToEdit.userRole == 'BOOK' ? 'selected' : ''}><fmt:message key="edit.book" /></option>
+                        <option value="USER" ${userToEdit.userRole == 'USER' ? 'selected' : ''}><fmt:message key="edit.user" /></option>
+                        <option value="BLOCKED" ${userToEdit.userRole == 'BLOCKED' ? 'selected' : ''}><fmt:message key="edit.blocked" /></option>
                     </select>
                 </td>
             </tr>

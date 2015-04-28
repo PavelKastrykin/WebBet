@@ -11,7 +11,8 @@
         function setBetNum(betNum, betCoef)
         {
             if (document.getElementById("moneySum").value == ""){
-                alert("Sum is empty")
+                <fmt:message key="make.bet.empty" var="alertField" />
+                alert("${alertField}")
                 return false;
             }
             document.getElementById("selectedBetNum").value = betNum;
@@ -33,11 +34,11 @@
         <input type="hidden" id="idOfMatch" name="idOfMatch" value="${matchToBet.matchId}">
         <table border="1" cellpadding="5" cellspacing="5">
             <tr>
-                <th>Name</th>
-                <th>Date</th>
-                <th>Win1</th>
-                <th>Draw</th>
-                <th>Win2</th>
+                <th><fmt:message key="matches.table.match" /></th>
+                <th><fmt:message key="matches.table.date" /></th>
+                <th><fmt:message key="matches.table.winner1" /></th>
+                <th><fmt:message key="matches.table.draw" /></th>
+                <th><fmt:message key="matches.table.winner2" /></th>
             </tr>
             <tr>
                 <td>${matchToBet.matchName}</td>
@@ -47,11 +48,11 @@
                 <td><input type="button" value="${matchToBet.looseCoef}" onclick="setBetNum('second', '${matchToBet.looseCoef}');"></td>
             </tr>
         </table><br/>
-        <label for="moneySum">Enter sum of bet:</label>
+        <label for="moneySum"><fmt:message key="make.bet.entersum" /></label>
         <input type="text" id="moneySum" name="moneySum"/>
     </form>
     <br/>
-    You have <span id="seconds">10</span> seconds to make bet.
+    <fmt:message key="make.bet.count.begin" /><span id="seconds">10</span><fmt:message key="make.bet.count.end" />
     <script>
         var seconds = 10;
         setInterval(
