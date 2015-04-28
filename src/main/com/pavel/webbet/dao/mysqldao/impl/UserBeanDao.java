@@ -19,6 +19,7 @@ public class UserBeanDao {
     public static UserBeanDao getInstance() {
         return instance;
     }
+    private int numberOfRecords;
 
     public UserBean getBeanByLogin (String login) {
         UserBean userBean = null;
@@ -130,38 +131,41 @@ public class UserBeanDao {
         return null;
     }
 
-    public List<UserBean> getAllUsersList() {
+    public List<UserBean> getAllUsersList(int offset, int noOfRecords) {
         Connection connection = null;
         Statement statement = null;
-        ResultSet resultSet = null;
+
         List<UserBean> userList = new ArrayList<>();
+        UserBean user = null;
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
-            resultSet = statement.executeQuery(QueryConstants.MYSQL_ALL_USER_LIST_QUERY);
-            while (resultSet.next()){
-                UserBean userBean = new UserBean();
-                userBean.setUserID(resultSet.getInt(1));
-                userBean.setLogin(resultSet.getString(2));
-                userBean.setPassword(resultSet.getString(3));
-                userBean.setUserRole(UserRole.valueOf(resultSet.getString(4).toUpperCase()));
-                userBean.setName(resultSet.getString(5));
-                userList.add(userBean);
+            ResultSet rs = statement.executeQuery(QueryConstants.queryForAllUsersWithLimit(offset, noOfRecords));
+            while (rs.next()){
+                user = new UserBean();
+                user.setUserID(rs.getInt(1));
+                user.setLogin(rs.getString(2));
+                user.setUserRole(UserRole.valueOf(rs.getString(3).toUpperCase()));
+                user.setName(rs.getString(4));
+                userList.add(user);
             }
-            return userList;
+            rs.close();
+            rs = statement.executeQuery("select FOUND_ROWS()");
+            if (rs.next()){
+                numberOfRecords = rs.getInt(1);
+            }
         }
         catch (ConnectionPoolException e) {}
         catch (SQLException e){}
         finally {
             try {
-                if (resultSet != null){resultSet.close();}
                 if (statement != null){statement.close();}
                 if (connection != null){connection.close();}
             }
             catch (SQLException e) {
             }
         }
-        return null;
+        return userList;
     }
 
     public void insert(UserBean bean) {
@@ -223,4 +227,6 @@ public class UserBeanDao {
             }
         }
     }
+
+    public int getNumberOfRecords() {return numberOfRecords; }
 }

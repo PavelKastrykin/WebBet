@@ -167,5 +167,25 @@ public class BetDao {
         return bet;
     }
 
+    public void update(BetBean bet) {
+        Connection connection = null;
+        Statement statement = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
+            int x = statement.executeUpdate(QueryConstants.queryForBetUpdate(bet));
+        }
+        catch (ConnectionPoolException e) {}
+        catch (SQLException e) {}
+        finally {
+            try {
+                if (statement != null){statement.close();}
+                if (connection != null){connection.close();}
+            }
+            catch (SQLException e) {
+            }
+        }
+    }
+
     public int getNumberOfRecords() {return numberOfRecords; }
 }

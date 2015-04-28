@@ -13,10 +13,10 @@ public class QueryConstants {
     public static final String MYSQL_REGISTER_QUERY = "insert into users (`login`, `password`, `user_role`, `user_name`) " +
             "values (''{0}'', ''{1}'', ''user'', ''{2}'')";
     public static final String MYSQL_BY_USER_TYPE_QUERY = "select * from users where user_role = ''{0}''";
-    public static final String MYSQL_ALL_USER_LIST_QUERY = "select * from users";
+    public static final String MYSQL_ALL_USER_LIST_QUERY = "select SQL_CALC_FOUND_ROWS userid, login, user_role, user_name " +
+            "from users order by userid desc limit {0}, {1}";
     public static final String MYSQL_DELETE_USER_QUERY = "delete from users where userid = ''{0}''";
-    public static final String MYSQL_UPDATE_USER_QUERY = "UPDATE users SET `login`=''{0}'', `password`=''{1}'', " +
-            "`user_role`=''{2}'', `user_name`=''{3}'' WHERE `userid`=''{4}'';";
+    public static final String MYSQL_UPDATE_USER_QUERY = "UPDATE users SET `user_role`=''{0}'' WHERE `login`=''{1}'';";
     public static final String MYSQL_ALL_MATCHES_LIST_QUERY = "select SQL_CALC_FOUND_ROWS * from (select * from " +
             "football_match order by football_matchid desc) as A limit {0}, {1}";
     public static final String MYSQL_ADD_MATCH_QUERY = "INSERT INTO football_match (`name`, `time_start`) values (''{0}'', ''{1}'')";
@@ -40,7 +40,7 @@ public class QueryConstants {
             "from bets join football_match on bets.football_matchid = football_match.football_matchid " +
             "where betid=''{0}''";
 
-    public static String MYSQL_UPDATE_BET_QUERY = "UPDATE bets SET `money_charge`=''{0}'', `is_won`=''{1}'', " +
+    public static String MYSQL_UPDATE_BET_QUERY = "UPDATE bets SET `money_charge`={0}, `is_won`={1}, " +
             "`bet_status`=''{2}'' WHERE `betid`=''{3}''";
 
     public static String queryForLoginAndPassword(String userNameParameter, String userPasswordParameter) {
@@ -70,8 +70,8 @@ public class QueryConstants {
     }
 
     public static String queryForUserUpdate(UserBean bean) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_UPDATE_USER_QUERY,
-                bean.getLogin(), bean.getPassword(), bean.getUserRole().toString().toLowerCase(), bean.getName(), bean.getUserID());
+        String query = MessageFormat.format(QueryConstants.MYSQL_UPDATE_USER_QUERY, bean.getUserRole().toString().toLowerCase(),
+                bean.getLogin());
         return query;
     }
 
@@ -120,9 +120,13 @@ public class QueryConstants {
     }
 
     public static String queryForBetUpdate(BetBean bet) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_UPDATE_BET_QUERY, bet.isMoneyCharge(), bet.isWon(),
+        String query = MessageFormat.format(QueryConstants.MYSQL_UPDATE_BET_QUERY, bet.isMoneyCharge() ? 1 : 0, bet.isWon() ? 1 : 0,
                 bet.getStatus().toString().toLowerCase(), bet.getBetId());
         return query;
     }
 
+    public static String queryForAllUsersWithLimit(int offset, int numberOfRecords) {
+        String query = MessageFormat.format(QueryConstants.MYSQL_ALL_USER_LIST_QUERY, offset, numberOfRecords);
+        return query;
+    }
 }

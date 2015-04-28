@@ -1,5 +1,6 @@
 package com.pavel.webbet.service.impl;
 
+import com.pavel.webbet.dao.mysqldao.impl.BetDao;
 import com.pavel.webbet.entity.bet.BetBean;
 import com.pavel.webbet.entity.bet.BetStatus;
 import com.pavel.webbet.service.ICommand;
@@ -14,7 +15,8 @@ public class DoConfirmEditBetCommand implements ICommand {
         bet.setMoneyCharge(Boolean.valueOf(request.getParameter("charge").toLowerCase()));
         bet.setWon(Boolean.valueOf(request.getParameter("won").toLowerCase()));
         bet.setStatus(BetStatus.valueOf(request.getParameter("status")));
-
-        return "jsp/adminBetPage.jsp";
+        BetDao dao = BetDao.getInstance();
+        dao.update(bet);
+        return "webBetController?command=CREATE_BET_LIST";
     }
 }

@@ -29,6 +29,6 @@ public class DoAddBetCommand implements ICommand {
 
         BetDao dao = BetDao.getInstance();
         dao.insert(betBean);
-        return "jsp/home.jsp";
+        return "webBetController?command=DISPLAY_MATCHES_COMMAND&submit=Show+matches";
     }
 }

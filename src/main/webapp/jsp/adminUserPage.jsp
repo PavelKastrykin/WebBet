@@ -9,42 +9,28 @@
     <title></title>
 </head>
 <body>
-    <c:set var="pageID" value="jsp/adminBetPage.jsp" scope="request" />
+    <c:set var="pageID" value="jsp/adminUserPage.jsp" scope="request" />
     <jsp:include page="header.jsp"/>
     <jsp:include page="loginLogoutHeader.jsp" />
     <table border="1" cellpadding="5" cellspacing="5">
         <tr>
             <th>#id</th>
             <th>Login</th>
-            <th>Match</th>
-            <th>Date</th>
-            <th>Score</th>
-            <th>Prediction</th>
-            <th>Charge</th>
-            <th>Sum</th>
-            <th>Coef</th>
-            <th>Won</th>
-            <th>Status</th>
+            <th>Name</th>
+            <th>Role</th>
         </tr>
-        <c:forEach var="bet" items="${betList}">
+        <c:forEach var="user" items="${userList}">
             <tr>
-                <td>${bet.betId}</td>
-                <td>${bet.login}</td>
-                <td>${bet.footballMatchName}</td>
-                <td><fmt:formatDate value="${bet.footballMatchDate}" dateStyle="short"/></td>
-                <td>${bet.matchScore}</td>
-                <td>${bet.prediction}</td>
-                <td>${bet.moneyCharge}</td>
-                <td>${bet.sum}</td>
-                <td>${bet.currentCoef}</td>
-                <td>${bet.won}</td>
-                <td>${bet.status}</td>
-                <td><a href="webBetController?betId=${bet.betId}&command=EDIT_BET_COMMAND" >Edit</a> </td>
+                <td>${user.userID}</td>
+                <td>${user.login}</td>
+                <td>${user.name}</td>
+                <td>${user.userRole}</td>
+                <td><a href="webBetController?userLogin=${user.login}&command=EDIT_USER_COMMAND" >Edit</a> </td>
             </tr>
         </c:forEach>
     </table>
     <c:if test="${currentPage != 1}">
-        <td><a href="webBetController?command=CREATE_BET_LIST&page=${currentPage - 1}"><fmt:message key="matches.table.previous" /></a> </td>
+        <td><a href="webBetController?command=CREATE_USER_LIST&page=${currentPage - 1}"><fmt:message key="matches.table.previous" /></a> </td>
     </c:if>
     <table border="1" cellpadding="5" cellspacing="5">
         <tr>
@@ -54,14 +40,14 @@
                         <td>${i}</td>
                     </c:when>
                     <c:otherwise>
-                        <td><a href="webBetController?command=CREATE_BET_LIST&page=${i}">${i}</a> </td>
+                        <td><a href="webBetController?command=CREATE_USER_LIST&page=${i}">${i}</a> </td>
                     </c:otherwise>
                 </c:choose>
             </c:forEach>
         </tr>
     </table>
     <c:if test="${currentPage lt numberOfPages}">
-        <td><a href="webBetController?command=CREATE_BET_LIST&page=${currentPage + 1}"><fmt:message key="matches.table.next" /></a></td>
+        <td><a href="webBetController?command=CREATE_USER_LIST&page=${currentPage + 1}"><fmt:message key="matches.table.next" /></a></td>
     </c:if>
     <br/>
     <a href="home.jsp"><fmt:message key="login.home.reff" /> </a>

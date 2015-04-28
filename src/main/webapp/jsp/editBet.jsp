@@ -62,6 +62,5 @@
         <fmt:message key="editmatch.button.edit" var="buttonValue"/>
         <input type="submit" name="submit" value="${buttonValue}" onclick="return confirm('Confirm?')" />
     </form>
-
 </body>
 </html>
