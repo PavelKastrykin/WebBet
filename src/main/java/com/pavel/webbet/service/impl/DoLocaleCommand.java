@@ -4,7 +4,6 @@ import com.pavel.webbet.service.ICommand;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.sql.Connection;
 
 public class DoLocaleCommand implements ICommand{
     @Override

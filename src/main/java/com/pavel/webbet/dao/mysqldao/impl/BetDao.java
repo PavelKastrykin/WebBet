@@ -1,13 +1,11 @@
 package com.pavel.webbet.dao.mysqldao.impl;
 
+import com.pavel.webbet.entity.bet.BetPrediction;
 import com.pavel.webbet.dao.mysqldao.QueryConstants;
 import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPool;
 import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPoolException;
 import com.pavel.webbet.entity.bet.BetBean;
-import com.pavel.webbet.entity.bet.BetPrediction;
 import com.pavel.webbet.entity.bet.BetStatus;
-import com.pavel.webbet.entity.match.FootballMatch;
-import com.pavel.webbet.entity.match.MatchStatus;
 
 import java.sql.Connection;
 import java.sql.ResultSet;

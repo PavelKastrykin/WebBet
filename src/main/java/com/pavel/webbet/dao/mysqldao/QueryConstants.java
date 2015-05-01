@@ -5,7 +5,6 @@ import com.pavel.webbet.entity.match.FootballMatch;
 import com.pavel.webbet.entity.userbean.UserBean;
 
 import java.text.MessageFormat;
-import java.util.Date;
 
 public class QueryConstants {
     public static final String MYSQL_LOGIN_QUERY = "select * from users where login = ''{0}'' and password = ''{1}''";

@@ -3,7 +3,6 @@ package com.pavel.webbet.service.impl;
 import com.pavel.webbet.dao.mysqldao.impl.BetDao;
 import com.pavel.webbet.entity.bet.BetBean;
 import com.pavel.webbet.entity.bet.BetPrediction;
-import com.pavel.webbet.entity.bet.BetStatus;
 import com.pavel.webbet.entity.userbean.UserBean;
 import com.pavel.webbet.service.ICommand;
 

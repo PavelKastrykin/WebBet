@@ -1,7 +1,5 @@
 package com.pavel.webbet.controller;
 
-import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPool;
-import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPoolException;
 import com.pavel.webbet.service.CommandDispatcher;
 import com.pavel.webbet.service.ICommand;
 
@@ -11,8 +9,6 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.SQLException;
 
 public class WebBetController extends HttpServlet{
 
