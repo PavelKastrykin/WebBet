@@ -25,6 +25,7 @@ public class AuthorizationManager {
         userAccess.add(UserRole.USER);
 
         authorizationMap.put("blocked.jsp", null);
+        authorizationMap.put("errorPage.jsp", null);
         authorizationMap.put("header.jsp", null);
         authorizationMap.put("home.jsp", null);
         authorizationMap.put("loginLogoutHeader", null);

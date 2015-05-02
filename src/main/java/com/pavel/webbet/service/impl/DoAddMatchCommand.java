@@ -1,8 +1,10 @@
 package com.pavel.webbet.service.impl;
 
+import com.pavel.webbet.dao.mysqldao.MysqlDaoException;
 import com.pavel.webbet.dao.mysqldao.impl.FootballMatchDAO;
 import com.pavel.webbet.entity.match.FootballMatch;
 import com.pavel.webbet.entity.userbean.UserBean;
+import com.pavel.webbet.service.CommandException;
 import com.pavel.webbet.service.CommandStringConstants;
 import com.pavel.webbet.service.ICommand;
 
@@ -15,7 +17,7 @@ import java.util.Date;
 
 public class DoAddMatchCommand implements ICommand {
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request) throws CommandException {
         String matchName = request.getParameter("matchName");
         String matchDateAsString = request.getParameter("matchDate");
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
@@ -42,7 +44,11 @@ public class DoAddMatchCommand implements ICommand {
         match.setMatchName(matchName);
         match.setStartTime(matchDate);
         FootballMatchDAO dao = FootballMatchDAO.getInstance();
-        dao.insert(match);
+        try {
+            dao.insert(match);
+        }
+        catch (MysqlDaoException e){throw  new CommandException(e.getMessage(), e);}
+
         request.setAttribute("addMatchWarning", CommandStringConstants.MATCH_ADDED_WARNING);
 
         return "jsp/addMatch.jsp";

@@ -1,5 +1,6 @@
 package com.pavel.webbet.dao.mysqldao.impl;
 
+import com.pavel.webbet.dao.mysqldao.MysqlDaoException;
 import com.pavel.webbet.entity.bet.BetPrediction;
 import com.pavel.webbet.dao.mysqldao.QueryConstants;
 import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPool;
@@ -23,7 +24,7 @@ public class BetDao {
 
     private int numberOfRecords;
 
-    public List<BetBean> viewAllBets(int offset, int noOfRecords){
+    public List<BetBean> viewAllBets(int offset, int noOfRecords) throws MysqlDaoException{
 
         Connection connection = null;
         Statement statement = null;
@@ -57,9 +58,8 @@ public class BetDao {
                 numberOfRecords = rs.getInt(1);
             }
         }
-        catch (ConnectionPoolException e) {}
-        catch (SQLException e){
-            e.printStackTrace();
+        catch (ConnectionPoolException e) {throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e){throw new MysqlDaoException("Error retrieving data from database", e);
         }
         finally {
             try {
@@ -73,7 +73,7 @@ public class BetDao {
         return list;
     }
 
-    public void insert(BetBean bean) {
+    public void insert(BetBean bean) throws MysqlDaoException{
         Connection connection = null;
         Statement statement = null;
         try {
@@ -81,8 +81,8 @@ public class BetDao {
             statement = connection.createStatement();
             int x = statement.executeUpdate(QueryConstants.queryForBetInsert(bean));
         }
-        catch (ConnectionPoolException e){}
-        catch (SQLException e){}
+        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
         finally {
             try {
                 if (statement != null){statement.close();}
@@ -93,7 +93,7 @@ public class BetDao {
         }
     }
 
-    public List<BetBean> betsByLogin(String login) {
+    public List<BetBean> betsByLogin(String login) throws MysqlDaoException {
         Connection connection = null;
         Statement statement = null;
 
@@ -118,12 +118,19 @@ public class BetDao {
             rs.close();
 
         }
-        catch (ConnectionPoolException e){}
-        catch (SQLException e) {}
+        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
+        finally {
+            try {
+                if (statement != null){statement.close();}
+                if (connection != null){connection.close();}
+            }
+            catch (SQLException e) {e.printStackTrace();}
+        }
         return list;
     }
 
-    public BetBean getBetById(int id) {
+    public BetBean getBetById(int id) throws MysqlDaoException {
 
         Connection connection = null;
         Statement statement = null;
@@ -149,10 +156,8 @@ public class BetDao {
             }
             rs.close();
         }
-        catch (ConnectionPoolException e) {}
-        catch (SQLException e){
-            e.printStackTrace();
-        }
+        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
         finally {
             try {
                 if (statement != null){statement.close();}
@@ -165,7 +170,7 @@ public class BetDao {
         return bet;
     }
 
-    public void update(BetBean bet) {
+    public void update(BetBean bet) throws MysqlDaoException {
         Connection connection = null;
         Statement statement = null;
         try {
@@ -173,15 +178,14 @@ public class BetDao {
             statement = connection.createStatement();
             int x = statement.executeUpdate(QueryConstants.queryForBetUpdate(bet));
         }
-        catch (ConnectionPoolException e) {}
-        catch (SQLException e) {}
+        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
         finally {
             try {
                 if (statement != null){statement.close();}
                 if (connection != null){connection.close();}
             }
-            catch (SQLException e) {
-            }
+            catch (SQLException e) {e.printStackTrace();}
         }
     }
 

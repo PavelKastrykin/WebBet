@@ -1,9 +1,11 @@
 package com.pavel.webbet.service.impl;
 
+import com.pavel.webbet.dao.mysqldao.MysqlDaoException;
 import com.pavel.webbet.dao.mysqldao.impl.BetDao;
 import com.pavel.webbet.entity.bet.BetBean;
 import com.pavel.webbet.entity.bet.BetPrediction;
 import com.pavel.webbet.entity.userbean.UserBean;
+import com.pavel.webbet.service.CommandException;
 import com.pavel.webbet.service.ICommand;
 
 import javax.servlet.http.HttpServletRequest;
@@ -11,7 +13,7 @@ import javax.servlet.http.HttpSession;
 
 public class DoAddBetCommand implements ICommand {
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request) throws CommandException{
         HttpSession session = request.getSession(true);
         double moneySum = Double.parseDouble(request.getParameter("moneySum"));
         BetPrediction prediction = BetPrediction.valueOf((request.getParameter("selectedBetNum")).toUpperCase());
@@ -27,7 +29,10 @@ public class DoAddBetCommand implements ICommand {
         betBean.setFootballMatchId(idOfMatch);
 
         BetDao dao = BetDao.getInstance();
-        dao.insert(betBean);
+        try {
+            dao.insert(betBean);
+        }
+        catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
         return "webBetController?command=DISPLAY_MATCHES_COMMAND&submit=Show+matches";
     }
 }

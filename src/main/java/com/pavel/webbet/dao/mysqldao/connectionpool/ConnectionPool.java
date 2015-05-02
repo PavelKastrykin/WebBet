@@ -1,6 +1,5 @@
 package com.pavel.webbet.dao.mysqldao.connectionpool;
 
-
 import java.sql.*;
 import java.util.Locale;
 import java.util.Map;
@@ -25,7 +24,7 @@ public final class ConnectionPool {
     private String password;
     private int poolSize;
 
-    private ConnectionPool(){
+    private ConnectionPool() {
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
         this.driverName = dbResourceManager.getValue(DBParameter.DB_DRIVER);
         this.url = dbResourceManager.getValue(DBParameter.DB_URL);
@@ -65,17 +64,17 @@ public final class ConnectionPool {
         }
     }
 
-    public void dispose(){
+    public void dispose() throws ConnectionPoolException {
         clearConnectionQueue();
     }
 
-    public void clearConnectionQueue() {
+    public void clearConnectionQueue() throws ConnectionPoolException{
         try{
             closeConnectionsQueue(givenAwayConQueue);
             closeConnectionsQueue(connectionQueue);
         }
         catch (SQLException e){
-            //stub
+            throw new ConnectionPoolException("Unable to clear connection queue", e);
         }
 
     }
@@ -92,30 +91,30 @@ public final class ConnectionPool {
         return connection;
     }
 
-    public void closeConnection(Connection con, Statement st, ResultSet rs){
+    public void closeConnection(Connection con, Statement st, ResultSet rs) throws ConnectionPoolException{
         try{
             con.close();
         }
-        catch (SQLException e){}
+        catch (SQLException e){throw new ConnectionPoolException("Failed to close connection", e);}
         try{
             rs.close();
         }
-        catch (SQLException e){}
+        catch (SQLException e){throw new ConnectionPoolException("Failed to close resultset", e);}
         try{
             st.close();
         }
-        catch (SQLException e){}
+        catch (SQLException e){throw new ConnectionPoolException("Failed to close statement", e);}
     }
 
-    public void closeConnection(Connection con, Statement st){
+    public void closeConnection(Connection con, Statement st) throws ConnectionPoolException{
         try{
             con.close();
         }
-        catch (SQLException e){}
+        catch (SQLException e){throw new ConnectionPoolException("Failed to close connection", e);}
         try{
             st.close();
         }
-        catch (SQLException e){}
+        catch (SQLException e){throw new ConnectionPoolException("Failed to close statement", e);}
     }
 
     public void closeConnectionsQueue(BlockingQueue<Connection> queue) throws SQLException {

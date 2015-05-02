@@ -1,5 +1,6 @@
 package com.pavel.webbet.dao.mysqldao.impl;
 
+import com.pavel.webbet.dao.mysqldao.MysqlDaoException;
 import com.pavel.webbet.dao.mysqldao.QueryConstants;
 import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPool;
 import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPoolException;
@@ -22,7 +23,7 @@ public class FootballMatchDAO {
 
     private int numberOfRecords;
 
-    public List<FootballMatch> viewAllMatches(int offset, int noOfRecords){
+    public List<FootballMatch> viewAllMatches(int offset, int noOfRecords) throws MysqlDaoException{
 
         Connection connection = null;
         Statement statement = null;
@@ -53,10 +54,8 @@ public class FootballMatchDAO {
                 numberOfRecords = rs.getInt(1);
             }
         }
-        catch (ConnectionPoolException e) {}
-        catch (SQLException e){
-            e.printStackTrace();
-        }
+        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
         finally {
             try {
                 if (statement != null){statement.close();}
@@ -69,7 +68,7 @@ public class FootballMatchDAO {
         return list;
     }
 
-    public FootballMatch getMatchById (int id) {
+    public FootballMatch getMatchById (int id) throws MysqlDaoException{
         Connection connection = null;
         Statement statement = null;
         FootballMatch match = null;
@@ -89,10 +88,8 @@ public class FootballMatchDAO {
                 match.setStatus(MatchStatus.valueOf(rs.getString("status").toUpperCase()));
             }
         }
-        catch (ConnectionPoolException e) {}
-        catch (SQLException e){
-            e.printStackTrace();
-        }
+        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
         finally {
             try {
                 if (statement != null){statement.close();}
@@ -105,7 +102,7 @@ public class FootballMatchDAO {
         return match;
     }
 
-    public void insert(FootballMatch match) {
+    public void insert(FootballMatch match) throws MysqlDaoException{
         Connection connection = null;
         Statement statement = null;
         try {
@@ -113,19 +110,18 @@ public class FootballMatchDAO {
             statement = connection.createStatement();
             int x = statement.executeUpdate(QueryConstants.queryForMatchInsert(match));
         }
-        catch (ConnectionPoolException e){}
-        catch (SQLException e){}
+        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
         finally {
             try {
                 if (statement != null){statement.close();}
                 if (connection != null){connection.close();}
             }
-            catch (SQLException e) {
-            }
+            catch (SQLException e) {e.printStackTrace();}
         }
     }
 
-    public void update(FootballMatch match) {
+    public void update(FootballMatch match) throws MysqlDaoException{
         Connection connection = null;
         Statement statement = null;
         try {
@@ -133,15 +129,14 @@ public class FootballMatchDAO {
             statement = connection.createStatement();
             int x = statement.executeUpdate(QueryConstants.queryForMatchUpdate(match));
         }
-        catch (ConnectionPoolException e) {}
-        catch (SQLException e) {}
+        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
         finally {
             try {
                 if (statement != null){statement.close();}
                 if (connection != null){connection.close();}
             }
-            catch (SQLException e) {
-            }
+            catch (SQLException e) {e.printStackTrace();}
         }
     }
 

@@ -1,5 +1,6 @@
 package com.pavel.webbet.dao.mysqldao.impl;
 
+import com.pavel.webbet.dao.mysqldao.MysqlDaoException;
 import com.pavel.webbet.dao.mysqldao.QueryConstants;
 import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPool;
 import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPoolException;
@@ -21,7 +22,7 @@ public class UserBeanDao {
     }
     private int numberOfRecords;
 
-    public UserBean getBeanByLogin (String login) {
+    public UserBean getBeanByLogin (String login) throws MysqlDaoException{
         UserBean userBean = null;
         Connection connection = null;
         Statement statement = null;
@@ -44,21 +45,19 @@ public class UserBeanDao {
                 return userBean;
             }
         }
-        catch (ConnectionPoolException e){}
-        catch (SQLException e){}
+        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
         finally {
             try {
                 if (resultSet != null){resultSet.close();}
                 if (statement != null){statement.close();}
                 if (connection != null){connection.close();}
             }
-            catch (SQLException e) {
-            }
+            catch (SQLException e) {e.printStackTrace();}
         }
-        return null;
     }
 
-    public UserBean getBeanByLoginAndPassword (String login, String password) {
+    public UserBean getBeanByLoginAndPassword (String login, String password) throws MysqlDaoException {
 
         UserBean userBean = null;
         Connection connection = null;
@@ -82,21 +81,19 @@ public class UserBeanDao {
                 return userBean;
             }
         }
-        catch (ConnectionPoolException e){}
-        catch (SQLException e){}
+        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
         finally {
             try {
                 if (resultSet != null){resultSet.close();}
                 if (statement != null){statement.close();}
                 if (connection != null){connection.close();}
             }
-            catch (SQLException e) {
-            }
+            catch (SQLException e) {e.printStackTrace();}
         }
-        return null;
     }
 
-    public List<UserBean> getListByUserType (String type) {
+    public List<UserBean> getListByUserType (String type) throws MysqlDaoException {
 
         Connection connection = null;
         Statement statement = null;
@@ -117,8 +114,8 @@ public class UserBeanDao {
             }
             return userList;
         }
-        catch (ConnectionPoolException e) {}
-        catch (SQLException e){}
+        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
         finally {
             try {
                 if (resultSet != null){resultSet.close();}
@@ -128,10 +125,9 @@ public class UserBeanDao {
             catch (SQLException e) {
             }
         }
-        return null;
     }
 
-    public List<UserBean> getAllUsersList(int offset, int noOfRecords) {
+    public List<UserBean> getAllUsersList(int offset, int noOfRecords) throws MysqlDaoException{
         Connection connection = null;
         Statement statement = null;
 
@@ -155,8 +151,8 @@ public class UserBeanDao {
                 numberOfRecords = rs.getInt(1);
             }
         }
-        catch (ConnectionPoolException e) {}
-        catch (SQLException e){}
+        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
         finally {
             try {
                 if (statement != null){statement.close();}
@@ -168,7 +164,7 @@ public class UserBeanDao {
         return userList;
     }
 
-    public void insert(UserBean bean) {
+    public void insert(UserBean bean) throws MysqlDaoException {
         Connection connection = null;
         Statement statement = null;
         try {
@@ -176,19 +172,18 @@ public class UserBeanDao {
             statement = connection.createStatement();
             int x = statement.executeUpdate(QueryConstants.queryForUserInsert(bean));
         }
-        catch (ConnectionPoolException e){}
-        catch (SQLException e){}
+        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
         finally {
             try {
                 if (statement != null){statement.close();}
                 if (connection != null){connection.close();}
             }
-            catch (SQLException e) {
-            }
+            catch (SQLException e) {e.printStackTrace();}
         }
     }
 
-    public void delete(UserBean bean) {
+    public void delete(UserBean bean) throws MysqlDaoException {
         Connection connection = null;
         Statement statement = null;
         try {
@@ -196,19 +191,18 @@ public class UserBeanDao {
             statement = connection.createStatement();
             int x = statement.executeUpdate(QueryConstants.queryForUserDelete(bean.getUserID()));
         }
-        catch (ConnectionPoolException e){}
-        catch (SQLException e){}
+        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
         finally {
             try {
                 if (statement != null){statement.close();}
                 if (connection != null){connection.close();}
             }
-            catch (SQLException e) {
-            }
+            catch (SQLException e) {e.printStackTrace();}
         }
     }
 
-    public void update(UserBean bean) {
+    public void update(UserBean bean) throws MysqlDaoException {
         Connection connection = null;
         Statement statement = null;
         try {
@@ -216,15 +210,14 @@ public class UserBeanDao {
             statement = connection.createStatement();
             int x = statement.executeUpdate(QueryConstants.queryForUserUpdate(bean));
         }
-        catch (ConnectionPoolException e){}
-        catch (SQLException e){}
+        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
         finally {
             try {
                 if (statement != null){statement.close();}
                 if (connection != null){connection.close();}
             }
-            catch (SQLException e) {
-            }
+            catch (SQLException e) {e.printStackTrace();}
         }
     }
 

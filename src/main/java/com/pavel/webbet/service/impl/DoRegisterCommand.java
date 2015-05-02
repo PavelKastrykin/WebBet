@@ -1,7 +1,9 @@
 package com.pavel.webbet.service.impl;
 
+import com.pavel.webbet.dao.mysqldao.MysqlDaoException;
 import com.pavel.webbet.dao.mysqldao.impl.UserBeanDao;
 import com.pavel.webbet.entity.userbean.UserBean;
+import com.pavel.webbet.service.CommandException;
 import com.pavel.webbet.service.CommandStringConstants;
 import com.pavel.webbet.service.ICommand;
 
@@ -9,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 
 public class DoRegisterCommand implements ICommand {
     @Override
-    public String execute(HttpServletRequest request) {
+    public String execute(HttpServletRequest request) throws CommandException {
         String login = request.getParameter("registerLogin");
         String password = request.getParameter("registerPassword");
         String confirm = request.getParameter("registerConfirm");
@@ -26,13 +28,20 @@ public class DoRegisterCommand implements ICommand {
         }
 
         UserBeanDao dao = UserBeanDao.getInstance();
-        UserBean checkLogin = dao.getBeanByLogin(login);
+        UserBean checkLogin = null;
+        try {
+            checkLogin = dao.getBeanByLogin(login);
+        }
+        catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
         if (checkLogin == null){
             UserBean newUserBean = new UserBean();
             newUserBean.setLogin(login);
             newUserBean.setPassword(password);
             newUserBean.setName(realName);
-            dao.insert(newUserBean);
+            try {
+                dao.insert(newUserBean);
+            }
+            catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
             request.setAttribute("registerWarning", "project.empty");
             return "index.jsp";
         }
