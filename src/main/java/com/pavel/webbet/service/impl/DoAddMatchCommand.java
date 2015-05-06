@@ -27,6 +27,7 @@ public class DoAddMatchCommand implements ICommand {
         }
         catch (ParseException e){
             e.printStackTrace();
+            throw new CommandException("Invalid Date");
         }
 
         HttpSession session = request.getSession(true);

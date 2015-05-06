@@ -7,11 +7,16 @@ import com.pavel.webbet.entity.bet.BetPrediction;
 import com.pavel.webbet.entity.userbean.UserBean;
 import com.pavel.webbet.service.CommandException;
 import com.pavel.webbet.service.ICommand;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+
 public class DoAddBetCommand implements ICommand {
+
+    public static final Logger logger = Logger.getLogger(DoAddBetCommand.class);
+
     @Override
     public String execute(HttpServletRequest request) throws CommandException{
         HttpSession session = request.getSession(true);
@@ -33,6 +38,6 @@ public class DoAddBetCommand implements ICommand {
             dao.insert(betBean);
         }
         catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
-        return "webBetController?command=DISPLAY_MATCHES_COMMAND&submit=Show+matches";
+        return "webBetController?command=DISPLAY_MATCHES_COMMAND";
     }
 }

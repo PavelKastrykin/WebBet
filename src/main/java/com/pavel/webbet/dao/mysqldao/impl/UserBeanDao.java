@@ -98,7 +98,7 @@ public class UserBeanDao {
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        List<UserBean> userList = new ArrayList<>();
+        List<UserBean> userList = new ArrayList<UserBean>();
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();

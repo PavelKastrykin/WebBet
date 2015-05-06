@@ -27,6 +27,7 @@ public class CommandDispatcher {
         commands.put(CommandType.CONFIRM_EDIT_BET_COMMAND, new DoConfirmEditBetCommand());
         commands.put(CommandType.EDIT_USER_COMMAND, new DoCreateUserEditCommand());
         commands.put(CommandType.CONFIRM_EDIT_USER_COMMAND, new DoConfirmEditUserCommand());
+        commands.put(CommandType.DELETE_MATCH_COMMAND, new DoDeleteMatchCommand());
     }
 
     public static CommandDispatcher getInstance(){
@@ -37,7 +38,13 @@ public class CommandDispatcher {
         CommandType commandType = CommandType.valueOf(commandName);
         ICommand command;
         if (null != commandType){
-            command = commands.get(commandType);
+            try {
+                command = commands.get(commandType);
+            }
+            catch (IllegalArgumentException e){
+                command = commands.get(CommandType.NO_SUCH_COMMAND);
+            }
+
         }
         else {
             command = commands.get(CommandType.NO_SUCH_COMMAND);

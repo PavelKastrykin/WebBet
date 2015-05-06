@@ -75,6 +75,15 @@
     </servlet-mapping>
 
     <servlet>
+        <servlet-name>deleteMatch.jsp</servlet-name>
+        <jsp-file>/jsp/deleteMatch.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>deleteMatch.jsp</servlet-name>
+        <url-pattern>/deleteMatch.jsp</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
         <servlet-name>editBet.jsp</servlet-name>
         <jsp-file>/jsp/editBet.jsp</jsp-file>
     </servlet>

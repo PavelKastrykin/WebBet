@@ -7,13 +7,21 @@
 
 <html>
 <head>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <title></title>
 </head>
 <body>
-    <c:set var="pageID" value="jsp/errorPage.jsp" scope="request" />
-    <jsp:include page="header.jsp"/>
-    <jsp:include page="loginLogoutHeader.jsp" />
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <c:set var="pageID" value="jsp/errorPage.jsp" scope="request" />
+            <jsp:include page="header.jsp"/>
+            <jsp:include page="loginLogoutHeader.jsp" />
 
-    <a href="home.jsp"><fmt:message key="login.home.reff" /> </a>
+            <a href="home.jsp"><fmt:message key="login.home.reff" /> </a>
+        </div>
+    </div>
+</div>
 </body>
 </html>

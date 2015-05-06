@@ -7,6 +7,7 @@
 <html>
 <head>
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <link href="css/bootstrap.css" rel="stylesheet" />
     <script>
         function submitLogin()
         {
@@ -21,25 +22,32 @@
     <title><fmt:message key="title.index" /></title>
 </head>
 <body>
-    <c:set var="pageID" value="index.jsp" scope="request" />
-    <jsp:include page="jsp/header.jsp"/>
-    <form id="loginForm" action="webBetController" method="post" >
-        <input type="hidden" name="command" value="LOGIN_COMMAND"/>
-        <table>
-            <tr>
-                <td><label for="username"><fmt:message key="login.label.username" /></label></td>
-                <td><input type="text" id="username" name="username"></td>
-            </tr>
-            <tr>
-                <td><label for="password"><fmt:message key="login.label.password" /></label></td>
-                <td><input type="password" id="password" name="password"></td>
-            </tr>
-        </table>
-        <br>
-        <fmt:message key="login.button.submit" var="buttonValue"/>
-        <input type="submit" name="submit" value="${buttonValue}" onclick="return submitLogin()"/>
-        <a href="register.jsp"><fmt:message key="register.button.submit" /> </a>
-    </form>
-    <a href="home.jsp"><fmt:message key="login.home.reff" /> </a>
+    <div class="navbar navbar-fixed-top">
+        <div class="navbar-inner">
+            <div class="container">
+                <c:set var="pageID" value="index.jsp" scope="request" />
+                <jsp:include page="jsp/header.jsp"/>
+
+                <form id="loginForm" action="webBetController" method="post" >
+                    <input type="hidden" name="command" value="LOGIN_COMMAND"/>
+                    <table>
+                        <tr>
+                            <td><label for="username"><fmt:message key="login.label.username" /></label></td>
+                            <td><input type="text" id="username" name="username"></td>
+                        </tr>
+                        <tr>
+                            <td><label for="password"><fmt:message key="login.label.password" /></label></td>
+                            <td><input type="password" id="password" name="password"></td>
+                        </tr>
+                    </table>
+                    <br>
+                    <fmt:message key="login.button.submit" var="buttonValue"/>
+                    <input type="submit" name="submit" value="${buttonValue}" onclick="return submitLogin()" class="btn btn-primary"/>
+                    <a href="register.jsp"><fmt:message key="register.button.submit" /> </a>
+                </form>
+                <a href="home.jsp"><fmt:message key="login.home.reff" /> </a>
+            </div>
+        </div>
+    </div>
 </body>
 </html>

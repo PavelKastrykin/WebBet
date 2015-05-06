@@ -14,7 +14,8 @@ public class QueryConstants {
     public static final String MYSQL_BY_USER_TYPE_QUERY = "select * from users where user_role = ''{0}''";
     public static final String MYSQL_ALL_USER_LIST_QUERY = "select SQL_CALC_FOUND_ROWS userid, login, user_role, user_name " +
             "from users order by userid desc limit {0}, {1}";
-    public static final String MYSQL_DELETE_USER_QUERY = "delete from users where userid = ''{0}''";
+    public static final String MYSQL_DELETE_USER_QUERY = "delete from users where userid = {0}";
+    public static final String MYSQL_DELETE_MATCH_QUERY = "delete from football_match where football_matchid = {0}";
     public static final String MYSQL_UPDATE_USER_QUERY = "UPDATE users SET `user_role`=''{0}'' WHERE `login`=''{1}'';";
     public static final String MYSQL_ALL_MATCHES_LIST_QUERY = "select SQL_CALC_FOUND_ROWS * from (select * from " +
             "football_match order by football_matchid desc) as A limit {0}, {1}";
@@ -65,6 +66,11 @@ public class QueryConstants {
 
     public static String queryForUserDelete(int id) {
         String query = MessageFormat.format(QueryConstants.MYSQL_DELETE_USER_QUERY, id);
+        return query;
+    }
+
+    public static String queryForMatchDelete(int id) {
+        String query = MessageFormat.format(QueryConstants.MYSQL_DELETE_MATCH_QUERY, id);
         return query;
     }
 

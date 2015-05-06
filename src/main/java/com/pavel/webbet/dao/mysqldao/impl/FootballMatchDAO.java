@@ -140,6 +140,26 @@ public class FootballMatchDAO {
         }
     }
 
+    public void delete(int id) throws MysqlDaoException {
+        Connection connection = null;
+        Statement statement = null;
+        try {
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
+            int x = statement.executeUpdate(QueryConstants.queryForMatchDelete(id));
+        }
+        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e){ throw new MysqlDaoException("Match was not deleted from database", e);}
+        finally {
+            try {
+                if (statement != null){statement.close();}
+                if (connection != null){connection.close();}
+            }
+            catch (SQLException e) {e.printStackTrace();}
+        }
+    }
+
+
     public int getNumberOfRecords(){
         return numberOfRecords;
     }

@@ -37,6 +37,7 @@ public class AuthorizationManager {
         authorizationMap.put("adminHeader.jsp", adminAccess);
         authorizationMap.put("adminUserPage.jsp", adminAccess);
         authorizationMap.put("bookmakerPanel.jsp", bookAccess);
+        authorizationMap.put("deleteMatch.jsp", bookAccess);
         authorizationMap.put("editBet.jsp", adminAccess);
         authorizationMap.put("editMatch.jsp", bookAccess);
         authorizationMap.put("editUser.jsp", adminAccess);

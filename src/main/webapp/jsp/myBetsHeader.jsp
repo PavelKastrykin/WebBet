@@ -6,13 +6,15 @@
 <fmt:setBundle basename="locale.text"/>
 <html>
 <head>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <title></title>
 </head>
 <body>
-<form action="webBetController" method="post">
+<form action="webBetController" method="post" style="display:inline;">
     <input type="hidden" name="command" value="SHOW_MY_BETS_COMMAND">
     <fmt:message key="bets.showbets.button" var="buttonValue" />
-    <input type="submit" name="submit" value="${buttonValue}">
+    <input type="submit" name="submit" value="${buttonValue}" class="btn btn-primary" style="width:120px">
 </form>
 </body>
 </html>

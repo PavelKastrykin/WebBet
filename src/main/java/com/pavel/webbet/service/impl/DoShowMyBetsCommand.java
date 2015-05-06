@@ -18,7 +18,7 @@ public class DoShowMyBetsCommand implements ICommand{
         String login = user.getLogin();
         List<BetBean> myBets = null;
         try{
-            dao.betsByLogin(login);
+            myBets = dao.betsByLogin(login);
         }
         catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
         request.setAttribute("myBets", myBets);

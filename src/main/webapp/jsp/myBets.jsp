@@ -6,36 +6,44 @@
 <fmt:setBundle basename="locale.text"/>
 <html>
 <head>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <title></title>
 </head>
 <body>
-    <c:set var="pageID" value="jsp/myBets.jsp" scope="request" />
-    <jsp:include page="header.jsp"/>
-    <jsp:include page="loginLogoutHeader.jsp" />
-    <table border="1" cellpadding="5" cellspacing="5">
-        <tr>
-            <th><fmt:message key="bets.table.matchname" /></th>
-            <th><fmt:message key="bets.table.timestart" /></th>
-            <th><fmt:message key="bets.table.prediction" /></th>
-            <th><fmt:message key="bets.table.sum" /></th>
-            <th><fmt:message key="bets.table.coef" /></th>
-            <th><fmt:message key="bets.table.won" /></th>
-            <th><fmt:message key="bets.table.status" /></th>
-            <th><fmt:message key="bets.table.charge" /></th>
-        </tr>
-        <c:forEach var="bet" items="${myBets}">
-            <tr>
-                <td>${bet.footballMatchName}</td>
-                <td><fmt:formatDate value="${bet.footballMatchDate}" dateStyle="short"/></td>
-                <td>${bet.prediction}</td>
-                <td>${bet.sum}</td>
-                <td>${bet.currentCoef}</td>
-                <td>${bet.won}</td>
-                <td>${bet.status}</td>
-                <td>${bet.moneyCharge}</td>
-            </tr>
-        </c:forEach>
-    </table>
-    <a href="home.jsp"><fmt:message key="login.home.reff" /> </a><br/>
+<div class="navbar navbar-fixed-top">
+    <div class="navbar-inner">
+        <div class="container">
+            <c:set var="pageID" value="jsp/myBets.jsp" scope="request" />
+            <jsp:include page="header.jsp"/>
+            <jsp:include page="loginLogoutHeader.jsp" />
+            <table class="table">
+                <tr>
+                    <th><fmt:message key="bets.table.matchname" /></th>
+                    <th><fmt:message key="bets.table.timestart" /></th>
+                    <th><fmt:message key="bets.table.prediction" /></th>
+                    <th><fmt:message key="bets.table.sum" /></th>
+                    <th><fmt:message key="bets.table.coef" /></th>
+                    <th><fmt:message key="bets.table.won" /></th>
+                    <th><fmt:message key="bets.table.status" /></th>
+                    <th><fmt:message key="bets.table.charge" /></th>
+                </tr>
+                <c:forEach var="bet" items="${myBets}">
+                    <tr>
+                        <td>${bet.footballMatchName}</td>
+                        <td><fmt:formatDate value="${bet.footballMatchDate}" dateStyle="short"/></td>
+                        <td>${bet.prediction}</td>
+                        <td>${bet.sum}</td>
+                        <td>${bet.currentCoef}</td>
+                        <td>${bet.won}</td>
+                        <td>${bet.status}</td>
+                        <td>${bet.moneyCharge}</td>
+                    </tr>
+                </c:forEach>
+            </table>
+            <a href="home.jsp"><fmt:message key="login.home.reff" /> </a><br/>
+        </div>
+    </div>
+</div>
 </body>
 </html>

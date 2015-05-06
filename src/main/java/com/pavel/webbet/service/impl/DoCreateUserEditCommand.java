@@ -15,7 +15,7 @@ public class DoCreateUserEditCommand implements ICommand {
         UserBeanDao dao = UserBeanDao.getInstance();
         UserBean user = null;
         try {
-            dao.getBeanByLogin(login);
+            user = dao.getBeanByLogin(login);
         }
         catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
         request.setAttribute("userToEdit", user);

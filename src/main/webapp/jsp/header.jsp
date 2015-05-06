@@ -3,12 +3,16 @@
 <fmt:setLocale value="${localeValue == '' || localeValue == null ? 'en_US' : localeValue}"/>
 <fmt:setBundle basename="locale.text"/>
 <html>
+<header>
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+</header>
 <body>
-    <form action="webBetController" method="get">
+    <form action="webBetController" method="get" style="display:inline;">
         <label><fmt:message key="header.language" /></label>
         <input type="hidden" name="command" value="LOCALE_COMMAND"/>
         <input type="hidden" name="hiddenPageID" value="${pageID}" />
-        <select id="language" name="language" onchange="this.form.submit()">
+        <select id="language" name="language" onchange="this.form.submit()" >
             <option value="en_US" ${localeValue == 'en_US' ? 'selected' : ''}>English</option>
             <option value="ru_RU" ${localeValue == 'ru_RU' ? 'selected' : ''}>Русский</option>
         </select>
