@@ -6,11 +6,15 @@ import com.pavel.webbet.entity.bet.BetBean;
 import com.pavel.webbet.entity.userbean.UserBean;
 import com.pavel.webbet.service.CommandException;
 import com.pavel.webbet.service.ICommand;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class DoShowMyBetsCommand implements ICommand{
+
+    public static final Logger logger = Logger.getLogger(DoShowMyBetsCommand.class);
+
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         BetDao dao = BetDao.getInstance();
@@ -18,7 +22,7 @@ public class DoShowMyBetsCommand implements ICommand{
         String login = user.getLogin();
         List<BetBean> myBets = null;
         try{
-            myBets = dao.betsByLogin(login);
+            myBets = dao.getListByName(login);
         }
         catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
         request.setAttribute("myBets", myBets);

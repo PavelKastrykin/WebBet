@@ -5,11 +5,15 @@ import com.pavel.webbet.dao.mysqldao.impl.FootballMatchDAO;
 import com.pavel.webbet.entity.match.FootballMatch;
 import com.pavel.webbet.service.CommandException;
 import com.pavel.webbet.service.ICommand;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class DoDisplayMatchesCommand implements ICommand {
+
+    public static final Logger logger = Logger.getLogger(DoDisplayMatchesCommand.class);
+
     @Override
     public String execute(HttpServletRequest request) throws CommandException{
         int page = 1;
@@ -20,7 +24,7 @@ public class DoDisplayMatchesCommand implements ICommand {
         FootballMatchDAO dao = FootballMatchDAO.getInstance();
         List<FootballMatch> list = null;
         try {
-            list = dao.viewAllMatches((page - 1) * recordsPerPage, recordsPerPage);
+            list = dao.getList((page - 1) * recordsPerPage, recordsPerPage);
         }
         catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
         int numberOfRecords = dao.getNumberOfRecords();

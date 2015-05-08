@@ -6,7 +6,7 @@ import com.pavel.webbet.entity.userbean.UserBean;
 
 import java.text.MessageFormat;
 
-public class QueryConstants {
+public class QueryConstant {
     public static final String MYSQL_LOGIN_QUERY = "select * from users where login = ''{0}'' and password = ''{1}''";
     public static final String MYSQL_GET_BY_LOGIN_QUERY = "select * from users where login = ''{0}''";
     public static final String MYSQL_REGISTER_QUERY = "insert into users (`login`, `password`, `user_role`, `user_name`) " +
@@ -44,94 +44,76 @@ public class QueryConstants {
             "`bet_status`=''{2}'' WHERE `betid`=''{3}''";
 
     public static String queryForLoginAndPassword(String userNameParameter, String userPasswordParameter) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_LOGIN_QUERY, userNameParameter, userPasswordParameter);
-        return query;
+        return MessageFormat.format(QueryConstant.MYSQL_LOGIN_QUERY, userNameParameter, userPasswordParameter);
     }
 
     public static String queryForLogin(String login) {
-        String query = MessageFormat.format(MYSQL_GET_BY_LOGIN_QUERY, login);
-        return query;
+        return MessageFormat.format(MYSQL_GET_BY_LOGIN_QUERY, login);
     }
 
     public static String queryForUserType(String type) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_BY_USER_TYPE_QUERY, type);
-        return query;
+        return MessageFormat.format(QueryConstant.MYSQL_BY_USER_TYPE_QUERY, type);
     }
 
     public static String queryForUserInsert(UserBean userBean) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_REGISTER_QUERY, userBean.getLogin(), userBean.getPassword(),
+        return MessageFormat.format(QueryConstant.MYSQL_REGISTER_QUERY, userBean.getLogin(), userBean.getPassword(),
                 userBean.getName());
-        return query;
     }
 
     public static String queryForUserDelete(int id) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_DELETE_USER_QUERY, id);
-        return query;
+        return MessageFormat.format(QueryConstant.MYSQL_DELETE_USER_QUERY, id);
     }
 
     public static String queryForMatchDelete(int id) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_DELETE_MATCH_QUERY, id);
-        return query;
+        return MessageFormat.format(QueryConstant.MYSQL_DELETE_MATCH_QUERY, id);
     }
 
     public static String queryForUserUpdate(UserBean bean) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_UPDATE_USER_QUERY, bean.getUserRole().toString().toLowerCase(),
+        return MessageFormat.format(QueryConstant.MYSQL_UPDATE_USER_QUERY, bean.getUserRole().toString().toLowerCase(),
                 bean.getLogin());
-        return query;
     }
 
     public static String queryForAllMatchesWithLimit(int offset, int numberOfRecords) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_ALL_MATCHES_LIST_QUERY, offset, numberOfRecords);
-        return query;
+        return MessageFormat.format(QueryConstant.MYSQL_ALL_MATCHES_LIST_QUERY, offset, numberOfRecords);
     }
 
     public static String queryForMatchInsert(FootballMatch match) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_ADD_MATCH_QUERY, match.getMatchName(),
+        return MessageFormat.format(QueryConstant.MYSQL_ADD_MATCH_QUERY, match.getMatchName(),
                 new java.sql.Date((match.getStartTime()).getTime()).toString());
-        return query;
     }
 
     public static String queryForGetMatchById(int id) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_GET_MATCH_ID_QUERY, id);
-        return query;
+        return MessageFormat.format(QueryConstant.MYSQL_GET_MATCH_ID_QUERY, id);
     }
 
     public static String queryForBetInsert (BetBean bean) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_ADD_BET_QUERY,
-                bean.getLogin(), bean.getFootballMatchId(), bean.getPrediction().toString().toLowerCase(), bean.getSum(),
-                bean.getCurrentCoef());
-        return query;
+        return MessageFormat.format(QueryConstant.MYSQL_ADD_BET_QUERY, bean.getLogin(), bean.getFootballMatchId(),
+                bean.getPrediction().toString().toLowerCase(), bean.getSum(), bean.getCurrentCoef());
     }
 
     public static String queryForGetBetsByLogin (String login) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_GET_BETS_BY_LOGIN, login);
-        return query;
+        return MessageFormat.format(QueryConstant.MYSQL_GET_BETS_BY_LOGIN, login);
     }
 
     public static String queryForMatchUpdate(FootballMatch match) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_UPDATE_MATCH_QUERY, match.getMatchScore(), match.getWinCoef(),
+        return MessageFormat.format(QueryConstant.MYSQL_UPDATE_MATCH_QUERY, match.getMatchScore(), match.getWinCoef(),
                 match.getDrawCoef(), match.getLooseCoef(), match.getStatus().toString().toLowerCase(), match.getMatchId());
-        return  query;
     }
 
     public static String queryForAllBetsWithLimit(int offset, int numberOfRecords) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_ALL_BETS_LIST_QUERY, offset, numberOfRecords);
-        return query;
+        return MessageFormat.format(QueryConstant.MYSQL_ALL_BETS_LIST_QUERY, offset, numberOfRecords);
     }
 
     public static String queryForGetBetById(int id) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_GET_BET_BY_ID, id);
-        return query;
+        return MessageFormat.format(QueryConstant.MYSQL_GET_BET_BY_ID, id);
     }
 
     public static String queryForBetUpdate(BetBean bet) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_UPDATE_BET_QUERY, bet.isMoneyCharge() ? 1 : 0, bet.isWon() ? 1 : 0,
+        return MessageFormat.format(QueryConstant.MYSQL_UPDATE_BET_QUERY, bet.isMoneyCharge() ? 1 : 0, bet.isWon() ? 1 : 0,
                 bet.getStatus().toString().toLowerCase(), bet.getBetId());
-        return query;
     }
 
     public static String queryForAllUsersWithLimit(int offset, int numberOfRecords) {
-        String query = MessageFormat.format(QueryConstants.MYSQL_ALL_USER_LIST_QUERY, offset, numberOfRecords);
-        return query;
+        return MessageFormat.format(QueryConstant.MYSQL_ALL_USER_LIST_QUERY, offset, numberOfRecords);
     }
 }

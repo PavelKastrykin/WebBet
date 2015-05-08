@@ -7,6 +7,7 @@ import com.pavel.webbet.entity.userbean.UserBean;
 import com.pavel.webbet.service.CommandException;
 import com.pavel.webbet.service.CommandStringConstants;
 import com.pavel.webbet.service.ICommand;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -16,6 +17,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class DoAddMatchCommand implements ICommand {
+
+    public static final Logger logger = Logger.getLogger(DoAddMatchCommand.class);
+
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String matchName = request.getParameter("matchName");
@@ -36,7 +40,7 @@ public class DoAddMatchCommand implements ICommand {
             request.setAttribute("addMatchWarning", CommandStringConstants.VALIDATION_ADMIN_BOOK_WARNING);
             return "jsp/addMatch.jsp";
         }
-        if (matchName.equals("") || matchDateAsString.equals("")){
+        if (matchName.isEmpty() || matchDateAsString.isEmpty()){
             request.setAttribute("addMatchWarning", CommandStringConstants.EMPTY_FIELDS_WARNING);
             return "jsp/addMatch.jsp";
         }

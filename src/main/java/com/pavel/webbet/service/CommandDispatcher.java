@@ -1,11 +1,15 @@
 package com.pavel.webbet.service;
 
 import com.pavel.webbet.service.impl.*;
+import org.apache.log4j.Logger;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class CommandDispatcher {
+
+    public static final Logger logger = Logger.getLogger(CommandDispatcher.class);
+
     private static final CommandDispatcher instance = new CommandDispatcher();
     private Map<CommandType, ICommand> commands = new HashMap<CommandType, ICommand>();
 
@@ -37,14 +41,12 @@ public class CommandDispatcher {
     public ICommand getCommand(String commandName){
         CommandType commandType = CommandType.valueOf(commandName);
         ICommand command;
-        if (null != commandType){
+        if (null != commandType) {
             try {
                 command = commands.get(commandType);
-            }
-            catch (IllegalArgumentException e){
+            } catch (IllegalArgumentException e) {
                 command = commands.get(CommandType.NO_SUCH_COMMAND);
             }
-
         }
         else {
             command = commands.get(CommandType.NO_SUCH_COMMAND);

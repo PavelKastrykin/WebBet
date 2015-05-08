@@ -1,12 +1,15 @@
 package com.pavel.webbet.dao.mysqldao.impl;
 
+import com.pavel.webbet.dao.mysqldao.IBetDao;
+import com.pavel.webbet.dao.mysqldao.ICommonDao;
 import com.pavel.webbet.dao.mysqldao.MysqlDaoException;
 import com.pavel.webbet.entity.bet.BetPrediction;
-import com.pavel.webbet.dao.mysqldao.QueryConstants;
+import com.pavel.webbet.dao.mysqldao.QueryConstant;
 import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPool;
 import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPoolException;
 import com.pavel.webbet.entity.bet.BetBean;
 import com.pavel.webbet.entity.bet.BetStatus;
+import org.apache.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -15,16 +18,18 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BetDao {
+public class BetDao implements IBetDao {
+
+    public static final Logger logger = Logger.getLogger(BetDao.class);
 
     private static final BetDao instance = new BetDao();
     public static BetDao getInstance() {
         return instance;
     }
-
     private int numberOfRecords;
 
-    public List<BetBean> viewAllBets(int offset, int noOfRecords) throws MysqlDaoException{
+    @Override
+    public List<BetBean> getList(int offset, int noOfRecords) throws MysqlDaoException{
 
         Connection connection = null;
         Statement statement = null;
@@ -35,7 +40,7 @@ public class BetDao {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
 
-            ResultSet rs = statement.executeQuery(QueryConstants.queryForAllBetsWithLimit(offset, noOfRecords));
+            ResultSet rs = statement.executeQuery(QueryConstant.queryForAllBetsWithLimit(offset, noOfRecords));
             while (rs.next()){
                 bet = new BetBean();
                 bet.setBetId(rs.getInt("betid"));
@@ -73,13 +78,14 @@ public class BetDao {
         return list;
     }
 
+    @Override
     public void insert(BetBean bean) throws MysqlDaoException{
         Connection connection = null;
         Statement statement = null;
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
-            int x = statement.executeUpdate(QueryConstants.queryForBetInsert(bean));
+            int x = statement.executeUpdate(QueryConstant.queryForBetInsert((BetBean) bean));
         }
         catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
         catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
@@ -93,7 +99,8 @@ public class BetDao {
         }
     }
 
-    public List<BetBean> betsByLogin(String login) throws MysqlDaoException {
+    @Override
+    public List<BetBean> getListByName(String login) throws MysqlDaoException {
         Connection connection = null;
         Statement statement = null;
 
@@ -102,7 +109,7 @@ public class BetDao {
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(QueryConstants.queryForGetBetsByLogin(login));
+            ResultSet rs = statement.executeQuery(QueryConstant.queryForGetBetsByLogin(login));
             while (rs.next()){
                 bean = new BetBean();
                 bean.setFootballMatchName(rs.getString(1));
@@ -130,7 +137,8 @@ public class BetDao {
         return list;
     }
 
-    public BetBean getBetById(int id) throws MysqlDaoException {
+    @Override
+    public BetBean getBeanById(int id) throws MysqlDaoException {
 
         Connection connection = null;
         Statement statement = null;
@@ -139,7 +147,7 @@ public class BetDao {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
 
-            ResultSet rs = statement.executeQuery(QueryConstants.queryForGetBetById(id));
+            ResultSet rs = statement.executeQuery(QueryConstant.queryForGetBetById(id));
             while (rs.next()){
                 bet = new BetBean();
                 bet.setBetId(rs.getInt("betid"));
@@ -170,13 +178,14 @@ public class BetDao {
         return bet;
     }
 
-    public void update(BetBean bet) throws MysqlDaoException {
+    @Override
+    public void updateBean(BetBean bet) throws MysqlDaoException {
         Connection connection = null;
         Statement statement = null;
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
-            int x = statement.executeUpdate(QueryConstants.queryForBetUpdate(bet));
+            int x = statement.executeUpdate(QueryConstant.queryForBetUpdate((BetBean)bet));
         }
         catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
         catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
@@ -189,5 +198,9 @@ public class BetDao {
         }
     }
 
+    @Override
     public int getNumberOfRecords() {return numberOfRecords; }
+
+    @Override
+    public void deleteBean(int id) throws MysqlDaoException {}
 }

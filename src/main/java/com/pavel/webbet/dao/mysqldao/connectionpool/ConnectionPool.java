@@ -1,5 +1,7 @@
 package com.pavel.webbet.dao.mysqldao.connectionpool;
 
+import org.apache.log4j.Logger;
+
 import java.sql.*;
 import java.util.Locale;
 import java.util.Map;
@@ -9,6 +11,9 @@ import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.Executor;
 
 public final class ConnectionPool {
+
+    public static final Logger logger = Logger.getLogger(ConnectionPool.class);
+
     private static ConnectionPool instance = new ConnectionPool();
 
     public static ConnectionPool getInstance() {
@@ -23,6 +28,7 @@ public final class ConnectionPool {
     private String user;
     private String password;
     private int poolSize;
+    private String encoding;
 
     private ConnectionPool() {
         DBResourceManager dbResourceManager = DBResourceManager.getInstance();
@@ -30,6 +36,7 @@ public final class ConnectionPool {
         this.url = dbResourceManager.getValue(DBParameter.DB_URL);
         this.user = dbResourceManager.getValue(DBParameter.DB_USER);
         this.password = dbResourceManager.getValue(DBParameter.DB_PASSWORD);
+        this.encoding = dbResourceManager.getValue(DBParameter.DB_ENCODING);
         try {
             this.poolSize = Integer.parseInt(dbResourceManager.getValue(DBParameter.DB_POOL_SIZE));
         }
@@ -50,8 +57,14 @@ public final class ConnectionPool {
             Class.forName(driverName);
             givenAwayConQueue = new ArrayBlockingQueue<Connection>(poolSize);
             connectionQueue = new ArrayBlockingQueue<Connection>(poolSize);
+
+            Properties properties = new Properties();
+            properties.setProperty("user", user);
+            properties.setProperty("password", password);
+            properties.setProperty("useUnicode", "true");
+            properties.setProperty("characterEncoding", encoding);
             for (int i = 0; i < poolSize; i++){
-                Connection connection = DriverManager.getConnection(url, user, password);
+                Connection connection = DriverManager.getConnection(url, properties);
                 PooledConnection pooledConnection = new PooledConnection(connection);
                 connectionQueue.add(pooledConnection);
             }

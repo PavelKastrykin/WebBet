@@ -1,7 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${localeValue == '' || localeValue == null ? 'en_US' : localeValue}"/>
 <fmt:setBundle basename="locale.text"/>
 <html>
@@ -29,7 +29,7 @@
     <div class="navbar-inner">
         <div class="container">
             <c:set var="pageID" value="jsp/makeBet.jsp" scope="request" />
-            <jsp:include page="header.jsp"/>
+            <br/><jsp:include page="header.jsp"/><br/>
             <jsp:include page="loginLogoutHeader.jsp" />
             <form id="betForm" action="webBetController" method="post">
                 <input type="hidden" name="command" value="ADD_BET_COMMAND">
@@ -56,7 +56,7 @@
                 <input type="text" id="moneySum" name="moneySum"/>
             </form>
             <br/>
-            <fmt:message key="make.bet.count.begin" /><span id="seconds">10</span><fmt:message key="make.bet.count.end" />
+            <fmt:message key="make.bet.count.begin" /><span id="seconds">20</span><fmt:message key="make.bet.count.end" />
             <script>
                 var seconds = 20;
                 setInterval(

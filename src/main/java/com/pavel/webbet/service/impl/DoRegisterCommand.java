@@ -6,10 +6,14 @@ import com.pavel.webbet.entity.userbean.UserBean;
 import com.pavel.webbet.service.CommandException;
 import com.pavel.webbet.service.CommandStringConstants;
 import com.pavel.webbet.service.ICommand;
+import org.apache.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
 public class DoRegisterCommand implements ICommand {
+
+    public static final Logger logger = Logger.getLogger(DoRegisterCommand.class);
+
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String login = request.getParameter("registerLogin");
@@ -30,7 +34,7 @@ public class DoRegisterCommand implements ICommand {
         UserBeanDao dao = UserBeanDao.getInstance();
         UserBean checkLogin = null;
         try {
-            checkLogin = dao.getBeanByLogin(login);
+            checkLogin = dao.getBeanByName(login);
         }
         catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
         if (checkLogin == null){

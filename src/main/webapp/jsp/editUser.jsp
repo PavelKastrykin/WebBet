@@ -1,7 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${localeValue == '' || localeValue == null ? 'en_US' : localeValue}"/>
 <fmt:setBundle basename="locale.text"/>
 <html>
@@ -15,7 +15,7 @@
     <div class="navbar-inner">
         <div class="container">
             <c:set var="pageID" value="jsp/editUser.jsp" scope="request" />
-            <jsp:include page="header.jsp"/>
+            <br/><jsp:include page="header.jsp"/><br/>
             <jsp:include page="loginLogoutHeader.jsp" />
             <form id="editUserForm" action="webBetController" method="get">
                 <input type="hidden" name="command" value="CONFIRM_EDIT_USER_COMMAND">
@@ -41,7 +41,7 @@
                         </td>
                     </tr>
                 </table>
-                <fmt:message key="editmatch.button.edit" var="buttonValue"/>
+                <fmt:message key="edituser.button.edit" var="buttonValue"/>
                 <input type="submit" name="submit" value="${buttonValue}" onclick="return confirm('Confirm?')" class="btn btn-primary" />
             </form>
         </div>

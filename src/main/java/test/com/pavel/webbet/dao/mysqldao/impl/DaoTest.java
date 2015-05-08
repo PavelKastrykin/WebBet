@@ -1,4 +1,4 @@
-package com.pavel.webbet.dao.mysqldao.test;
+package test.com.pavel.webbet.dao.mysqldao.impl;
 
 import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPool;
 import com.pavel.webbet.dao.mysqldao.impl.FootballMatchDAO;
@@ -23,14 +23,15 @@ public class DaoTest {
         ResultSet resultSet = null;
         FootballMatchDAO dao = FootballMatchDAO.getInstance();
 
-        String matchName = "TeamOne - TeamTwo";
+        String matchName = "Какой-то матч";
         String matchStartDate = "2015-01-01";
         FootballMatch match = new FootballMatch();
-        String matchIdByNameQuery = "select football_matchid from football_match where name = 'TeamOne - TeamTwo'";
+        String matchIdByNameQuery = "select football_matchid from football_match where name = 'Какой-то матч'";
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
         Date matchDate = df.parse(matchStartDate);
 
+//        match.setMatchName(new String(matchName.getBytes("UTF-8"),"UTF-8"));
         match.setMatchName(matchName);
         match.setStartTime(matchDate);
         try {
@@ -38,20 +39,18 @@ public class DaoTest {
             resultSet = statement.executeQuery(matchIdByNameQuery);
             resultSet.next();
             int id = resultSet.getInt("football_matchid");
-            Assert.assertEquals(id, dao.getMatchById(id).getMatchId(), 0.1);
+            Assert.assertEquals(id, dao.getBeanById(id).getMatchId(), 0.1);
 
-            match = dao.getMatchById(id);
+            match = dao.getBeanById(id);
             match.setMatchScore("0:0");
-            dao.update(match);
-            Assert.assertEquals("0:0", dao.getMatchById(id).getMatchScore());
+            dao.updateBean(match);
+            Assert.assertEquals("0:0", dao.getBeanById(id).getMatchScore());
 
-            dao.delete(id);
-            Assert.assertNull(dao.getMatchById(id));
+            dao.deleteBean(id);
+            Assert.assertNull(dao.getBeanById(id));
         }
         finally {
             connection.rollback();
-            statement.close();
-            resultSet.close();
             connection.close();
         }
 

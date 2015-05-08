@@ -1,7 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${localeValue == '' || localeValue == null ? 'en_US' : localeValue}"/>
 <fmt:setBundle basename="locale.text"/>
 <html>
@@ -16,7 +16,7 @@
         <div class="container">
             <c:set var="pageID" value="jsp/register.jsp" scope="request" />
             <c:set var="registerWarning" value="project.empty" scope="application" />
-            <jsp:include page="header.jsp"/>
+            <br/><jsp:include page="header.jsp"/><br/>
             <form action="webBetController" method="get">
                 <input type="hidden" name="command" value="REGISTER_COMMAND"/>
                 <table>

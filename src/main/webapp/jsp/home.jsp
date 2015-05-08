@@ -1,7 +1,7 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${localeValue == '' || localeValue == null ? 'en_US' : localeValue}"/>
 <fmt:setBundle basename="locale.text"/>
 <html>
@@ -15,7 +15,7 @@
     <div class="navbar-inner">
         <div class="container">
             <c:set var="pageID" value="jsp/home.jsp" scope="request" />
-            <br/><jsp:include page="header.jsp"/>
+            <br/><jsp:include page="header.jsp"/><br/>
             <jsp:include page="loginLogoutHeader.jsp" />
             <br/><br/>
 
@@ -32,6 +32,7 @@
                 <input type="hidden" name="command" value="DISPLAY_MATCHES_COMMAND" />
                 <fmt:message key="matches.button.show" var="buttonShow" />
                 <input type="submit" name="submit" value="${buttonShow}" class="btn btn-primary"/>
+            </form>
                 <br/><br/>
                 <table class="table">
                     <thead>
@@ -95,7 +96,7 @@
                 <c:if test="${currentPage lt numberOfPages}">
                     <td><a href="webBetController?command=DISPLAY_MATCHES_COMMAND&page=${currentPage + 1}"><fmt:message key="matches.table.next" /></a> </td>
                 </c:if>
-            </form>
+
         </div>
     </div>
 </div>

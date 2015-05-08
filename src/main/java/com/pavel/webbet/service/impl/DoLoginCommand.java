@@ -6,10 +6,15 @@ import com.pavel.webbet.entity.userbean.UserBean;
 import com.pavel.webbet.entity.userbean.UserRole;
 import com.pavel.webbet.service.CommandException;
 import com.pavel.webbet.service.ICommand;
+import org.apache.log4j.Logger;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class DoLoginCommand implements ICommand{
+
+    public static final Logger logger = Logger.getLogger(DoLoginCommand.class);
+
     @Override
     public String execute(HttpServletRequest request) throws CommandException{
         String userName = request.getParameter("username");
@@ -17,7 +22,7 @@ public class DoLoginCommand implements ICommand{
         UserBeanDao dao = UserBeanDao.getInstance();
         UserBean bean = null;
         try{
-            bean = dao.getBeanByLoginAndPassword(userName, password);
+            bean = dao.getBeanByNameAndPassword(userName, password);
         }
         catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
         if (bean != null && bean.getUserRole() == UserRole.BLOCKED){

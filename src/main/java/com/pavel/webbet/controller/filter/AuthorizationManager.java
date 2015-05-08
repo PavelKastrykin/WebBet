@@ -16,6 +16,7 @@ public class AuthorizationManager {
     private ArrayList<UserRole> adminAccess = new ArrayList<>();
     private ArrayList<UserRole> bookAccess = new ArrayList<>();
     private ArrayList<UserRole> userAccess = new ArrayList<>();
+
     {
         adminAccess.add(UserRole.ADMIN);
         bookAccess.add(UserRole.ADMIN);

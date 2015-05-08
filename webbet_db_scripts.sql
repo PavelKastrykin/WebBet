@@ -1,4 +1,6 @@
-CREATE DATABASE `webbet` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE `webbet`
+DEFAULT CHARACTER SET utf8
+DEFAULT COLLATE utf8_general_ci;
 
 
 CREATE TABLE `bets` (
@@ -12,7 +14,7 @@ CREATE TABLE `bets` (
   `is_won` bit(1) NOT NULL DEFAULT b'0',
   `bet_status` varchar(10) NOT NULL DEFAULT 'open',
   PRIMARY KEY (`betid`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 
 CREATE TABLE `football_match` (
@@ -25,7 +27,7 @@ CREATE TABLE `football_match` (
   `coef_lost` double NOT NULL DEFAULT '1',
   `status` varchar(45) NOT NULL DEFAULT 'soon',
   PRIMARY KEY (`football_matchid`)
-) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 CREATE TABLE `users` (
   `userid` int(11) NOT NULL AUTO_INCREMENT,
@@ -34,7 +36,7 @@ CREATE TABLE `users` (
   `user_role` varchar(10) NOT NULL,
   `user_name` varchar(45) NOT NULL,
   PRIMARY KEY (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8;
 
 INSERT INTO `webbet`.`users`
 (`userid`,
