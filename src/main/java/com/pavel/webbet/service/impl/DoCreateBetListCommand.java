@@ -1,7 +1,9 @@
 package com.pavel.webbet.service.impl;
 
-import com.pavel.webbet.dao.mysqldao.MysqlDaoException;
-import com.pavel.webbet.dao.mysqldao.impl.BetDao;
+import com.pavel.webbet.constant.RequestParameterConstant;
+import com.pavel.webbet.constant.UrlConstant;
+import com.pavel.webbet.dao.mysql.MysqlDaoException;
+import com.pavel.webbet.dao.mysql.impl.BetDao;
 import com.pavel.webbet.entity.bet.BetBean;
 import com.pavel.webbet.service.CommandException;
 import com.pavel.webbet.service.ICommand;
@@ -13,13 +15,14 @@ import java.util.List;
 public class DoCreateBetListCommand implements ICommand {
 
     public static final Logger logger = Logger.getLogger(DoCreateBetListCommand.class);
+    private static final String ATTRIBUTE_BET_LIST = "betList";
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         int page = 1;
         int recordsPerPage = 10;
-        if (request.getParameter("page") != null){
-            page = Integer.parseInt(request.getParameter("page"));
+        if (request.getParameter(RequestParameterConstant.PARAMETER_PAGINATION_PAGE) != null){
+            page = Integer.parseInt(request.getParameter(RequestParameterConstant.PARAMETER_PAGINATION_PAGE));
         }
         BetDao dao = BetDao.getInstance();
         List<BetBean> list = null;
@@ -29,9 +32,9 @@ public class DoCreateBetListCommand implements ICommand {
         catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
         int numberOfRecords = dao.getNumberOfRecords();
         int numberOfPages = (int)Math.ceil(numberOfRecords * 1.0 / recordsPerPage);
-        request.setAttribute("betList", list);
-        request.setAttribute("numberOfPages", numberOfPages);
-        request.setAttribute("currentPage", page);
-        return "jsp/adminBetPage.jsp";
+        request.setAttribute(ATTRIBUTE_BET_LIST, list);
+        request.setAttribute(RequestParameterConstant.ATTRIBUTE_PAGINATION_NUMBER_OF_PAGES, numberOfPages);
+        request.setAttribute(RequestParameterConstant.ATTRIBUTE_PAGINATION_CURRENT_PAGE, page);
+        return UrlConstant.URL_ADMIN_BET_PAGE;
     }
 }

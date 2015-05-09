@@ -1,5 +1,6 @@
 package com.pavel.webbet.service.impl;
 
+import com.pavel.webbet.constant.UrlConstant;
 import com.pavel.webbet.service.ICommand;
 import org.apache.log4j.Logger;
 
@@ -14,6 +15,6 @@ public class DoLogoutCommand implements ICommand {
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         session.invalidate();
-        return "index.jsp";
+        return UrlConstant.URL_INDEX;
     }
 }

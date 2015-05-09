@@ -19,7 +19,7 @@
             <jsp:include page="loginLogoutHeader.jsp" />
             <br/><br/>
 
-            <c:if test="${sessionScope.userValue.userRole == 'ADMIN' || sessionScope.userValue.userRole == 'BOOK'}" >
+            <c:if test="${sessionScope.userValue.userRole == 'ADMIN' || sessionScope.userValue.userRole == 'BOOKMAKER'}" >
                 <jsp:include page="bookmakerPanel.jsp" />
             </c:if>
             <c:if test="${sessionScope.userValue.userRole == 'ADMIN' || sessionScope.userValue.userRole == 'USER'}" >
@@ -58,12 +58,12 @@
                             <td>${match.drawCoef}</td>
                             <td>${match.looseCoef}</td>
                             <td>${match.status}</td>
-                            <c:if test="${match.status == 'ACTIVE' && sessionScope.userValue != null && sessionScope.userValue.userRole != 'BOOK'}">
+                            <c:if test="${match.status == 'ACTIVE' && sessionScope.userValue != null && sessionScope.userValue.userRole != 'BOOKMAKER'}">
                                 <td>
                                     <a href="webBetController?matchId=${match.matchId}&command=CREATE_BET_FORM_COMMAND" >Bet!</a>
                                 </td>
                             </c:if>
-                            <c:if test="${sessionScope.userValue.userRole == 'BOOK' && match.status != 'CLOSED'}">
+                            <c:if test="${sessionScope.userValue.userRole == 'BOOKMAKER'}">
                                 <td>
                                     <a href="webBetController?matchId=${match.matchId}&command=CREATE_MATCH_EDIT_FORM_COMMAND">Edit</a>
                                 </td>

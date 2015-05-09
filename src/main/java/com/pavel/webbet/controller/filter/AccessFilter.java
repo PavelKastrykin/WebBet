@@ -1,5 +1,6 @@
 package com.pavel.webbet.controller.filter;
 
+import com.pavel.webbet.constant.RequestParameterConstant;
 import com.pavel.webbet.entity.userbean.UserBean;
 
 import javax.servlet.*;
@@ -28,7 +29,7 @@ public class AccessFilter implements Filter {
         String uri = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
         AuthorizationManager manager = AuthorizationManager.getManager();
         HttpSession session = request.getSession(true);
-        UserBean user = (UserBean)(session.getAttribute("userValue"));
+        UserBean user = (UserBean)(session.getAttribute(RequestParameterConstant.SESSION_USER_VALUE));
 
         if (uri.equals("/") || uri.equals("index.jsp") || uri.equals("login.jsp") || uri.equals("register.jsp")
                 || uri.equals("home.jsp")) {

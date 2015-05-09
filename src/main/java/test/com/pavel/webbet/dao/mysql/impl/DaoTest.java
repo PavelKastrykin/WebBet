@@ -1,7 +1,8 @@
 package test.com.pavel.webbet.dao.mysqldao.impl;
 
-import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPool;
-import com.pavel.webbet.dao.mysqldao.impl.FootballMatchDAO;
+import com.pavel.webbet.constant.TableColumnConstant;
+import com.pavel.webbet.dao.mysql.connectionpool.ConnectionPool;
+import com.pavel.webbet.dao.mysql.impl.FootballMatchDAO;
 import com.pavel.webbet.entity.match.FootballMatch;
 import org.junit.Assert;
 import org.junit.Test;
@@ -38,7 +39,7 @@ public class DaoTest {
             dao.insert(match);
             resultSet = statement.executeQuery(matchIdByNameQuery);
             resultSet.next();
-            int id = resultSet.getInt("football_matchid");
+            int id = resultSet.getInt(TableColumnConstant.FOOTBALL_MATCH_COLUMN_FOOTBALL_MATCHID);
             Assert.assertEquals(id, dao.getBeanById(id).getMatchId(), 0.1);
 
             match = dao.getBeanById(id);

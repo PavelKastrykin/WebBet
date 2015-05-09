@@ -1,11 +1,10 @@
-package com.pavel.webbet.dao.mysqldao.impl;
+package com.pavel.webbet.dao.mysql.impl;
 
-import com.pavel.webbet.dao.mysqldao.ICommonDao;
-import com.pavel.webbet.dao.mysqldao.IUserBeanDao;
-import com.pavel.webbet.dao.mysqldao.MysqlDaoException;
-import com.pavel.webbet.dao.mysqldao.QueryConstant;
-import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPool;
-import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPoolException;
+import com.pavel.webbet.dao.IUserBeanDao;
+import com.pavel.webbet.dao.mysql.MysqlDaoException;
+import com.pavel.webbet.dao.mysql.QueryConstant;
+import com.pavel.webbet.dao.mysql.connectionpool.ConnectionPool;
+import com.pavel.webbet.dao.mysql.connectionpool.ConnectionPoolException;
 import com.pavel.webbet.entity.userbean.UserBean;
 import com.pavel.webbet.entity.userbean.UserRole;
 import org.apache.log4j.Logger;

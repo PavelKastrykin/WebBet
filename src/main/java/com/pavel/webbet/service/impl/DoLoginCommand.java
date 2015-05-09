@@ -1,7 +1,9 @@
 package com.pavel.webbet.service.impl;
 
-import com.pavel.webbet.dao.mysqldao.MysqlDaoException;
-import com.pavel.webbet.dao.mysqldao.impl.UserBeanDao;
+import com.pavel.webbet.constant.RequestParameterConstant;
+import com.pavel.webbet.constant.UrlConstant;
+import com.pavel.webbet.dao.mysql.MysqlDaoException;
+import com.pavel.webbet.dao.mysql.impl.UserBeanDao;
 import com.pavel.webbet.entity.userbean.UserBean;
 import com.pavel.webbet.entity.userbean.UserRole;
 import com.pavel.webbet.service.CommandException;
@@ -14,11 +16,13 @@ import javax.servlet.http.HttpSession;
 public class DoLoginCommand implements ICommand{
 
     public static final Logger logger = Logger.getLogger(DoLoginCommand.class);
+    private static final String PARAMETER_USERNAME = "username";
+    private static final String PARAMETER_PASSWORD = "password";
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException{
-        String userName = request.getParameter("username");
-        String password = request.getParameter("password");
+        String userName = request.getParameter(PARAMETER_USERNAME);
+        String password = request.getParameter(PARAMETER_PASSWORD);
         UserBeanDao dao = UserBeanDao.getInstance();
         UserBean bean = null;
         try{
@@ -26,15 +30,15 @@ public class DoLoginCommand implements ICommand{
         }
         catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
         if (bean != null && bean.getUserRole() == UserRole.BLOCKED){
-            return "jsp/blocked.jsp";
+            return UrlConstant.URL_BLOCKED;
         }
         if (bean != null){
             HttpSession session = request.getSession(true);
-            session.setAttribute("userValue", bean);
-            return "jsp/home.jsp";
+            session.setAttribute(RequestParameterConstant.SESSION_USER_VALUE, bean);
+            return UrlConstant.URL_HOME;
         }
         else {
-            return "index.jsp";
+            return UrlConstant.URL_INDEX;
         }
     }
 }

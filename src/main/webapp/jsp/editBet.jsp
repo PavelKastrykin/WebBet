@@ -37,10 +37,10 @@
                     </tr>
                     <tr>
                         <td>${betToEdit.betId}</td>
-                        <td>${betToEdit.login}</td>
-                        <td>${betToEdit.footballMatchName}</td>
-                        <td><fmt:formatDate value="${betToEdit.footballMatchDate}" dateStyle="short"/></td>
-                        <td>${betToEdit.matchScore}</td>
+                        <td>${betToEdit.user.login}</td>
+                        <td>${betToEdit.match.matchName}</td>
+                        <td><fmt:formatDate value="${betToEdit.match.startTime}" dateStyle="short"/></td>
+                        <td>${betToEdit.match.matchScore}</td>
                         <td>${betToEdit.prediction}</td>
                         <td>
                             <select id="charge" name="charge">

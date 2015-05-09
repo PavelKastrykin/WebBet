@@ -34,10 +34,10 @@
                 <c:forEach var="bet" items="${betList}">
                     <tr>
                         <td>${bet.betId}</td>
-                        <td>${bet.login}</td>
-                        <td>${bet.footballMatchName}</td>
-                        <td><fmt:formatDate value="${bet.footballMatchDate}" dateStyle="short"/></td>
-                        <td>${bet.matchScore}</td>
+                        <td>${bet.user.login}</td>
+                        <td>${bet.match.matchName}</td>
+                        <td><fmt:formatDate value="${bet.match.startTime}" dateStyle="short"/></td>
+                        <td>${bet.match.matchScore}</td>
                         <td>${bet.prediction}</td>
                         <td>${bet.moneyCharge}</td>
                         <td>${bet.sum}</td>

@@ -9,13 +9,16 @@ import javax.servlet.http.HttpSession;
 public class DoLocaleCommand implements ICommand{
 
     public static final Logger logger = Logger.getLogger(DoLocaleCommand.class);
+    private static final String PARAMETER_LANGUAGE = "language";
+    private static final String SESSION_LOCALE_VALUE = "localeValue";
+    private static final String PARAMETER_HIDDEN_PAGE_ID = "hiddenPageID";
 
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession(true);
-        String currentLocale = request.getParameter("language");
-        session.setAttribute("localeValue", currentLocale);
-        String page = request.getParameter("hiddenPageID");
+        String currentLocale = request.getParameter(PARAMETER_LANGUAGE);
+        session.setAttribute(SESSION_LOCALE_VALUE, currentLocale);
+        String page = request.getParameter(PARAMETER_HIDDEN_PAGE_ID);
         return page;
     }
 }

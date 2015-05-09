@@ -30,8 +30,8 @@
                 </tr>
                 <c:forEach var="bet" items="${myBets}">
                     <tr>
-                        <td>${bet.footballMatchName}</td>
-                        <td><fmt:formatDate value="${bet.footballMatchDate}" dateStyle="short"/></td>
+                        <td>${bet.match.matchName}</td>
+                        <td><fmt:formatDate value="${bet.match.startTime}" dateStyle="short"/></td>
                         <td>${bet.prediction}</td>
                         <td>${bet.sum}</td>
                         <td>${bet.currentCoef}</td>

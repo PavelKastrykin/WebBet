@@ -1,7 +1,8 @@
 package com.pavel.webbet.service.impl;
 
-import com.pavel.webbet.dao.mysqldao.MysqlDaoException;
-import com.pavel.webbet.dao.mysqldao.impl.BetDao;
+import com.pavel.webbet.constant.UrlConstant;
+import com.pavel.webbet.dao.mysql.MysqlDaoException;
+import com.pavel.webbet.dao.mysql.impl.BetDao;
 import com.pavel.webbet.entity.bet.BetBean;
 import com.pavel.webbet.service.CommandException;
 import com.pavel.webbet.service.ICommand;
@@ -12,17 +13,19 @@ import javax.servlet.http.HttpServletRequest;
 public class DoCreateBetEditCommand implements ICommand {
 
     public static final Logger logger = Logger.getLogger(DoCreateBetEditCommand.class);
+    private static final String PARAMETER_BET_ID = "betId";
+    private static final String ATTRIBUTE_BET_TO_EDIT = "betToEdit";
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        int id = Integer.parseInt(request.getParameter("betId"));
+        int id = Integer.parseInt(request.getParameter(PARAMETER_BET_ID));
         BetDao dao = BetDao.getInstance();
         BetBean bet = null;
         try {
-            bet = (BetBean)(dao.getBeanById(id));
+            bet = dao.getBeanById(id);
         }
         catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
-        request.setAttribute("betToEdit", bet);
-        return "jsp/editBet.jsp";
+        request.setAttribute(ATTRIBUTE_BET_TO_EDIT, bet);
+        return UrlConstant.URL_EDIT_BET;
     }
 }

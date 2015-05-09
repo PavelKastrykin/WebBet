@@ -1,4 +1,4 @@
-package com.pavel.webbet.dao.mysqldao.connectionpool;
+package com.pavel.webbet.dao.mysql.connectionpool;
 
 public final class DBParameter {
     private DBParameter(){}

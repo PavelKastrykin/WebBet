@@ -14,15 +14,15 @@ public class AuthorizationManager {
 
     private Map<String, ArrayList<UserRole>> authorizationMap = new HashMap<>();
     private ArrayList<UserRole> adminAccess = new ArrayList<>();
-    private ArrayList<UserRole> bookAccess = new ArrayList<>();
+    private ArrayList<UserRole> bookmakerAccess = new ArrayList<>();
     private ArrayList<UserRole> userAccess = new ArrayList<>();
 
     {
         adminAccess.add(UserRole.ADMIN);
-        bookAccess.add(UserRole.ADMIN);
-        bookAccess.add(UserRole.BOOK);
+        bookmakerAccess.add(UserRole.ADMIN);
+        bookmakerAccess.add(UserRole.BOOKMAKER);
         userAccess.add(UserRole.ADMIN);
-        userAccess.add(UserRole.BOOK);
+        userAccess.add(UserRole.BOOKMAKER);
         userAccess.add(UserRole.USER);
 
         authorizationMap.put("blocked.jsp", null);
@@ -33,14 +33,14 @@ public class AuthorizationManager {
         authorizationMap.put("register.jsp", null);
         authorizationMap.put("index.jsp", null);
 
-        authorizationMap.put("addMatch.jsp", bookAccess);
+        authorizationMap.put("addMatch.jsp", bookmakerAccess);
         authorizationMap.put("adminBetPage.jsp", adminAccess);
         authorizationMap.put("adminHeader.jsp", adminAccess);
         authorizationMap.put("adminUserPage.jsp", adminAccess);
-        authorizationMap.put("bookmakerPanel.jsp", bookAccess);
-        authorizationMap.put("deleteMatch.jsp", bookAccess);
+        authorizationMap.put("bookmakerPanel.jsp", bookmakerAccess);
+        authorizationMap.put("deleteMatch.jsp", bookmakerAccess);
         authorizationMap.put("editBet.jsp", adminAccess);
-        authorizationMap.put("editMatch.jsp", bookAccess);
+        authorizationMap.put("editMatch.jsp", bookmakerAccess);
         authorizationMap.put("editUser.jsp", adminAccess);
         authorizationMap.put("makeBet.jsp", userAccess);
         authorizationMap.put("myBets.jsp", userAccess);

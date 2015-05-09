@@ -1,4 +1,4 @@
-package com.pavel.webbet.dao.mysqldao;
+package com.pavel.webbet.dao.mysql;
 
 public class MysqlDaoException extends Exception {
     public MysqlDaoException(String message) { super(message);}

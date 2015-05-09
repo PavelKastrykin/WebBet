@@ -1,4 +1,4 @@
-package com.pavel.webbet.dao.mysqldao;
+package com.pavel.webbet.dao.mysql;
 
 import com.pavel.webbet.entity.bet.BetBean;
 import com.pavel.webbet.entity.match.FootballMatch;
@@ -87,7 +87,7 @@ public class QueryConstant {
     }
 
     public static String queryForBetInsert (BetBean bean) {
-        return MessageFormat.format(QueryConstant.MYSQL_ADD_BET_QUERY, bean.getLogin(), bean.getFootballMatchId(),
+        return MessageFormat.format(QueryConstant.MYSQL_ADD_BET_QUERY, bean.getUser().getLogin(), bean.getMatch().getMatchId(),
                 bean.getPrediction().toString().toLowerCase(), bean.getSum(), bean.getCurrentCoef());
     }
 

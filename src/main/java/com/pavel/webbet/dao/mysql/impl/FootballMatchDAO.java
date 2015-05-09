@@ -1,11 +1,11 @@
-package com.pavel.webbet.dao.mysqldao.impl;
+package com.pavel.webbet.dao.mysql.impl;
 
-import com.pavel.webbet.dao.mysqldao.ICommonDao;
-import com.pavel.webbet.dao.mysqldao.IFootballMatchDao;
-import com.pavel.webbet.dao.mysqldao.MysqlDaoException;
-import com.pavel.webbet.dao.mysqldao.QueryConstant;
-import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPool;
-import com.pavel.webbet.dao.mysqldao.connectionpool.ConnectionPoolException;
+import com.pavel.webbet.constant.TableColumnConstant;
+import com.pavel.webbet.dao.IFootballMatchDao;
+import com.pavel.webbet.dao.mysql.MysqlDaoException;
+import com.pavel.webbet.dao.mysql.QueryConstant;
+import com.pavel.webbet.dao.mysql.connectionpool.ConnectionPool;
+import com.pavel.webbet.dao.mysql.connectionpool.ConnectionPoolException;
 import com.pavel.webbet.entity.match.FootballMatch;
 import com.pavel.webbet.entity.match.MatchStatus;
 import org.apache.log4j.Logger;
@@ -42,14 +42,14 @@ public class FootballMatchDAO implements IFootballMatchDao {
             ResultSet rs = statement.executeQuery(QueryConstant.queryForAllMatchesWithLimit(offset, noOfRecords));
             while (rs.next()){
                 match = new FootballMatch();
-                match.setMatchId(rs.getInt("football_matchid"));
-                match.setMatchName(rs.getString("name"));
-                match.setStartTime(rs.getDate("time_start"));
-                match.setMatchScore(rs.getString("score"));
-                match.setWinCoef(rs.getFloat("coef_win"));
-                match.setDrawCoef(rs.getFloat("coef_draw"));
-                match.setLooseCoef(rs.getFloat("coef_lost"));
-                match.setStatus(MatchStatus.valueOf(rs.getString("status").toUpperCase()));
+                match.setMatchId(rs.getInt(TableColumnConstant.FOOTBALL_MATCH_COLUMN_FOOTBALL_MATCHID));
+                match.setMatchName(rs.getString(TableColumnConstant.FOOTBALL_MATCH_COLUMN_NAME));
+                match.setStartTime(rs.getDate(TableColumnConstant.FOOTBALL_MATCH_COLUMN_TIME_START));
+                match.setMatchScore(rs.getString(TableColumnConstant.FOOTBALL_MATCH_COLUMN_SCORE));
+                match.setWinCoef(rs.getFloat(TableColumnConstant.FOOTBALL_MATCH_COLUMN_COEF_WIN));
+                match.setDrawCoef(rs.getFloat(TableColumnConstant.FOOTBALL_MATCH_COLUMN_COEF_DRAW));
+                match.setLooseCoef(rs.getFloat(TableColumnConstant.FOOTBALL_MATCH_COLUMN_COEF_LOST));
+                match.setStatus(MatchStatus.valueOf(rs.getString(TableColumnConstant.FOOTBALL_MATCH_COLUMN_STATUS).toUpperCase()));
                 list.add(match);
             }
             rs.close();
@@ -84,14 +84,14 @@ public class FootballMatchDAO implements IFootballMatchDao {
             ResultSet rs = statement.executeQuery(QueryConstant.queryForGetMatchById(id));
             while (rs.next()){
                 match = new FootballMatch();
-                match.setMatchId(rs.getInt("football_matchid"));
-                match.setMatchName(rs.getString("name"));
-                match.setStartTime(rs.getDate("time_start"));
-                match.setMatchScore(rs.getString("score"));
-                match.setWinCoef(rs.getFloat("coef_win"));
-                match.setDrawCoef(rs.getFloat("coef_draw"));
-                match.setLooseCoef(rs.getFloat("coef_lost"));
-                match.setStatus(MatchStatus.valueOf(rs.getString("status").toUpperCase()));
+                match.setMatchId(rs.getInt(TableColumnConstant.FOOTBALL_MATCH_COLUMN_FOOTBALL_MATCHID));
+                match.setMatchName(rs.getString(TableColumnConstant.FOOTBALL_MATCH_COLUMN_NAME));
+                match.setStartTime(rs.getDate(TableColumnConstant.FOOTBALL_MATCH_COLUMN_TIME_START));
+                match.setMatchScore(rs.getString(TableColumnConstant.FOOTBALL_MATCH_COLUMN_SCORE));
+                match.setWinCoef(rs.getFloat(TableColumnConstant.FOOTBALL_MATCH_COLUMN_COEF_WIN));
+                match.setDrawCoef(rs.getFloat(TableColumnConstant.FOOTBALL_MATCH_COLUMN_COEF_DRAW));
+                match.setLooseCoef(rs.getFloat(TableColumnConstant.FOOTBALL_MATCH_COLUMN_COEF_LOST));
+                match.setStatus(MatchStatus.valueOf(rs.getString(TableColumnConstant.FOOTBALL_MATCH_COLUMN_STATUS).toUpperCase()));
             }
         }
         catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}

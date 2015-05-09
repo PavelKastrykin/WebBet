@@ -1,14 +1,14 @@
 package com.pavel.webbet.entity.bet;
 
-import java.util.Date;
+import com.pavel.webbet.entity.match.FootballMatch;
+import com.pavel.webbet.entity.userbean.UserBean;
 
 public class BetBean {
+
+    private FootballMatch match = new FootballMatch();
+    private UserBean user = new UserBean();
+
     private int betId;
-    private String login;
-    private int footballMatchId;
-    private String footballMatchName;
-    private String matchScore;
-    private Date footballMatchDate;
     private BetPrediction prediction;
     private boolean moneyCharge;
     private double sum;
@@ -16,18 +16,11 @@ public class BetBean {
     private boolean won;
     private BetStatus status;
 
+    public UserBean getUser(){ return user; }
+    public FootballMatch getMatch(){ return match; }
     public int getBetId() {
         return betId;
     }
-    public String getLogin() {
-        return login;
-    }
-    public int getFootballMatchId() {
-        return footballMatchId;
-    }
-    public String getMatchScore(){ return matchScore; }
-    public String getFootballMatchName() {return footballMatchName; }
-    public Date getFootballMatchDate() {return footballMatchDate; }
     public BetPrediction getPrediction() {
         return prediction;
     }
@@ -47,18 +40,11 @@ public class BetBean {
         return status;
     }
 
+    public void setMatch(FootballMatch match){ this.match = match; }
+    public void setUser(UserBean user){ this.user = user; }
     public void setBetId(int betId) {
         this.betId = betId;
     }
-    public void setLogin(String login) {
-        this.login = login;
-    }
-    public void setFootballMatchId(int footballMatchId) {
-        this.footballMatchId = footballMatchId;
-    }
-    public void setMatchScore(String matchScore) {this.matchScore = matchScore; }
-    public void setFootballMatchName(String footballMatchName) {this.footballMatchName = footballMatchName; }
-    public void setFootballMatchDate(Date date) {this.footballMatchDate = date; }
     public void setPrediction(BetPrediction prediction) {
         this.prediction = prediction;
     }

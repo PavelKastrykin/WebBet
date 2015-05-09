@@ -34,7 +34,7 @@
                         <td>
                             <select id="role" name="role">
                                 <option value="ADMIN" ${userToEdit.userRole == 'ADMIN' ? 'selected' : ''}><fmt:message key="edit.admin" /></option>
-                                <option value="BOOK" ${userToEdit.userRole == 'BOOK' ? 'selected' : ''}><fmt:message key="edit.book" /></option>
+                                <option value="BOOKMAKER" ${userToEdit.userRole == 'BOOKMAKER' ? 'selected' : ''}><fmt:message key="edit.book" /></option>
                                 <option value="USER" ${userToEdit.userRole == 'USER' ? 'selected' : ''}><fmt:message key="edit.user" /></option>
                                 <option value="BLOCKED" ${userToEdit.userRole == 'BLOCKED' ? 'selected' : ''}><fmt:message key="edit.blocked" /></option>
                             </select>

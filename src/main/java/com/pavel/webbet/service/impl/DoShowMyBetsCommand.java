@@ -1,7 +1,9 @@
 package com.pavel.webbet.service.impl;
 
-import com.pavel.webbet.dao.mysqldao.MysqlDaoException;
-import com.pavel.webbet.dao.mysqldao.impl.BetDao;
+import com.pavel.webbet.constant.RequestParameterConstant;
+import com.pavel.webbet.constant.UrlConstant;
+import com.pavel.webbet.dao.mysql.MysqlDaoException;
+import com.pavel.webbet.dao.mysql.impl.BetDao;
 import com.pavel.webbet.entity.bet.BetBean;
 import com.pavel.webbet.entity.userbean.UserBean;
 import com.pavel.webbet.service.CommandException;
@@ -14,18 +16,19 @@ import java.util.List;
 public class DoShowMyBetsCommand implements ICommand{
 
     public static final Logger logger = Logger.getLogger(DoShowMyBetsCommand.class);
+    private static final String ATTRIBUTE_MY_BETS = "myBets";
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         BetDao dao = BetDao.getInstance();
-        UserBean user = (UserBean)(request.getSession().getAttribute("userValue"));
+        UserBean user = (UserBean)(request.getSession().getAttribute(RequestParameterConstant.SESSION_USER_VALUE));
         String login = user.getLogin();
         List<BetBean> myBets = null;
         try{
             myBets = dao.getListByName(login);
         }
         catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
-        request.setAttribute("myBets", myBets);
-        return "jsp/myBets.jsp";
+        request.setAttribute(ATTRIBUTE_MY_BETS, myBets);
+        return UrlConstant.URL_MY_BETS;
     }
 }
