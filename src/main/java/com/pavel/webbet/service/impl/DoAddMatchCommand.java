@@ -2,6 +2,9 @@ package com.pavel.webbet.service.impl;
 
 import com.pavel.webbet.constant.RequestParameterConstant;
 import com.pavel.webbet.constant.UrlConstant;
+import com.pavel.webbet.dao.IFootballMatchDao;
+import com.pavel.webbet.dao.factory.DaoFactory;
+import com.pavel.webbet.dao.factory.DaoType;
 import com.pavel.webbet.dao.mysql.MysqlDaoException;
 import com.pavel.webbet.dao.mysql.impl.FootballMatchDAO;
 import com.pavel.webbet.entity.match.FootballMatch;
@@ -53,7 +56,7 @@ public class DoAddMatchCommand implements ICommand {
         FootballMatch match = new FootballMatch();
         match.setMatchName(matchName);
         match.setStartTime(matchDate);
-        FootballMatchDAO dao = FootballMatchDAO.getInstance();
+        IFootballMatchDao dao = DaoFactory.getDao(DaoType.MATCH);
         try {
             dao.insert(match);
         }

@@ -11,7 +11,7 @@ public class BetBean {
     private int betId;
     private BetPrediction prediction;
     private boolean moneyCharge;
-    private double sum;
+    private int sum;
     private float currentCoef;
     private boolean won;
     private BetStatus status;
@@ -27,7 +27,7 @@ public class BetBean {
     public boolean isMoneyCharge() {
         return moneyCharge;
     }
-    public double getSum() {
+    public int getSum() {
         return sum;
     }
     public float getCurrentCoef() {
@@ -51,7 +51,7 @@ public class BetBean {
     public void setMoneyCharge(boolean moneyCharge) {
         this.moneyCharge = moneyCharge;
     }
-    public void setSum(double sum) {
+    public void setSum(int sum) {
         this.sum = sum;
     }
     public void setCurrentCoef(float currentCoef) {

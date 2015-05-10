@@ -1,5 +1,5 @@
 package com.pavel.webbet.dao.factory;
 
-public enum DataType {
+public enum DaoType {
     USER, MATCH, BET
 }

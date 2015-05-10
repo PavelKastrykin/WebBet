@@ -2,6 +2,9 @@ package com.pavel.webbet.service.impl;
 
 import com.pavel.webbet.constant.RequestParameterConstant;
 import com.pavel.webbet.constant.UrlConstant;
+import com.pavel.webbet.dao.IBetDao;
+import com.pavel.webbet.dao.factory.DaoFactory;
+import com.pavel.webbet.dao.factory.DaoType;
 import com.pavel.webbet.dao.mysql.MysqlDaoException;
 import com.pavel.webbet.dao.mysql.impl.BetDao;
 import com.pavel.webbet.entity.bet.BetBean;
@@ -20,7 +23,7 @@ public class DoShowMyBetsCommand implements ICommand{
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
-        BetDao dao = BetDao.getInstance();
+        IBetDao dao = DaoFactory.getDao(DaoType.BET);
         UserBean user = (UserBean)(request.getSession().getAttribute(RequestParameterConstant.SESSION_USER_VALUE));
         String login = user.getLogin();
         List<BetBean> myBets = null;

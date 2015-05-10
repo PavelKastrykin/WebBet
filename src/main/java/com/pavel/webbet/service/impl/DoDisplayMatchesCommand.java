@@ -2,6 +2,9 @@ package com.pavel.webbet.service.impl;
 
 import com.pavel.webbet.constant.RequestParameterConstant;
 import com.pavel.webbet.constant.UrlConstant;
+import com.pavel.webbet.dao.IFootballMatchDao;
+import com.pavel.webbet.dao.factory.DaoFactory;
+import com.pavel.webbet.dao.factory.DaoType;
 import com.pavel.webbet.dao.mysql.MysqlDaoException;
 import com.pavel.webbet.dao.mysql.impl.FootballMatchDAO;
 import com.pavel.webbet.entity.match.FootballMatch;
@@ -24,7 +27,7 @@ public class DoDisplayMatchesCommand implements ICommand {
         if (request.getParameter(RequestParameterConstant.PARAMETER_PAGINATION_PAGE) != null){
             page = Integer.parseInt(request.getParameter(RequestParameterConstant.PARAMETER_PAGINATION_PAGE));
         }
-        FootballMatchDAO dao = FootballMatchDAO.getInstance();
+        IFootballMatchDao dao = DaoFactory.getDao(DaoType.MATCH);
         List<FootballMatch> list = null;
         try {
             list = dao.getList((page - 1) * recordsPerPage, recordsPerPage);

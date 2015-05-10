@@ -50,7 +50,7 @@ public class BetDao implements IBetDao {
                 bet.getMatch().setMatchScore(rs.getString(TableColumnConstant.FOOTBALL_MATCH_COLUMN_SCORE));
                 bet.setPrediction(BetPrediction.valueOf(rs.getString(TableColumnConstant.BETS_COLUMN_BET_PREDICTION).toUpperCase()));
                 bet.setMoneyCharge(rs.getBoolean(TableColumnConstant.BETS_COLUMN_MONEY_CHARGE));
-                bet.setSum(rs.getDouble(TableColumnConstant.BETS_COLUMN_SUM));
+                bet.setSum(rs.getInt(TableColumnConstant.BETS_COLUMN_SUM));
                 bet.setCurrentCoef(rs.getFloat(TableColumnConstant.BETS_COLUMN_CURRENT_COEF));
                 bet.setWon(rs.getBoolean(TableColumnConstant.BETS_COLUMN_IS_WON));
                 bet.setStatus(BetStatus.valueOf(rs.getString(TableColumnConstant.BETS_COLUMN_BET_STATUS).toUpperCase()));
@@ -112,14 +112,14 @@ public class BetDao implements IBetDao {
             ResultSet rs = statement.executeQuery(QueryConstant.queryForGetBetsByLogin(login));
             while (rs.next()){
                 bean = new BetBean();
-                bean.getMatch().setMatchName(rs.getString(1));
-                bean.getMatch().setStartTime(rs.getDate(2));
-                bean.setPrediction(BetPrediction.valueOf(rs.getString(3).toUpperCase()));
-                bean.setSum(rs.getDouble(4));
-                bean.setCurrentCoef(rs.getFloat(5));
-                bean.setWon(rs.getBoolean(6));
-                bean.setStatus(BetStatus.valueOf(rs.getString(7).toUpperCase()));
-                bean.setMoneyCharge(rs.getBoolean(8));
+                bean.getMatch().setMatchName(rs.getString(TableColumnConstant.FOOTBALL_MATCH_COLUMN_NAME));
+                bean.getMatch().setStartTime(rs.getDate(TableColumnConstant.FOOTBALL_MATCH_COLUMN_TIME_START));
+                bean.setPrediction(BetPrediction.valueOf(rs.getString(TableColumnConstant.BETS_COLUMN_BET_PREDICTION).toUpperCase()));
+                bean.setSum(rs.getInt(TableColumnConstant.BETS_COLUMN_SUM));
+                bean.setCurrentCoef(rs.getFloat(TableColumnConstant.BETS_COLUMN_CURRENT_COEF));
+                bean.setWon(rs.getBoolean(TableColumnConstant.BETS_COLUMN_IS_WON));
+                bean.setStatus(BetStatus.valueOf(rs.getString(TableColumnConstant.BETS_COLUMN_BET_STATUS).toUpperCase()));
+                bean.setMoneyCharge(rs.getBoolean(TableColumnConstant.BETS_COLUMN_MONEY_CHARGE));
                 list.add(bean);
             }
             rs.close();
@@ -157,7 +157,7 @@ public class BetDao implements IBetDao {
                 bet.getMatch().setMatchScore(rs.getString(TableColumnConstant.FOOTBALL_MATCH_COLUMN_SCORE));
                 bet.setPrediction(BetPrediction.valueOf(rs.getString(TableColumnConstant.BETS_COLUMN_BET_PREDICTION).toUpperCase()));
                 bet.setMoneyCharge(rs.getBoolean(TableColumnConstant.BETS_COLUMN_MONEY_CHARGE));
-                bet.setSum(rs.getDouble(TableColumnConstant.BETS_COLUMN_SUM));
+                bet.setSum(rs.getInt(TableColumnConstant.BETS_COLUMN_SUM));
                 bet.setCurrentCoef(rs.getFloat(TableColumnConstant.BETS_COLUMN_CURRENT_COEF));
                 bet.setWon(rs.getBoolean(TableColumnConstant.BETS_COLUMN_IS_WON));
                 bet.setStatus(BetStatus.valueOf(rs.getString(TableColumnConstant.BETS_COLUMN_BET_STATUS).toUpperCase()));
@@ -186,6 +186,33 @@ public class BetDao implements IBetDao {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
             int x = statement.executeUpdate(QueryConstant.queryForBetUpdate((BetBean)bet));
+        }
+        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
+        catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
+        finally {
+            try {
+                if (statement != null){statement.close();}
+                if (connection != null){connection.close();}
+            }
+            catch (SQLException e) {e.printStackTrace();}
+        }
+    }
+
+    @Override
+    public boolean containBetOnMatchId(int id) throws MysqlDaoException {
+        Connection connection = null;
+        Statement statement = null;
+        try{
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
+            ResultSet rs = statement.executeQuery(QueryConstant.queryForMatchDeletionValidation(id));
+            if (rs.next()){
+                rs.close();
+                return true;
+            }
+            rs.close();
+            return false;
+
         }
         catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
         catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}

@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
@@ -17,7 +17,7 @@
             <c:set var="pageID" value="jsp/editBet.jsp" scope="request" />
             <br/><jsp:include page="header.jsp"/><br/>
             <jsp:include page="loginLogoutHeader.jsp" />
-            <form id="editBetForm" action="webBetController" method="get">
+            <form id="editBetForm" action="webBetController" method="post">
                 <input type="hidden" name="command" value="CONFIRM_EDIT_BET_COMMAND">
                 <input type="hidden" name="betid" value="${betToEdit.betId}">
                 <table class="table">

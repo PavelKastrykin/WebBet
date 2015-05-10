@@ -2,6 +2,9 @@ package com.pavel.webbet.service.impl;
 
 import com.pavel.webbet.constant.RequestParameterConstant;
 import com.pavel.webbet.constant.UrlConstant;
+import com.pavel.webbet.dao.IUserBeanDao;
+import com.pavel.webbet.dao.factory.DaoFactory;
+import com.pavel.webbet.dao.factory.DaoType;
 import com.pavel.webbet.dao.mysql.MysqlDaoException;
 import com.pavel.webbet.dao.mysql.impl.UserBeanDao;
 import com.pavel.webbet.entity.userbean.UserBean;
@@ -19,7 +22,7 @@ public class DoCreateUserEditCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         String login = request.getParameter(RequestParameterConstant.PARAMETER_USER_LOGIN);
-        UserBeanDao dao = UserBeanDao.getInstance();
+        IUserBeanDao dao = DaoFactory.getDao(DaoType.USER);
         UserBean user = null;
         try {
             user = dao.getBeanByName(login);

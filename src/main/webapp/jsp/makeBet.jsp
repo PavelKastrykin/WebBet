@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
@@ -8,6 +8,7 @@
 <head>
     <link href="css/bootstrap.css" rel="stylesheet" />
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+    <meta http-equiv="refresh" content="20">
     <script>
         function setBetNum(betNum, betCoef)
         {
@@ -21,6 +22,17 @@
             document.forms["betForm"].submit();
             return true;
         }
+        function checkNumberInput(ob) {
+            var key = event.keyCode || event.which;
+            key = String.fromCharCode(key);
+            if(key.length == 0) return;
+            var validChars = /^[0-9]*\.?[0-9]*$/;
+            if(!validChars.test(key)){
+                event.returnValue = false;
+                if(event.preventDefault)
+                    event.preventDefault();
+            }
+        }
     </script>
     <title></title>
 </head>
@@ -28,7 +40,7 @@
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <c:set var="pageID" value="jsp/makeBet.jsp" scope="request" />
+            <c:set var="pageID" value="webBetController?matchId=${matchToBet.matchId}&command=CREATE_BET_FORM_COMMAND" scope="request" />
             <br/><jsp:include page="header.jsp"/><br/>
             <jsp:include page="loginLogoutHeader.jsp" />
             <form id="betForm" action="webBetController" method="post">
@@ -53,7 +65,7 @@
                     </tr>
                 </table><br/>
                 <label for="moneySum"><fmt:message key="make.bet.entersum" /></label>
-                <input type="text" id="moneySum" name="moneySum"/>
+                <input type="text" id="moneySum" name="moneySum" maxlength="9" onkeypress="return checkNumberInput(this)"/>BYR
             </form>
             <br/>
             <fmt:message key="make.bet.count.begin" /><span id="seconds">20</span><fmt:message key="make.bet.count.end" />
@@ -64,7 +76,7 @@
                             document.getElementById('seconds').innerHTML = --seconds;
                         }, 1000
                 );
-            </script>
+            </script><br/><br/>
             <a href="home.jsp"><fmt:message key="login.home.reff" /> </a>
         </div>
     </div>

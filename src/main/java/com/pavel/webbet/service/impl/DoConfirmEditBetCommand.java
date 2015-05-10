@@ -1,6 +1,9 @@
 package com.pavel.webbet.service.impl;
 
 import com.pavel.webbet.constant.UrlConstant;
+import com.pavel.webbet.dao.IBetDao;
+import com.pavel.webbet.dao.factory.DaoFactory;
+import com.pavel.webbet.dao.factory.DaoType;
 import com.pavel.webbet.dao.mysql.MysqlDaoException;
 import com.pavel.webbet.dao.mysql.impl.BetDao;
 import com.pavel.webbet.entity.bet.BetStatus;
@@ -26,7 +29,7 @@ public class DoConfirmEditBetCommand implements ICommand {
         bet.setMoneyCharge(Boolean.valueOf(request.getParameter(PARAMETER_CHARGE).toLowerCase()));
         bet.setWon(Boolean.valueOf(request.getParameter(PARAMETER_WON).toLowerCase()));
         bet.setStatus(BetStatus.valueOf(request.getParameter(PARAMETER_BET_STATUS)));
-        BetDao dao = BetDao.getInstance();
+        IBetDao dao = DaoFactory.getDao(DaoType.BET);
         try{
             dao.updateBean(bet);
         }

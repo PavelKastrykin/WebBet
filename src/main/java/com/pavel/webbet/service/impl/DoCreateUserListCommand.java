@@ -2,6 +2,9 @@ package com.pavel.webbet.service.impl;
 
 import com.pavel.webbet.constant.RequestParameterConstant;
 import com.pavel.webbet.constant.UrlConstant;
+import com.pavel.webbet.dao.IUserBeanDao;
+import com.pavel.webbet.dao.factory.DaoFactory;
+import com.pavel.webbet.dao.factory.DaoType;
 import com.pavel.webbet.dao.mysql.MysqlDaoException;
 import com.pavel.webbet.dao.mysql.impl.UserBeanDao;
 import com.pavel.webbet.entity.userbean.UserBean;
@@ -24,7 +27,7 @@ public class DoCreateUserListCommand implements ICommand {
         if (request.getParameter(RequestParameterConstant.PARAMETER_PAGINATION_PAGE) != null){
             page = Integer.parseInt(request.getParameter(RequestParameterConstant.PARAMETER_PAGINATION_PAGE));
         }
-        UserBeanDao dao = UserBeanDao.getInstance();
+        IUserBeanDao dao = DaoFactory.getDao(DaoType.USER);
         List<UserBean> list = null;
         try{
             list = dao.getList((page - 1) * recordsPerPage, recordsPerPage);

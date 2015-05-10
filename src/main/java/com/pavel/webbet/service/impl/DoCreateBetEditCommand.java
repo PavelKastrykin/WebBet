@@ -1,6 +1,9 @@
 package com.pavel.webbet.service.impl;
 
 import com.pavel.webbet.constant.UrlConstant;
+import com.pavel.webbet.dao.IBetDao;
+import com.pavel.webbet.dao.factory.DaoFactory;
+import com.pavel.webbet.dao.factory.DaoType;
 import com.pavel.webbet.dao.mysql.MysqlDaoException;
 import com.pavel.webbet.dao.mysql.impl.BetDao;
 import com.pavel.webbet.entity.bet.BetBean;
@@ -19,7 +22,7 @@ public class DoCreateBetEditCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request) throws CommandException {
         int id = Integer.parseInt(request.getParameter(PARAMETER_BET_ID));
-        BetDao dao = BetDao.getInstance();
+        IBetDao dao = DaoFactory.getDao(DaoType.BET);
         BetBean bet = null;
         try {
             bet = dao.getBeanById(id);

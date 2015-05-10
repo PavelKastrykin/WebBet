@@ -20,14 +20,14 @@ public class QueryConstant {
     public static final String MYSQL_ALL_MATCHES_LIST_QUERY = "select SQL_CALC_FOUND_ROWS * from (select * from " +
             "football_match order by football_matchid desc) as A limit {0}, {1}";
     public static final String MYSQL_ADD_MATCH_QUERY = "INSERT INTO football_match (`name`, `time_start`) values (''{0}'', ''{1}'')";
-    public static final String MYSQL_GET_MATCH_ID_QUERY = "select * from football_match where football_matchid = ''{0}''";
+    public static final String MYSQL_GET_MATCH_ID_QUERY = "select * from football_match where football_matchid = {0}";
     public static final String MYSQL_ADD_BET_QUERY = "INSERT INTO bets (`login`, `football_matchid`, `bet_prediction`, " +
-            "`sum`, `current_coef`) VALUES (''{0}'', ''{1}'', ''{2}'', ''{3}'', ''{4}'')";
+            "`sum`, `current_coef`) VALUES (''{0}'', {1}, ''{2}'', {3}, {4})";
     public static final String MYSQL_GET_BETS_BY_LOGIN = "select football_match.name, football_match.time_start, " +
             "bet_prediction, sum, current_coef, is_won, bet_status, money_charge from bets join football_match " +
             "on bets.football_matchid = football_match.football_matchid where login = ''{0}''";
-    public static final String MYSQL_UPDATE_MATCH_QUERY = "UPDATE football_match SET `score`=''{0}'', `coef_win`=''{1}''," +
-            " `coef_draw`=''{2}'', `coef_lost`=''{3}'', `status`=''{4}'' WHERE `football_matchid`=''{5}'';";
+    public static final String MYSQL_UPDATE_MATCH_QUERY = "UPDATE football_match SET `score`=''{0}'', `coef_win`={1}," +
+            " `coef_draw`={2}, `coef_lost`={3}, `status`=''{4}'' WHERE `football_matchid`={5};";
     public static final String MYSQL_ALL_BETS_LIST_QUERY = "select SQL_CALC_FOUND_ROWS betid, login, name, time_start, score, " +
             "bet_prediction, money_charge, sum, current_coef, is_won, bet_status " +
             "from (select betid, login, football_match.name, football_match.time_start, football_match.score, " +
@@ -35,13 +35,15 @@ public class QueryConstant {
             "from bets join football_match on bets.football_matchid = football_match.football_matchid " +
             "order by betid desc) as A limit {0}, {1}";
 
-    public static String MYSQL_GET_BET_BY_ID = "select betid, login, football_match.name, football_match.time_start, " +
+    public static final String MYSQL_GET_BET_BY_ID = "select betid, login, football_match.name, football_match.time_start, " +
             "football_match.score, bet_prediction, money_charge, sum, current_coef, is_won, bet_status " +
             "from bets join football_match on bets.football_matchid = football_match.football_matchid " +
-            "where betid=''{0}''";
+            "where betid={0}";
 
-    public static String MYSQL_UPDATE_BET_QUERY = "UPDATE bets SET `money_charge`={0}, `is_won`={1}, " +
-            "`bet_status`=''{2}'' WHERE `betid`=''{3}''";
+    public static final String MYSQL_UPDATE_BET_QUERY = "UPDATE bets SET `money_charge`={0}, `is_won`={1}, " +
+            "`bet_status`=''{2}'' WHERE `betid`={3}";
+
+    public static final String MYSQL_MATCH_DELETION_VALIDATION_QUERY = "select betid from bets where football_matchid = {0}";
 
     public static String queryForLoginAndPassword(String userNameParameter, String userPasswordParameter) {
         return MessageFormat.format(QueryConstant.MYSQL_LOGIN_QUERY, userNameParameter, userPasswordParameter);
@@ -61,11 +63,11 @@ public class QueryConstant {
     }
 
     public static String queryForUserDelete(int id) {
-        return MessageFormat.format(QueryConstant.MYSQL_DELETE_USER_QUERY, id);
+        return MessageFormat.format(QueryConstant.MYSQL_DELETE_USER_QUERY, Integer.toString(id));
     }
 
     public static String queryForMatchDelete(int id) {
-        return MessageFormat.format(QueryConstant.MYSQL_DELETE_MATCH_QUERY, id);
+        return MessageFormat.format(QueryConstant.MYSQL_DELETE_MATCH_QUERY, Integer.toString(id));
     }
 
     public static String queryForUserUpdate(UserBean bean) {
@@ -74,7 +76,8 @@ public class QueryConstant {
     }
 
     public static String queryForAllMatchesWithLimit(int offset, int numberOfRecords) {
-        return MessageFormat.format(QueryConstant.MYSQL_ALL_MATCHES_LIST_QUERY, offset, numberOfRecords);
+        return MessageFormat.format(QueryConstant.MYSQL_ALL_MATCHES_LIST_QUERY, Integer.toString(offset),
+                Integer.toString(numberOfRecords));
     }
 
     public static String queryForMatchInsert(FootballMatch match) {
@@ -83,12 +86,13 @@ public class QueryConstant {
     }
 
     public static String queryForGetMatchById(int id) {
-        return MessageFormat.format(QueryConstant.MYSQL_GET_MATCH_ID_QUERY, id);
+        return MessageFormat.format(QueryConstant.MYSQL_GET_MATCH_ID_QUERY, Integer.toString(id));
     }
 
     public static String queryForBetInsert (BetBean bean) {
-        return MessageFormat.format(QueryConstant.MYSQL_ADD_BET_QUERY, bean.getUser().getLogin(), bean.getMatch().getMatchId(),
-                bean.getPrediction().toString().toLowerCase(), bean.getSum(), bean.getCurrentCoef());
+        return MessageFormat.format(QueryConstant.MYSQL_ADD_BET_QUERY, bean.getUser().getLogin(),
+                Integer.toString(bean.getMatch().getMatchId()), bean.getPrediction().toString().toLowerCase(),
+                Integer.toString(bean.getSum()), Float.toString(bean.getCurrentCoef()));
     }
 
     public static String queryForGetBetsByLogin (String login) {
@@ -96,24 +100,32 @@ public class QueryConstant {
     }
 
     public static String queryForMatchUpdate(FootballMatch match) {
-        return MessageFormat.format(QueryConstant.MYSQL_UPDATE_MATCH_QUERY, match.getMatchScore(), match.getWinCoef(),
-                match.getDrawCoef(), match.getLooseCoef(), match.getStatus().toString().toLowerCase(), match.getMatchId());
+        return MessageFormat.format(QueryConstant.MYSQL_UPDATE_MATCH_QUERY, match.getMatchScore(),
+                Float.toString(match.getWinCoef()), Float.toString(match.getDrawCoef()),
+                Float.toString(match.getLooseCoef()), match.getStatus().toString().toLowerCase(),
+                Integer.toString(match.getMatchId()));
     }
 
     public static String queryForAllBetsWithLimit(int offset, int numberOfRecords) {
-        return MessageFormat.format(QueryConstant.MYSQL_ALL_BETS_LIST_QUERY, offset, numberOfRecords);
+        return MessageFormat.format(QueryConstant.MYSQL_ALL_BETS_LIST_QUERY, Integer.toString(offset),
+                Integer.toString(numberOfRecords));
     }
 
     public static String queryForGetBetById(int id) {
-        return MessageFormat.format(QueryConstant.MYSQL_GET_BET_BY_ID, id);
+        return MessageFormat.format(QueryConstant.MYSQL_GET_BET_BY_ID, Integer.toString(id));
     }
 
     public static String queryForBetUpdate(BetBean bet) {
         return MessageFormat.format(QueryConstant.MYSQL_UPDATE_BET_QUERY, bet.isMoneyCharge() ? 1 : 0, bet.isWon() ? 1 : 0,
-                bet.getStatus().toString().toLowerCase(), bet.getBetId());
+                bet.getStatus().toString().toLowerCase(), Integer.toString(bet.getBetId()));
     }
 
     public static String queryForAllUsersWithLimit(int offset, int numberOfRecords) {
-        return MessageFormat.format(QueryConstant.MYSQL_ALL_USER_LIST_QUERY, offset, numberOfRecords);
+        return MessageFormat.format(QueryConstant.MYSQL_ALL_USER_LIST_QUERY, Integer.toString(offset),
+                Integer.toString(numberOfRecords));
+    }
+
+    public static String queryForMatchDeletionValidation(int id) {
+        return MessageFormat.format(QueryConstant.MYSQL_MATCH_DELETION_VALIDATION_QUERY, Integer.toString(id));
     }
 }

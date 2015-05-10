@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
@@ -17,9 +17,9 @@
             <c:set var="pageID" value="jsp/editMatch.jsp" scope="request" />
             <br/><jsp:include page="header.jsp"/><br/>
             <jsp:include page="loginLogoutHeader.jsp" />
-            <form id="editMatchForm" action="webBetController" method="get">
+            <form id="editMatchForm" action="webBetController" method="post">
                 <input type="hidden" name="command" value="EDIT_MATCH_COMMAND">
-                <input type="hidden" name="matchid" value="${matchToEdit.matchId}">
+                <input type="hidden" name="matchId" value="${matchToEdit.matchId}">
                 <table class="table">
                     <tr>
                         <th>#id</th>

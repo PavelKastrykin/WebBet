@@ -4,8 +4,8 @@ import com.pavel.webbet.constant.RequestParameterConstant;
 import com.pavel.webbet.constant.UrlConstant;
 import com.pavel.webbet.dao.IBetDao;
 import com.pavel.webbet.dao.factory.DaoFactory;
+import com.pavel.webbet.dao.factory.DaoType;
 import com.pavel.webbet.dao.mysql.MysqlDaoException;
-import com.pavel.webbet.dao.mysql.impl.BetDao;
 import com.pavel.webbet.entity.bet.BetBean;
 import com.pavel.webbet.entity.bet.BetPrediction;
 import com.pavel.webbet.entity.userbean.UserBean;
@@ -29,7 +29,7 @@ public class DoAddBetCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request) throws CommandException{
         HttpSession session = request.getSession(true);
-        double moneySum = Double.parseDouble(request.getParameter(PARAMETER_MONEY_SUM));
+        int moneySum = Integer.parseInt(request.getParameter(PARAMETER_MONEY_SUM));
         BetPrediction prediction = BetPrediction.valueOf((request.getParameter(PARAMETER_SELECTED_BET_NUMBER)).toUpperCase());
         Float selectedBetCoef = Float.parseFloat(request.getParameter(PARAMETER_SELECTED_BET_COEF));
         String login = ((UserBean)(session.getAttribute(RequestParameterConstant.SESSION_USER_VALUE))).getLogin();
@@ -42,7 +42,7 @@ public class DoAddBetCommand implements ICommand {
         betBean.getUser().setLogin(login);
         betBean.getMatch().setMatchId(idOfMatch);
 
-        IBetDao dao = DaoFactory.getInstance().getDao("BET_DAO", IBetDao.class);
+        IBetDao dao = DaoFactory.getDao(DaoType.BET);
         try {
             dao.insert(betBean);
         }

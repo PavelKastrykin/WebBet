@@ -1,5 +1,6 @@
 package com.pavel.webbet.dao.mysql.impl;
 
+import com.pavel.webbet.constant.TableColumnConstant;
 import com.pavel.webbet.dao.IUserBeanDao;
 import com.pavel.webbet.dao.mysql.MysqlDaoException;
 import com.pavel.webbet.dao.mysql.QueryConstant;
@@ -42,11 +43,11 @@ public class UserBeanDao implements IUserBeanDao {
             if (!hasResult) {
                 return null;
             } else {
-                userBean.setUserID(resultSet.getInt(1));
-                userBean.setLogin(resultSet.getString(2));
-                userBean.setPassword(resultSet.getString(3));
-                userBean.setUserRole(UserRole.valueOf(resultSet.getString(4).toUpperCase()));
-                userBean.setName(resultSet.getString(5));
+                userBean.setUserID(resultSet.getInt(TableColumnConstant.USERS_COLUMN_USERID));
+                userBean.setLogin(resultSet.getString(TableColumnConstant.USERS_COLUMN_LOGIN));
+                userBean.setPassword(resultSet.getString(TableColumnConstant.USERS_COLUMN_PASSWORD));
+                userBean.setUserRole(UserRole.valueOf(resultSet.getString(TableColumnConstant.USERS_COLUMN_USER_ROLE).toUpperCase()));
+                userBean.setName(resultSet.getString(TableColumnConstant.USERS_COLUMN_USER_NAME));
                 return userBean;
             }
         }
@@ -79,11 +80,11 @@ public class UserBeanDao implements IUserBeanDao {
             if (!hasResult) {
                 return null;
             } else {
-                userBean.setUserID(resultSet.getInt(1));
-                userBean.setLogin(resultSet.getString(2));
-                userBean.setPassword(resultSet.getString(3));
-                userBean.setUserRole(UserRole.valueOf(resultSet.getString(4).toUpperCase()));
-                userBean.setName(resultSet.getString(5));
+                userBean.setUserID(resultSet.getInt(TableColumnConstant.USERS_COLUMN_USERID));
+                userBean.setLogin(resultSet.getString(TableColumnConstant.USERS_COLUMN_LOGIN));
+                userBean.setPassword(resultSet.getString(TableColumnConstant.USERS_COLUMN_PASSWORD));
+                userBean.setUserRole(UserRole.valueOf(resultSet.getString(TableColumnConstant.USERS_COLUMN_USER_ROLE).toUpperCase()));
+                userBean.setName(resultSet.getString(TableColumnConstant.USERS_COLUMN_USER_NAME));
                 return userBean;
             }
         }
@@ -112,11 +113,11 @@ public class UserBeanDao implements IUserBeanDao {
             resultSet = statement.executeQuery(QueryConstant.queryForUserType(type));
             while (resultSet.next()){
                 UserBean userBean = new UserBean();
-                userBean.setUserID(resultSet.getInt(1));
-                userBean.setLogin(resultSet.getString(2));
-                userBean.setPassword(resultSet.getString(3));
-                userBean.setUserRole(UserRole.valueOf(resultSet.getString(4).toUpperCase()));
-                userBean.setName(resultSet.getString(5));
+                userBean.setUserID(resultSet.getInt(TableColumnConstant.USERS_COLUMN_USERID));
+                userBean.setLogin(resultSet.getString(TableColumnConstant.USERS_COLUMN_LOGIN));
+                userBean.setPassword(resultSet.getString(TableColumnConstant.USERS_COLUMN_PASSWORD));
+                userBean.setUserRole(UserRole.valueOf(resultSet.getString(TableColumnConstant.USERS_COLUMN_USER_ROLE).toUpperCase()));
+                userBean.setName(resultSet.getString(TableColumnConstant.USERS_COLUMN_USER_NAME));
                 userList.add(userBean);
             }
             return userList;
@@ -144,19 +145,19 @@ public class UserBeanDao implements IUserBeanDao {
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery(QueryConstant.queryForAllUsersWithLimit(offset, noOfRecords));
-            while (rs.next()){
+            ResultSet resultSet = statement.executeQuery(QueryConstant.queryForAllUsersWithLimit(offset, noOfRecords));
+            while (resultSet.next()){
                 user = new UserBean();
-                user.setUserID(rs.getInt(1));
-                user.setLogin(rs.getString(2));
-                user.setUserRole(UserRole.valueOf(rs.getString(3).toUpperCase()));
-                user.setName(rs.getString(4));
+                user.setUserID(resultSet.getInt(TableColumnConstant.USERS_COLUMN_USERID));
+                user.setLogin(resultSet.getString(TableColumnConstant.USERS_COLUMN_LOGIN));
+                user.setUserRole(UserRole.valueOf(resultSet.getString(TableColumnConstant.USERS_COLUMN_USER_ROLE).toUpperCase()));
+                user.setName(resultSet.getString(TableColumnConstant.USERS_COLUMN_USER_NAME));
                 userList.add(user);
             }
-            rs.close();
-            rs = statement.executeQuery("select FOUND_ROWS()");
-            if (rs.next()){
-                numberOfRecords = rs.getInt(1);
+            resultSet.close();
+            resultSet = statement.executeQuery("select FOUND_ROWS()");
+            if (resultSet.next()){
+                numberOfRecords = resultSet.getInt(1);
             }
         }
         catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}

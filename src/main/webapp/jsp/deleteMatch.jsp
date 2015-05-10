@@ -1,4 +1,4 @@
-
+<!DOCTYPE html>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
@@ -19,7 +19,7 @@
     </script>
 </head>
 <body>
-    <form action="webBetController" name="matchDelete${matchToDelete}" id="matchDelete${matchToDelete}" method="get">
+    <form action="webBetController" name="matchDelete${matchToDelete}" id="matchDelete${matchToDelete}" method="post">
       <fmt:message key="bookmaker.panel.deleteMatch.reff" var="buttonValue"/>
       <input type="hidden" name="command" value="DELETE_MATCH_COMMAND"/>
       <input type="hidden" name="matchToDeleteId" value="${matchToDelete}"/>
