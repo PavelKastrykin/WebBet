@@ -67,6 +67,7 @@
                 <fmt:message key="editbet.button.edit" var="buttonValue"/>
                 <input type="submit" name="submit" value="${buttonValue}" onclick="return confirm('Confirm?')" class="btn btn-primary" />
             </form>
+            <br/><a href="home.jsp"><fmt:message key="login.home.reff" /> </a><br/>
         </div>
     </div>
 </div>

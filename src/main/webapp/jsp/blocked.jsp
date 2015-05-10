@@ -12,5 +12,6 @@
 </head>
 <body>
     <h1><fmt:message key="blocked" /></h1>
+    <br/><a href="home.jsp"><fmt:message key="login.home.reff" /> </a><br/>
 </body>
 </html>

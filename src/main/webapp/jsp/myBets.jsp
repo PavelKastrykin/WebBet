@@ -41,7 +41,7 @@
                     </tr>
                 </c:forEach>
             </table>
-            <a href="home.jsp"><fmt:message key="login.home.reff" /> </a><br/>
+            <br/><a href="home.jsp"><fmt:message key="login.home.reff" /> </a><br/>
         </div>
     </div>
 </div>

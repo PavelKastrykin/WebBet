@@ -23,6 +23,11 @@ public final class ConnectionPool {
     private BlockingQueue<Connection> connectionQueue;
     private BlockingQueue<Connection> givenAwayConQueue;
 
+    private static final String PROPERTY_USER = "user";
+    private static final String PROPERTY_PASSWORD = "password";
+    private static final String PROPERTY_USE_UNICODE = "useUnicode";
+    private static final String PROPERTY_ENCODING = "characterEncoding";
+
     private String driverName;
     private String url;
     private String user;
@@ -59,10 +64,10 @@ public final class ConnectionPool {
             connectionQueue = new ArrayBlockingQueue<Connection>(poolSize);
 
             Properties properties = new Properties();
-            properties.setProperty("user", user);
-            properties.setProperty("password", password);
-            properties.setProperty("useUnicode", "true");
-            properties.setProperty("characterEncoding", encoding);
+            properties.setProperty(PROPERTY_USER, user);
+            properties.setProperty(PROPERTY_PASSWORD, password);
+            properties.setProperty(PROPERTY_USE_UNICODE, "true");
+            properties.setProperty(PROPERTY_ENCODING, encoding);
             for (int i = 0; i < poolSize; i++){
                 Connection connection = DriverManager.getConnection(url, properties);
                 PooledConnection pooledConnection = new PooledConnection(connection);
@@ -161,7 +166,7 @@ public final class ConnectionPool {
         }
         @Override
         public CallableStatement prepareCall(String sql) throws SQLException {
-            return prepareCall(sql);
+            return connection.prepareCall(sql);
         }
         @Override
         public String nativeSQL(String sql) throws SQLException {

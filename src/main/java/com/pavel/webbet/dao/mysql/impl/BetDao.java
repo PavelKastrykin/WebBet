@@ -4,7 +4,7 @@ import com.pavel.webbet.constant.TableColumnConstant;
 import com.pavel.webbet.dao.IBetDao;
 import com.pavel.webbet.dao.mysql.MysqlDaoException;
 import com.pavel.webbet.entity.bet.BetPrediction;
-import com.pavel.webbet.dao.mysql.QueryConstant;
+import com.pavel.webbet.constant.QueryConstant;
 import com.pavel.webbet.dao.mysql.connectionpool.ConnectionPool;
 import com.pavel.webbet.dao.mysql.connectionpool.ConnectionPoolException;
 import com.pavel.webbet.entity.bet.BetBean;
@@ -63,7 +63,10 @@ public class BetDao implements IBetDao {
                 numberOfRecords = rs.getInt(1);
             }
         }
-        catch (ConnectionPoolException e) {throw new MysqlDaoException(e.getMessage(), e);}
+        catch (ConnectionPoolException e) {
+            throw new MysqlDaoException(e.getMessage(), e);
+        }
+
         catch (SQLException e){throw new MysqlDaoException("Error retrieving data from database", e);
         }
         finally {
@@ -85,9 +88,12 @@ public class BetDao implements IBetDao {
         try {
             connection = ConnectionPool.getInstance().takeConnection();
             statement = connection.createStatement();
-            int x = statement.executeUpdate(QueryConstant.queryForBetInsert(bean));
+            statement.executeUpdate(QueryConstant.queryForBetInsert(bean));
         }
-        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
+        catch (ConnectionPoolException e){
+            throw new MysqlDaoException(e.getMessage(), e);
+        }
+
         catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
         finally {
             try {
@@ -164,12 +170,20 @@ public class BetDao implements IBetDao {
             }
             rs.close();
         }
-        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
-        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
+        catch (ConnectionPoolException e){
+            throw new MysqlDaoException(e.getMessage(), e);
+        }
+        catch (SQLException e) {
+            throw new MysqlDaoException("Error retrieving data from database", e);
+        }
         finally {
             try {
-                if (statement != null){statement.close();}
-                if (connection != null){connection.close();}
+                if (statement != null){
+                    statement.close();
+                }
+                if (connection != null){
+                    connection.close();
+                }
             }
             catch (SQLException e){
                 e.printStackTrace();

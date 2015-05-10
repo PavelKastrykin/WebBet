@@ -1,7 +1,6 @@
 package com.pavel.webbet.dao.mysql.connectionpool;
 
 public final class DBParameter {
-    private DBParameter(){}
 
     public static final String DB_DRIVER = "db.driver";
     public static final String DB_URL ="db.url";

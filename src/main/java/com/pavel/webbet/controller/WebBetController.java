@@ -19,6 +19,7 @@ public class WebBetController extends HttpServlet{
     public static final Logger logger = Logger.getLogger(WebBetController.class);
     private static final String PARAMETER_COMMAND = "command";
     private static final String ERROR_MESSAGE = "errorMessage";
+    private static final String REQUEST_ENCODING = "UTF-8";
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -27,7 +28,7 @@ public class WebBetController extends HttpServlet{
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        request.setCharacterEncoding("UTF-8");
+        request.setCharacterEncoding(REQUEST_ENCODING);
         String commandName = request.getParameter(PARAMETER_COMMAND);
         ICommand command = CommandDispatcher.getInstance().getCommand(commandName);
         String page = null;

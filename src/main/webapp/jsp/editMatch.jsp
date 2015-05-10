@@ -9,15 +9,36 @@
     <link href="css/bootstrap.css" rel="stylesheet" />
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
     <title></title>
+    <script>
+        function validate(){
+            var win = document.getElementsByName("winCoef")[0].value;
+            var draw = document.getElementsByName("drawCoef")[0].value;
+            var loose = document.getElementsByName("looseCoef")[0].value;
+            if(isNaN(win) || isNaN(draw) || isNaN(loose)){
+                document.getElementById("validationWarning").innerText = '<fmt:message key="editmatch.validation.notnumeric"/>';
+                return false;
+            }
+            if(win > 1000 || draw > 1000 || loose > 1000){
+                document.getElementById("validationWarning").innerText = '<fmt:message key="editmatch.validation.toobig"/>';
+                return false;
+            }
+            if(win <= 0 || draw <= 0 || loose <= 0){
+                document.getElementById("validationWarning").innerText = '<fmt:message key="editmatch.validation.lesszero"/>';
+                return false;
+            }
+            return true;
+
+        }
+    </script>
 </head>
 <body>
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <c:set var="pageID" value="jsp/editMatch.jsp" scope="request" />
+            <c:set var="pageID" value="webBetController?matchId=${matchToEdit.matchId}&command=CREATE_MATCH_EDIT_FORM_COMMAND" scope="request" />
             <br/><jsp:include page="header.jsp"/><br/>
             <jsp:include page="loginLogoutHeader.jsp" />
-            <form id="editMatchForm" action="webBetController" method="post">
+            <form id="editMatchForm" action="webBetController" method="post" onsubmit="return validate()">
                 <input type="hidden" name="command" value="EDIT_MATCH_COMMAND">
                 <input type="hidden" name="matchId" value="${matchToEdit.matchId}">
                 <table class="table">
@@ -49,8 +70,10 @@
                     </tr>
                 </table>
                 <fmt:message key="editmatch.button.edit" var="buttonValue"/>
-                <input type="submit" name="submit" value="${buttonValue}" onclick="return confirm('Confirm?')" class="btn btn-primary"/>
+                <input type="submit" name="submit" id="submitSave" value="${buttonValue}" onclick="return confirm('Confirm?')" class="btn btn-primary"/>
+                <label id="validationWarning" > </label>
             </form>
+            <br/><a href="home.jsp"><fmt:message key="login.home.reff" /> </a><br/>
         </div>
     </div>
 </div>

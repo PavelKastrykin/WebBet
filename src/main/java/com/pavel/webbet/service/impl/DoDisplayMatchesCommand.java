@@ -1,5 +1,6 @@
 package com.pavel.webbet.service.impl;
 
+import com.pavel.webbet.constant.CommandConstant;
 import com.pavel.webbet.constant.RequestParameterConstant;
 import com.pavel.webbet.constant.UrlConstant;
 import com.pavel.webbet.dao.IFootballMatchDao;
@@ -23,7 +24,7 @@ public class DoDisplayMatchesCommand implements ICommand {
     @Override
     public String execute(HttpServletRequest request) throws CommandException{
         int page = 1;
-        int recordsPerPage = 10;
+        int recordsPerPage = CommandConstant.NUMBER_OF_RECORDS;
         if (request.getParameter(RequestParameterConstant.PARAMETER_PAGINATION_PAGE) != null){
             page = Integer.parseInt(request.getParameter(RequestParameterConstant.PARAMETER_PAGINATION_PAGE));
         }

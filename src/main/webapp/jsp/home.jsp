@@ -96,7 +96,6 @@
                 <c:if test="${currentPage lt numberOfPages}">
                     <td><a href="webBetController?command=DISPLAY_MATCHES_COMMAND&page=${currentPage + 1}"><fmt:message key="matches.table.next" /></a> </td>
                 </c:if>
-
         </div>
     </div>
 </div>

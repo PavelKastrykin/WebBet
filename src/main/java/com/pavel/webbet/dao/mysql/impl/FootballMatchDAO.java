@@ -3,7 +3,7 @@ package com.pavel.webbet.dao.mysql.impl;
 import com.pavel.webbet.constant.TableColumnConstant;
 import com.pavel.webbet.dao.IFootballMatchDao;
 import com.pavel.webbet.dao.mysql.MysqlDaoException;
-import com.pavel.webbet.dao.mysql.QueryConstant;
+import com.pavel.webbet.constant.QueryConstant;
 import com.pavel.webbet.dao.mysql.connectionpool.ConnectionPool;
 import com.pavel.webbet.dao.mysql.connectionpool.ConnectionPoolException;
 import com.pavel.webbet.entity.match.FootballMatch;

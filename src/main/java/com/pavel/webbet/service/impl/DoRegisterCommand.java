@@ -1,14 +1,14 @@
 package com.pavel.webbet.service.impl;
 
+import com.mysql.jdbc.StringUtils;
 import com.pavel.webbet.constant.UrlConstant;
 import com.pavel.webbet.dao.IUserBeanDao;
 import com.pavel.webbet.dao.factory.DaoFactory;
 import com.pavel.webbet.dao.factory.DaoType;
 import com.pavel.webbet.dao.mysql.MysqlDaoException;
-import com.pavel.webbet.dao.mysql.impl.UserBeanDao;
 import com.pavel.webbet.entity.userbean.UserBean;
 import com.pavel.webbet.service.CommandException;
-import com.pavel.webbet.service.CommandWarningConstants;
+import com.pavel.webbet.constant.CommandConstant;
 import com.pavel.webbet.service.ICommand;
 import org.apache.log4j.Logger;
 
@@ -30,13 +30,14 @@ public class DoRegisterCommand implements ICommand {
         String confirm = request.getParameter(PARAMETER_REGISTER_CONFIRM);
         String realName = request.getParameter(PARAMETER_REGISTER_NAME);
 
-        if (login == "" || password=="" || confirm=="" || realName==""){
-            request.setAttribute(PARAMETER_REGISTER_WARNING, CommandWarningConstants.EMPTY_FIELDS_WARNING);
+        if (StringUtils.isNullOrEmpty(login) || StringUtils.isNullOrEmpty(password) ||
+                StringUtils.isNullOrEmpty(confirm) || StringUtils.isNullOrEmpty(realName)){
+            request.setAttribute(PARAMETER_REGISTER_WARNING, CommandConstant.EMPTY_FIELDS_WARNING);
             return UrlConstant.URL_REGISTER;
         }
 
         if (!password.equals(confirm)){
-            request.setAttribute(PARAMETER_REGISTER_WARNING, CommandWarningConstants.PASSWORD_CONFIRM_WARNING);
+            request.setAttribute(PARAMETER_REGISTER_WARNING, CommandConstant.PASSWORD_CONFIRM_WARNING);
             return UrlConstant.URL_REGISTER;
         }
 
@@ -59,7 +60,7 @@ public class DoRegisterCommand implements ICommand {
             return UrlConstant.URL_INDEX;
         }
         else {
-            request.setAttribute(PARAMETER_REGISTER_WARNING, CommandWarningConstants.SAME_LOGIN_WARNING);
+            request.setAttribute(PARAMETER_REGISTER_WARNING, CommandConstant.SAME_LOGIN_WARNING);
             return UrlConstant.URL_REGISTER;
         }
     }

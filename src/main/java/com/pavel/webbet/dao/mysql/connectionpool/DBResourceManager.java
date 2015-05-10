@@ -3,8 +3,10 @@ package com.pavel.webbet.dao.mysql.connectionpool;
 import java.util.ResourceBundle;
 
 public class DBResourceManager {
+
     private final static DBResourceManager instance = new DBResourceManager();
     private ResourceBundle bundle = ResourceBundle.getBundle("properties.project");
+
     public static DBResourceManager getInstance(){
         return instance;
     }
