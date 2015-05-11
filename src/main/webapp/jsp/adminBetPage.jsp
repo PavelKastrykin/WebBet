@@ -69,7 +69,7 @@
                 <td><a href="webBetController?command=CREATE_BET_LIST&page=${currentPage + 1}"><fmt:message key="matches.table.next" /></a></td>
             </c:if>
             <br/>
-            <a href="home.jsp"><fmt:message key="login.home.reff" /> </a>
+            <a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a>
         </div>
     </div>
 </div>

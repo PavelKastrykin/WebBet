@@ -41,7 +41,7 @@
                     <input type="submit" name="submit" value="${buttonValue}" onclick="return submitLogin()" class="btn btn-primary"/>
                     <a href="register.jsp"><fmt:message key="register.button.submit" /> </a>
                 </form>
-                <a href="home.jsp"><fmt:message key="login.home.reff" /> </a>
+                <a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a>
             </div>
         </div>
     </div>

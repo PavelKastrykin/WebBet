@@ -38,7 +38,7 @@ public class DoLoginCommand implements ICommand{
         if (bean != null){
             HttpSession session = request.getSession(true);
             session.setAttribute(RequestParameterConstant.SESSION_USER_VALUE, bean);
-            return UrlConstant.URL_HOME;
+            return UrlConstant.REQUEST_MATCH_LIST;
         }
         else {
             return UrlConstant.URL_INDEX;

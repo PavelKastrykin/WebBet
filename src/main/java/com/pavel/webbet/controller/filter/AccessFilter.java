@@ -31,17 +31,6 @@ public class AccessFilter implements Filter {
         HttpSession session = request.getSession(true);
         UserBean user = (UserBean)(session.getAttribute(RequestParameterConstant.SESSION_USER_VALUE));
 
-        if (uri.equals("/") || uri.equals("index.jsp") || uri.equals("login.jsp") || uri.equals("register.jsp")
-                || uri.equals("home.jsp")) {
-            filterChain.doFilter(servletRequest, servletResponse);
-            return;
-        }
-
-        if (user == null) {
-            config.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
-            return;
-        }
-
         if (!manager.isUserAuthorized(uri, user)){
             config.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
             return;

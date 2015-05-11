@@ -73,7 +73,7 @@
                 <input type="submit" name="submit" id="submitSave" value="${buttonValue}" onclick="return confirm('Confirm?')" class="btn btn-primary"/>
                 <label id="validationWarning" > </label>
             </form>
-            <br/><a href="home.jsp"><fmt:message key="login.home.reff" /> </a><br/>
+            <br/><a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a><br/>
         </div>
     </div>
 </div>

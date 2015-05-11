@@ -11,14 +11,12 @@ import com.pavel.webbet.entity.bet.BetBean;
 import com.pavel.webbet.entity.bet.BetStatus;
 import org.apache.log4j.Logger;
 
-import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BetDao implements IBetDao {
+public class BetDao extends DaoJdbcResource implements IBetDao {
 
     public static final Logger logger = Logger.getLogger(BetDao.class);
 
@@ -31,14 +29,10 @@ public class BetDao implements IBetDao {
     @Override
     public List<BetBean> getList(int offset, int noOfRecords) throws MysqlDaoException{
 
-        Connection connection = null;
-        Statement statement = null;
-
         List<BetBean> list = new ArrayList<>();
         BetBean bet = null;
         try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.createStatement();
+            prepareConnection();
 
             ResultSet rs = statement.executeQuery(QueryConstant.queryForAllBetsWithLimit(offset, noOfRecords));
             while (rs.next()){
@@ -70,24 +64,16 @@ public class BetDao implements IBetDao {
         catch (SQLException e){throw new MysqlDaoException("Error retrieving data from database", e);
         }
         finally {
-            try {
-                if (statement != null){statement.close();}
-                if (connection != null){connection.close();}
-            }
-            catch (SQLException e){
-                e.printStackTrace();
-            }
+            releaseJDBCResources();
         }
         return list;
     }
 
     @Override
     public void insert(BetBean bean) throws MysqlDaoException{
-        Connection connection = null;
-        Statement statement = null;
+
         try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.createStatement();
+            prepareConnection();
             statement.executeUpdate(QueryConstant.queryForBetInsert(bean));
         }
         catch (ConnectionPoolException e){
@@ -96,25 +82,17 @@ public class BetDao implements IBetDao {
 
         catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
         finally {
-            try {
-                if (statement != null){statement.close();}
-                if (connection != null){connection.close();}
-            }
-            catch (SQLException e) {
-            }
+            releaseJDBCResources();
         }
     }
 
     @Override
     public List<BetBean> getListByName(String login) throws MysqlDaoException {
-        Connection connection = null;
-        Statement statement = null;
 
         List<BetBean> list = new ArrayList<>();
         BetBean bean = null;
         try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.createStatement();
+            prepareConnection();
             ResultSet rs = statement.executeQuery(QueryConstant.queryForGetBetsByLogin(login));
             while (rs.next()){
                 bean = new BetBean();
@@ -134,11 +112,7 @@ public class BetDao implements IBetDao {
         catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
         catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
         finally {
-            try {
-                if (statement != null){statement.close();}
-                if (connection != null){connection.close();}
-            }
-            catch (SQLException e) {e.printStackTrace();}
+            releaseJDBCResources();
         }
         return list;
     }
@@ -146,13 +120,9 @@ public class BetDao implements IBetDao {
     @Override
     public BetBean getBeanById(int id) throws MysqlDaoException {
 
-        Connection connection = null;
-        Statement statement = null;
         BetBean bet = null;
         try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.createStatement();
-
+            prepareConnection();
             ResultSet rs = statement.executeQuery(QueryConstant.queryForGetBetById(id));
             while (rs.next()){
                 bet = new BetBean();
@@ -177,48 +147,29 @@ public class BetDao implements IBetDao {
             throw new MysqlDaoException("Error retrieving data from database", e);
         }
         finally {
-            try {
-                if (statement != null){
-                    statement.close();
-                }
-                if (connection != null){
-                    connection.close();
-                }
-            }
-            catch (SQLException e){
-                e.printStackTrace();
-            }
+            releaseJDBCResources();
         }
         return bet;
     }
 
     @Override
     public void updateBean(BetBean bet) throws MysqlDaoException {
-        Connection connection = null;
-        Statement statement = null;
         try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.createStatement();
+            prepareConnection();
             int x = statement.executeUpdate(QueryConstant.queryForBetUpdate((BetBean)bet));
         }
         catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
         catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
         finally {
-            try {
-                if (statement != null){statement.close();}
-                if (connection != null){connection.close();}
-            }
-            catch (SQLException e) {e.printStackTrace();}
+            releaseJDBCResources();
         }
     }
 
     @Override
     public boolean containBetOnMatchId(int id) throws MysqlDaoException {
-        Connection connection = null;
-        Statement statement = null;
+
         try{
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.createStatement();
+            prepareConnection();
             ResultSet rs = statement.executeQuery(QueryConstant.queryForMatchDeletionValidation(id));
             if (rs.next()){
                 rs.close();
@@ -226,16 +177,11 @@ public class BetDao implements IBetDao {
             }
             rs.close();
             return false;
-
         }
         catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
         catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
         finally {
-            try {
-                if (statement != null){statement.close();}
-                if (connection != null){connection.close();}
-            }
-            catch (SQLException e) {e.printStackTrace();}
+            releaseJDBCResources();
         }
     }
 

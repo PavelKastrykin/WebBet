@@ -77,7 +77,7 @@
                         }, 1000
                 );
             </script><br/><br/>
-            <a href="home.jsp"><fmt:message key="login.home.reff" /> </a>
+            <a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a>
         </div>
     </div>
 </div>

@@ -8,10 +8,11 @@
 <head>
     <link href="css/bootstrap.css" rel="stylesheet" />
     <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-    <title></title>
 </head>
 <body>
-    <h1><fmt:message key="blocked" /></h1>
-    <br/><a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a><br/>
+    <div align="center">
+        <h1>404</h1>
+        <img src="/image/why_face.jpg" />
+    </div>
 </body>
 </html>

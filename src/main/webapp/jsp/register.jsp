@@ -38,7 +38,7 @@
                 <fmt:message key="register.button.submit" var="buttonValue"/>
                 <input type="submit" name="submit" value="${buttonValue}" class="btn btn-primary">
             </form><br/>
-            <a href="home.jsp"><fmt:message key="login.home.reff" /> </a>
+            <a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a>
             <label><fmt:message key="${registerWarning}"/></label>
         </div>
     </div>

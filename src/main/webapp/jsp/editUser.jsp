@@ -44,7 +44,7 @@
                 <fmt:message key="edituser.button.edit" var="buttonValue"/>
                 <input type="submit" name="submit" value="${buttonValue}" onclick="return confirm('Confirm?')" class="btn btn-primary" />
             </form>
-            <br/><a href="home.jsp"><fmt:message key="login.home.reff" /> </a><br/>
+            <br/><a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a><br/>
         </div>
     </div>
 </div>

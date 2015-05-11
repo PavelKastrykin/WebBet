@@ -18,7 +18,7 @@
             <c:set var="pageID" value="jsp/errorPage.jsp" scope="request" />
             <br/><jsp:include page="header.jsp"/><br/>
             <jsp:include page="loginLogoutHeader.jsp" />
-            <a href="home.jsp"><fmt:message key="login.home.reff" /> </a>
+            <a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a>
             <h3>${errorMessage}</h3>
         </div>
     </div>

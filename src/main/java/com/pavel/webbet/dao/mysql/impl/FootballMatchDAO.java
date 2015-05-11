@@ -17,7 +17,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FootballMatchDAO implements IFootballMatchDao {
+public class FootballMatchDAO extends DaoJdbcResource implements IFootballMatchDao {
 
     public static final Logger logger = Logger.getLogger(FootballMatchDAO.class);
 
@@ -30,15 +30,10 @@ public class FootballMatchDAO implements IFootballMatchDao {
     @Override
     public List<FootballMatch> getList(int offset, int noOfRecords) throws MysqlDaoException{
 
-        Connection connection = null;
-        Statement statement = null;
-
         List<FootballMatch> list = new ArrayList<>();
         FootballMatch match = null;
         try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.createStatement();
-
+            prepareConnection();
             ResultSet rs = statement.executeQuery(QueryConstant.queryForAllMatchesWithLimit(offset, noOfRecords));
             while (rs.next()){
                 match = new FootballMatch();
@@ -62,25 +57,17 @@ public class FootballMatchDAO implements IFootballMatchDao {
         catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
         catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
         finally {
-            try {
-                if (statement != null){statement.close();}
-                if (connection != null){connection.close();}
-            }
-            catch (SQLException e){
-                e.printStackTrace();
-            }
+            releaseJDBCResources();
         }
         return list;
     }
 
     @Override
     public FootballMatch getBeanById(int id) throws MysqlDaoException{
-        Connection connection = null;
-        Statement statement = null;
+
         FootballMatch match = null;
         try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.createStatement();
+            prepareConnection();
             ResultSet rs = statement.executeQuery(QueryConstant.queryForGetMatchById(id));
             while (rs.next()){
                 match = new FootballMatch();
@@ -97,73 +84,49 @@ public class FootballMatchDAO implements IFootballMatchDao {
         catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
         catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
         finally {
-            try {
-                if (statement != null){statement.close();}
-                if (connection != null){connection.close();}
-            }
-            catch (SQLException e){
-                e.printStackTrace();
-            }
+            releaseJDBCResources();
         }
         return match;
     }
 
     @Override
     public void insert(FootballMatch match) throws MysqlDaoException{
-        Connection connection = null;
-        Statement statement = null;
+
         try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.createStatement();
+            prepareConnection();
             int x = statement.executeUpdate(QueryConstant.queryForMatchInsert(match));
         }
         catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
         catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
         finally {
-            try {
-                if (statement != null){statement.close();}
-                if (connection != null){connection.close();}
-            }
-            catch (SQLException e) {e.printStackTrace();}
+            releaseJDBCResources();
         }
     }
 
     @Override
     public void updateBean(FootballMatch match) throws MysqlDaoException{
-        Connection connection = null;
-        Statement statement = null;
+
         try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.createStatement();
+            prepareConnection();
             int x = statement.executeUpdate(QueryConstant.queryForMatchUpdate(match));
         }
         catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
         catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
         finally {
-            try {
-                if (statement != null){statement.close();}
-                if (connection != null){connection.close();}
-            }
-            catch (SQLException e) {e.printStackTrace();}
+            releaseJDBCResources();
         }
     }
 
     public void deleteBean(int id) throws MysqlDaoException {
-        Connection connection = null;
-        Statement statement = null;
+
         try {
-            connection = ConnectionPool.getInstance().takeConnection();
-            statement = connection.createStatement();
+            prepareConnection();
             int x = statement.executeUpdate(QueryConstant.queryForMatchDelete(id));
         }
         catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
         catch (SQLException e){ throw new MysqlDaoException("Match was not deleted from database", e);}
         finally {
-            try {
-                if (statement != null){statement.close();}
-                if (connection != null){connection.close();}
-            }
-            catch (SQLException e) {e.printStackTrace();}
+            releaseJDBCResources();
         }
     }
 
