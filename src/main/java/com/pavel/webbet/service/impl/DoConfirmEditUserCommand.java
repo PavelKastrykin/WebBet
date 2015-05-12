@@ -2,6 +2,7 @@ package com.pavel.webbet.service.impl;
 
 import com.pavel.webbet.constant.RequestParameterConstant;
 import com.pavel.webbet.constant.UrlConstant;
+import com.pavel.webbet.dao.ICommonDao;
 import com.pavel.webbet.dao.IUserBeanDao;
 import com.pavel.webbet.dao.factory.DaoFactory;
 import com.pavel.webbet.dao.factory.DaoType;

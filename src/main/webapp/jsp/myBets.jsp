@@ -14,7 +14,7 @@
 <div class="navbar navbar-fixed-top">
     <div class="navbar-inner">
         <div class="container">
-            <c:set var="pageID" value="jsp/myBets.jsp" scope="request" />
+            <c:set var="pageID" value="webBetController?command=SHOW_MY_BETS_COMMAND" scope="request" />
             <br/><jsp:include page="header.jsp"/><br/>
             <table class="table">
                 <tr>
