@@ -48,8 +48,8 @@ public class UserBeanDao extends DaoJdbcResource implements IUserBeanDao {
                 return userBean;
             }
         }
-        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
-        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
+        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage());}
+        catch (SQLException e) {throw new MysqlDaoException("Problem appeared while connecting to database, please try later");}
         finally {
             releaseJDBCResources();
         }
@@ -77,8 +77,8 @@ public class UserBeanDao extends DaoJdbcResource implements IUserBeanDao {
                 return userBean;
             }
         }
-        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
-        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
+        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage());}
+        catch (SQLException e) {throw new MysqlDaoException("Problem appeared while connecting to database, please try later");}
         finally {
             releaseJDBCResources();
         }
@@ -103,8 +103,8 @@ public class UserBeanDao extends DaoJdbcResource implements IUserBeanDao {
             }
             return userList;
         }
-        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
-        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
+        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage());}
+        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database");}
         finally {
             releaseJDBCResources();
         }
@@ -132,8 +132,8 @@ public class UserBeanDao extends DaoJdbcResource implements IUserBeanDao {
                 numberOfRecords = resultSet.getInt(1);
             }
         }
-        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
-        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
+        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage());}
+        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database");}
         finally {
             releaseJDBCResources();
         }
@@ -147,8 +147,8 @@ public class UserBeanDao extends DaoJdbcResource implements IUserBeanDao {
             prepareConnection();
             int x = statement.executeUpdate(QueryConstant.queryForUserInsert(bean));
         }
-        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
-        catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
+        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage());}
+        catch (SQLException e){ throw new MysqlDaoException("Registering was not performed, please try again.");}
         finally {
             releaseJDBCResources();
         }
@@ -161,8 +161,8 @@ public class UserBeanDao extends DaoJdbcResource implements IUserBeanDao {
             prepareConnection();
             int x = statement.executeUpdate(QueryConstant.queryForUserDelete(id));
         }
-        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
-        catch (SQLException e){ throw new MysqlDaoException("Data was not deleted from database", e);}
+        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage());}
+        catch (SQLException e){ throw new MysqlDaoException("User was not deleted from database");}
         finally {
             releaseJDBCResources();
         }
@@ -175,8 +175,8 @@ public class UserBeanDao extends DaoJdbcResource implements IUserBeanDao {
             prepareConnection();
             int x = statement.executeUpdate(QueryConstant.queryForUserUpdate(bean));
         }
-        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
-        catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
+        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage());}
+        catch (SQLException e){ throw new MysqlDaoException("User was not updated, please try again.");}
         finally {
             releaseJDBCResources();
         }

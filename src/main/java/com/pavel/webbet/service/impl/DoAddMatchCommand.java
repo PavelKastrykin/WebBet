@@ -61,7 +61,7 @@ public class DoAddMatchCommand implements ICommand {
         try {
             dao.insert(match);
         }
-        catch (MysqlDaoException e){throw  new CommandException(e.getMessage(), e);}
+        catch (MysqlDaoException e){throw  new CommandException(e.getMessage());}
 
         request.setAttribute(ATTRIBUTE_ADD_MATCH_WARNING, CommandConstant.MATCH_ADDED_WARNING);
 

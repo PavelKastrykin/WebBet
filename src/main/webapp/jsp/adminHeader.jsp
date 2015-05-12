@@ -4,13 +4,13 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${localeValue == '' || localeValue == null ? 'en_US' : localeValue}"/>
 <fmt:setBundle basename="locale.text"/>
-<html>
-<head>
-    <link href="css/bootstrap.css" rel="stylesheet" />
-    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
-    <title></title>
-</head>
-<body>
+<%--<html>--%>
+<%--<head>--%>
+    <%--<link href="css/bootstrap.css" rel="stylesheet" />--%>
+    <%--<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">--%>
+    <%--<title></title>--%>
+<%--</head>--%>
+<%--<body>--%>
     <form action="webBetController" id="userList" name="userList" method="get" style="display:inline;">
         <fmt:message key="admin.header.button.users" var="userButtonValue"/>
         <input type="hidden" name="command" value="CREATE_USER_LIST">
@@ -23,5 +23,5 @@
         <input type="button" value="${betButtonValue}" onclick="document.forms['betList'].submit()" class="btn btn-primary"
                style="width:120px">
     </form>
-</body>
-</html>
+<%--</body>--%>
+<%--</html>--%>

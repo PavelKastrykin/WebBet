@@ -32,7 +32,7 @@ public class DoDeleteMatchCommand implements ICommand{
             else throw new CommandException("This match cannot be deleted: bets are done.");
         }
         catch (MysqlDaoException e){
-            throw new CommandException(e.getMessage(), e);
+            throw new CommandException(e.getMessage());
         }
         return UrlConstant.REQUEST_MATCH_LIST;
     }

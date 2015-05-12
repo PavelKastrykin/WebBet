@@ -16,16 +16,15 @@
         <div class="container">
             <c:set var="pageID" value="webBetController?command=CREATE_USER_LIST" scope="request" />
             <br/><jsp:include page="header.jsp"/><br/>
+            <h3><em><mark><fmt:message key="admin.user.header"/></mark></em></h3>
             <table class="table">
                 <tr>
-                    <th>#id</th>
                     <th><fmt:message key="admin.user.table.login"/></th>
                     <th><fmt:message key="admin.user.table.name"/></th>
                     <th><fmt:message key="admin.user.table.role"/></th>
                 </tr>
                 <c:forEach var="user" items="${userList}">
                     <tr>
-                        <td>${user.userID}</td>
                         <td>${user.login}</td>
                         <td>${user.name}</td>
                         <td>${user.userRole}</td>
@@ -54,7 +53,6 @@
                 <td><a href="webBetController?command=CREATE_USER_LIST&page=${currentPage + 1}"><fmt:message key="matches.table.next" /></a></td>
             </c:if>
             <br/>
-            <a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a>
         </div>
     </div>
 </div>

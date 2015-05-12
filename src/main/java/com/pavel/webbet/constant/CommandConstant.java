@@ -7,5 +7,5 @@ public class CommandConstant {
     public static final String VALIDATION_ADMIN_BOOKMAKER_WARNING = "addmatch.validation.warning";
     public static final String MATCH_ADDED_WARNING = "addmatch.added.warning";
 
-    public static final int NUMBER_OF_RECORDS = 10;
+    public static final int NUMBER_OF_RECORDS = 8;
 }

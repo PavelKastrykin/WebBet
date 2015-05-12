@@ -21,10 +21,11 @@
             <br/><jsp:include page="header.jsp"/><br/>
             <form action="webBetController" method="post">
                 <input type="hidden" name="command" value="ADD_MATCH_COMMAND"/>
+                <h3><em><mark><fmt:message key="addmatch.header"/></mark></em></h3>
                 <table class="table" style="width: auto !important;">
                     <tr>
                         <td><label for="matchName"><fmt:message key="addmatch.label.match"/> </label> </td>
-                        <td><input type="text" id="matchName" name="matchName" /></td>
+                        <td><input type="text" id="matchName" maxlength="45" name="matchName" /></td>
                     </tr>
                     <tr>
                         <td><label for="matchDate"><fmt:message key="addmatch.label.date"/> </label> </td>

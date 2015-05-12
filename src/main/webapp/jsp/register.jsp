@@ -23,18 +23,18 @@
                 <table class="table" style="width: auto !important;">
                     <tr>
                         <td><label for="registerLogin"><fmt:message key="register.label.login"/> </label></td>
-                        <td><input type="text" class="form-control" id="registerLogin" name="registerLogin" /></td>
+                        <td><input type="text" class="form-control" maxlength="45" id="registerLogin" name="registerLogin" /></td>
                     </tr>
                     <tr>
                         <td><label for="registerPassword"><fmt:message key="register.label.password"/> </label></td>
-                        <td><input type="password" class="form-control" id="registerPassword" name="registerPassword" /></td>
+                        <td><input type="password" class="form-control" maxlength="45" id="registerPassword" name="registerPassword" /></td>
                     </tr>
                     <tr>
                         <td><label for="registerConfirm"><fmt:message key="register.label.confirm"/> </label></td>
-                        <td><input type="password" class="form-control" id="registerConfirm" name="registerConfirm" /></td>
+                        <td><input type="password" class="form-control" maxlength="45" id="registerConfirm" name="registerConfirm" /></td>
                     <tr>
                         <td><label for="registerName"><fmt:message key="register.label.name"/> </label></td>
-                        <td><input type="text" class="form-control" id="registerName" name="registerName" /></td>
+                        <td><input type="text" class="form-control" maxlength="45" id="registerName" name="registerName" /></td>
                 </table>
                 <fmt:message key="register.button.submit" var="buttonValue"/>
                 <input type="submit" name="submit" value="${buttonValue}" class="btn btn-primary">

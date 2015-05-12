@@ -16,9 +16,9 @@
         <div class="container">
             <c:set var="pageID" value="webBetController?command=CREATE_BET_LIST" scope="request" />
             <br/><jsp:include page="header.jsp"/><br/>
+            <h3><em><mark><fmt:message key="admin.bet.header"/></mark></em></h3>
             <table class="table">
                 <tr>
-                    <th>#id</th>
                     <th><fmt:message key="admin.bet.table.login"/></th>
                     <th><fmt:message key="admin.bet.table.match"/></th>
                     <th><fmt:message key="admin.bet.table.date"/></th>
@@ -32,7 +32,6 @@
                 </tr>
                 <c:forEach var="bet" items="${betList}">
                     <tr>
-                        <td>${bet.betId}</td>
                         <td>${bet.user.login}</td>
                         <td>${bet.match.matchName}</td>
                         <td><fmt:formatDate value="${bet.match.startTime}" dateStyle="short"/></td>

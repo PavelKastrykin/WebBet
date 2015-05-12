@@ -1,6 +1,7 @@
 package com.pavel.webbet.controller.filter;
 
 import com.pavel.webbet.constant.RequestParameterConstant;
+import com.pavel.webbet.constant.UrlConstant;
 import com.pavel.webbet.entity.userbean.UserBean;
 
 import javax.servlet.*;
@@ -13,6 +14,7 @@ public class AccessFilter implements Filter {
 
     protected ServletContext servletContext;
     private FilterConfig config;
+    private static final String DASH = "/";
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -26,13 +28,13 @@ public class AccessFilter implements Filter {
 
         HttpServletRequest request = (HttpServletRequest)servletRequest;
         HttpServletResponse response = (HttpServletResponse)servletResponse;
-        String uri = request.getRequestURI().substring(request.getRequestURI().lastIndexOf("/") + 1);
+        String uri = request.getRequestURI().substring(request.getRequestURI().lastIndexOf(DASH) + 1);
         AuthorizationManager manager = AuthorizationManager.getManager();
         HttpSession session = request.getSession(true);
         UserBean user = (UserBean)(session.getAttribute(RequestParameterConstant.SESSION_USER_VALUE));
 
         if (!manager.isUserAuthorized(uri, user)){
-            config.getServletContext().getRequestDispatcher("/index.jsp").forward(request, response);
+            config.getServletContext().getRequestDispatcher(DASH + UrlConstant.URL_INDEX).forward(request, response);
             return;
         }
         filterChain.doFilter(servletRequest, servletResponse);

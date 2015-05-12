@@ -26,74 +26,68 @@
             <c:if test="${sessionScope.userValue.userRole == 'ADMIN'}" >
                 <jsp:include page="adminHeader.jsp"/>
             </c:if>
-            <%--<form action="webBetController" name="allmatches" id="allmatches" method="get">--%>
-                <%--<input type="hidden" name="command" value="DISPLAY_MATCHES_COMMAND" />--%>
-                <%--<fmt:message key="matches.button.show" var="buttonShow" />--%>
-                <%--<input type="submit" name="submit" value="${buttonShow}" class="btn btn-primary"/>--%>
-            <%--</form>--%>
-                <br/>
-                <table class="table">
-                    <thead>
+            <br/>
+            <h3><em><mark><fmt:message key="matches.list.header"/></mark></em></h3>
+            <table class="table">
+                <thead>
+                <tr>
+                    <th><fmt:message key="matches.table.match" /></th>
+                    <th><fmt:message key="matches.table.date" /></th>
+                    <th><fmt:message key="matches.table.score" /></th>
+                    <th><fmt:message key="matches.table.winner1" /></th>
+                    <th><fmt:message key="matches.table.draw" /></th>
+                    <th><fmt:message key="matches.table.winner2" /></th>
+                    <th><fmt:message key="matches.table.status" /></th>
+                </tr>
+                </thead>
+                <tbody>
+                <c:forEach var="match" items="${matchesList}">
                     <tr>
-                        <th>#id</th>
-                        <th><fmt:message key="matches.table.match" /></th>
-                        <th><fmt:message key="matches.table.date" /></th>
-                        <th><fmt:message key="matches.table.score" /></th>
-                        <th><fmt:message key="matches.table.winner1" /></th>
-                        <th><fmt:message key="matches.table.draw" /></th>
-                        <th><fmt:message key="matches.table.winner2" /></th>
-                        <th><fmt:message key="matches.table.status" /></th>
+                        <td>${match.matchName}</td>
+                        <td><fmt:formatDate value="${match.startTime}" dateStyle="short"/></td>
+                        <td>${match.matchScore}</td>
+                        <td>${match.winCoef}</td>
+                        <td>${match.drawCoef}</td>
+                        <td>${match.looseCoef}</td>
+                        <td>${match.status}</td>
+                        <c:if test="${match.status == 'ACTIVE' && sessionScope.userValue != null && sessionScope.userValue.userRole != 'BOOKMAKER'}">
+                            <td>
+                                <a href="webBetController?matchId=${match.matchId}&command=CREATE_BET_FORM_COMMAND" >Bet!</a>
+                            </td>
+                        </c:if>
+                        <c:if test="${sessionScope.userValue.userRole == 'BOOKMAKER'}">
+                            <td>
+                                <a href="webBetController?matchId=${match.matchId}&command=CREATE_MATCH_EDIT_FORM_COMMAND">Edit</a>
+                            </td>
+                            <td>
+                                <c:set var="matchToDelete" value="${match.matchId}" scope="request"/>
+                                <jsp:include page="deleteMatch.jsp"/>
+                            </td>
+                        </c:if>
                     </tr>
-                    </thead>
-                    <tbody>
-                    <c:forEach var="match" items="${matchesList}">
-                        <tr>
-                            <td>${match.matchId}</td>
-                            <td>${match.matchName}</td>
-                            <td><fmt:formatDate value="${match.startTime}" dateStyle="short"/></td>
-                            <td>${match.matchScore}</td>
-                            <td>${match.winCoef}</td>
-                            <td>${match.drawCoef}</td>
-                            <td>${match.looseCoef}</td>
-                            <td>${match.status}</td>
-                            <c:if test="${match.status == 'ACTIVE' && sessionScope.userValue != null && sessionScope.userValue.userRole != 'BOOKMAKER'}">
-                                <td>
-                                    <a href="webBetController?matchId=${match.matchId}&command=CREATE_BET_FORM_COMMAND" >Bet!</a>
-                                </td>
-                            </c:if>
-                            <c:if test="${sessionScope.userValue.userRole == 'BOOKMAKER'}">
-                                <td>
-                                    <a href="webBetController?matchId=${match.matchId}&command=CREATE_MATCH_EDIT_FORM_COMMAND">Edit</a>
-                                </td>
-                                <td>
-                                    <c:set var="matchToDelete" value="${match.matchId}" scope="request"/>
-                                    <jsp:include page="deleteMatch.jsp"/>
-                                </td>
-                            </c:if>
-                        </tr>
+                </c:forEach>
+                </tbody>
+            </table>
+            <c:if test="${currentPage != 1}">
+                <td><a href="webBetController?command=DISPLAY_MATCHES_COMMAND&page=${currentPage - 1}"><fmt:message key="matches.table.previous" /></a> </td>
+            </c:if>
+            <table class="table" style="width: auto !important;">
+                <tr>
+                    <c:forEach begin="1" end="${numberOfPages}" var="i">
+                        <c:choose>
+                            <c:when test="${currentPage eq i}">
+                                <td>${i}</td>
+                            </c:when>
+                            <c:otherwise>
+                                <td><a href="webBetController?command=DISPLAY_MATCHES_COMMAND&page=${i}">${i}</a> </td>
+                            </c:otherwise>
+                        </c:choose>
                     </c:forEach>
-                    </tbody>
-                </table>
-                <c:if test="${currentPage != 1}">
-                    <td><a href="webBetController?command=DISPLAY_MATCHES_COMMAND&page=${currentPage - 1}"><fmt:message key="matches.table.previous" /></a> </td>
-                </c:if>
-                <table class="table" style="width: auto !important;">
-                    <tr>
-                        <c:forEach begin="1" end="${numberOfPages}" var="i">
-                            <c:choose>
-                                <c:when test="${currentPage eq i}">
-                                    <td>${i}</td>
-                                </c:when>
-                                <c:otherwise>
-                                    <td><a href="webBetController?command=DISPLAY_MATCHES_COMMAND&page=${i}">${i}</a> </td>
-                                </c:otherwise>
-                            </c:choose>
-                        </c:forEach>
-                    </tr>
-                </table>
-                <c:if test="${currentPage lt numberOfPages}">
-                    <td><a href="webBetController?command=DISPLAY_MATCHES_COMMAND&page=${currentPage + 1}"><fmt:message key="matches.table.next" /></a> </td>
-                </c:if>
+                </tr>
+            </table>
+            <c:if test="${currentPage lt numberOfPages}">
+                <td><a href="webBetController?command=DISPLAY_MATCHES_COMMAND&page=${currentPage + 1}"><fmt:message key="matches.table.next" /></a> </td>
+            </c:if>
         </div>
     </div>
 </div>

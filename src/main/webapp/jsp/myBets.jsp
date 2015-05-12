@@ -16,6 +16,7 @@
         <div class="container">
             <c:set var="pageID" value="webBetController?command=SHOW_MY_BETS_COMMAND" scope="request" />
             <br/><jsp:include page="header.jsp"/><br/>
+            <h3><em><mark><fmt:message key="my.bets.header"/></mark></em></h3>
             <table class="table">
                 <tr>
                     <th><fmt:message key="bets.table.matchname" /></th>

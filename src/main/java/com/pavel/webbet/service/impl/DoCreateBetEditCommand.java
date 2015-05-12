@@ -27,7 +27,7 @@ public class DoCreateBetEditCommand implements ICommand {
         try {
             bet = dao.getBeanById(id);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
+        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
         request.setAttribute(ATTRIBUTE_BET_TO_EDIT, bet);
         return UrlConstant.URL_EDIT_BET;
     }

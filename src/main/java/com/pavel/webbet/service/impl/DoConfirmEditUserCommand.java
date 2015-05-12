@@ -30,7 +30,7 @@ public class DoConfirmEditUserCommand implements ICommand {
         try{
             dao.updateBean(user);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
+        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
         return UrlConstant.REQUEST_USER_LIST;
 
     }

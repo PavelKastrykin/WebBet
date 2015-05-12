@@ -19,6 +19,7 @@
             <form id="editUserForm" action="webBetController" method="post">
                 <input type="hidden" name="command" value="CONFIRM_EDIT_USER_COMMAND">
                 <input type="hidden" name="userLogin" value="${userToEdit.login}">
+                <h3><em><mark><fmt:message key="edit.user.header"/></mark></em></h3>
                 <table class="table">
                     <tr>
                         <th>#id</th>

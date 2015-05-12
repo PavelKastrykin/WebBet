@@ -39,14 +39,18 @@ public class CommandDispatcher {
     }
 
     public ICommand getCommand(String commandName){
-        CommandType commandType = CommandType.valueOf(commandName);
         ICommand command;
+        CommandType commandType = null;
+        try{
+            commandType = CommandType.valueOf(commandName);
+        }
+        catch (IllegalArgumentException e){
+            command = commands.get(CommandType.NO_SUCH_COMMAND);
+            return command;
+        }
+
         if (null != commandType) {
-            try {
-                command = commands.get(commandType);
-            } catch (IllegalArgumentException e) {
-                command = commands.get(CommandType.NO_SUCH_COMMAND);
-            }
+            command = commands.get(commandType);
         }
         else {
             command = commands.get(CommandType.NO_SUCH_COMMAND);

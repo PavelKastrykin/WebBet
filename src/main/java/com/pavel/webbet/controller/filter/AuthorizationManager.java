@@ -21,38 +21,26 @@ public class AuthorizationManager {
         String BOOKMAKER_ACCESS = bundle.getString("access.bookmaker");
         String USER_ACCESS = bundle.getString("access.user");
         StringBuilder access = new StringBuilder();
-        UserRole role = null;
+        UserRole role;
         if (user != null){
             role = user.getUserRole();
         }
         else {
             access.append(ADMIN_ACCESS).append(BOOKMAKER_ACCESS).append(USER_ACCESS);
-            if (access.toString().contains(uri)){
-                return false;
-            }
-            else {return true;}
+            return !access.toString().contains(uri);
         }
         switch (role){
             case ADMIN:
                 return true;
             case BOOKMAKER:
                 access.append(ADMIN_ACCESS);
-                if (access.toString().contains(uri)){
-                    return false;
-                }
-                return true;
+                return !access.toString().contains(uri);
             case USER:
                 access.append(ADMIN_ACCESS).append(BOOKMAKER_ACCESS);
-                if (access.toString().contains(uri)){
-                    return false;
-                }
-                return true;
+                return !access.toString().contains(uri);
             default:
                 access.append(ADMIN_ACCESS).append(BOOKMAKER_ACCESS).append(USER_ACCESS);
-                if (access.toString().contains(uri)){
-                    return false;
-                }
-                return true;
+                return !access.toString().contains(uri);
         }
     }
 }

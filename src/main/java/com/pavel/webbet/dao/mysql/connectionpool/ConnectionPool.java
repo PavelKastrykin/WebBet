@@ -75,10 +75,12 @@ public final class ConnectionPool {
             }
         }
         catch (SQLException e){
-            throw new ConnectionPoolException("SQLException in Connection pool");
+            throw new ConnectionPoolException("No connection to database. Try later");
+//            "SQLException in Connection pool"
         }
         catch (ClassNotFoundException e){
-            throw new ConnectionPoolException("Can't find database driver class");
+            throw new ConnectionPoolException("No connection to database. Try later");
+//            "Can't find database driver class"
         }
     }
 
@@ -92,7 +94,9 @@ public final class ConnectionPool {
             closeConnectionsQueue(connectionQueue);
         }
         catch (SQLException e){
-            throw new ConnectionPoolException("Unable to clear connection queue");
+            throw new ConnectionPoolException("WebBet works unstable, please reopen it");
+//            "Unable to clear connection queue"
+
         }
 
     }
@@ -104,7 +108,8 @@ public final class ConnectionPool {
             givenAwayConQueue.add(connection);
         }
         catch (InterruptedException e){
-            throw new ConnectionPoolException("Error connecting to the data source");
+            throw new ConnectionPoolException("No connection to database. Try later");
+//            "Error connecting to the data source"
         }
         return connection;
     }
@@ -113,26 +118,41 @@ public final class ConnectionPool {
         try{
             con.close();
         }
-        catch (SQLException e){throw new ConnectionPoolException("Failed to close connection");}
+        catch (SQLException e){
+            throw new ConnectionPoolException("WebBet works unstable, please reopen it");
+//            "Failed to close connection"
+        }
         try{
             rs.close();
         }
-        catch (SQLException e){throw new ConnectionPoolException("Failed to close resultset");}
+        catch (SQLException e){
+            throw new ConnectionPoolException("");
+//            "Failed to close resultset"
+        }
         try{
             st.close();
         }
-        catch (SQLException e){throw new ConnectionPoolException("Failed to close statement");}
+        catch (SQLException e){
+            throw new ConnectionPoolException("");
+//            "Failed to close statement"
+        }
     }
 
     public void closeConnection(Connection con, Statement st) throws ConnectionPoolException{
         try{
             con.close();
         }
-        catch (SQLException e){throw new ConnectionPoolException("Failed to close connection");}
+        catch (SQLException e){
+            throw new ConnectionPoolException("WebBet works unstable, please reopen it");
+//            "Failed to close connection"
+        }
         try{
             st.close();
         }
-        catch (SQLException e){throw new ConnectionPoolException("Failed to close statement");}
+        catch (SQLException e){
+            throw new ConnectionPoolException("");
+//            "Failed to close statement"
+        }
     }
 
     public void closeConnectionsQueue(BlockingQueue<Connection> queue) throws SQLException {
@@ -191,7 +211,8 @@ public final class ConnectionPool {
         @Override
         public void close() throws SQLException {
             if(connection.isClosed()){
-                throw new SQLException("Attempting to close closed connection.");
+                throw new SQLException("");
+//                "Attempting to close closed connection."
             }
 
             if(connection.isReadOnly()){
@@ -199,11 +220,13 @@ public final class ConnectionPool {
             }
 
             if (!givenAwayConQueue.remove(this)){
-                throw new SQLException("Error deleting connection from the given away connections pool");
+                throw new SQLException("");
+//                "Error deleting connection from the given away connections pool"
             }
 
             if (!connectionQueue.offer(this)){
-                throw new SQLException("Error allocating connection in the pool");
+                throw new SQLException();
+//                "Error allocating connection in the pool"
             }
         }
         @Override

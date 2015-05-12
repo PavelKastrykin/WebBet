@@ -33,7 +33,7 @@ public class DoCreateUserListCommand implements ICommand {
         try{
             list = dao.getList((page - 1) * recordsPerPage, recordsPerPage);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
+        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
         int numberOfRecords = dao.getNumberOfRecords();
         int numberOfPages = (int)Math.ceil(numberOfRecords * 1.0 / recordsPerPage);
         request.setAttribute(ATTRIBUTE_USER_LIST, list);

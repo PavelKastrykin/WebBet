@@ -40,6 +40,7 @@
             <form id="editMatchForm" action="webBetController" method="post" onsubmit="return validate()">
                 <input type="hidden" name="command" value="EDIT_MATCH_COMMAND">
                 <input type="hidden" name="matchId" value="${matchToEdit.matchId}">
+                <h3><em><mark><fmt:message key="edit.match.header"/></mark></em></h3>
                 <table class="table">
                     <tr>
                         <th>#id</th>
@@ -55,10 +56,10 @@
                         <td>${matchToEdit.matchId}</td>
                         <td>${matchToEdit.matchName}</td>
                         <td><fmt:formatDate value="${matchToEdit.startTime}" dateStyle="short"/></td>
-                        <td><input type="text" name="matchScore" value="${matchToEdit.matchScore}"></td>
-                        <td><input type="text" name="winCoef" value="${matchToEdit.winCoef}"></td>
-                        <td><input type="text" name="drawCoef" value="${matchToEdit.drawCoef}"></td>
-                        <td><input type="text" name="looseCoef" value="${matchToEdit.looseCoef}"></td>
+                        <td><input type="text" name="matchScore" maxlength="6" value="${matchToEdit.matchScore}"></td>
+                        <td><input type="text" name="winCoef" maxlength="6" value="${matchToEdit.winCoef}"></td>
+                        <td><input type="text" name="drawCoef" maxlength="6" value="${matchToEdit.drawCoef}"></td>
+                        <td><input type="text" name="looseCoef" maxlength="6" value="${matchToEdit.looseCoef}"></td>
                         <td>
                             <select id="status" name="status">
                                 <option value="ACTIVE" ${matchToEdit.status == 'ACTIVE' ? 'selected' : ''}><fmt:message key="edit.active"/></option>

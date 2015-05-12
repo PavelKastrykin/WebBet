@@ -4,11 +4,11 @@
 <%@ page pageEncoding="UTF-8" contentType="text/html;charset=UTF-8" language="java" %>
 <fmt:setLocale value="${localeValue == '' || localeValue == null ? 'en_US' : localeValue}"/>
 <fmt:setBundle basename="locale.text"/>
-<html>
-<header>
-    <link href="css/bootstrap.css" rel="stylesheet" />
-</header>
-<body>
+<%--<html>--%>
+<%--<header>--%>
+    <%--<link href="css/bootstrap.css" rel="stylesheet" />--%>
+<%--</header>--%>
+<%--<body>--%>
     <c:choose>
         <c:when test="${sessionScope.userValue != null}">
             <form action="webBetController" method="get" style="display:inline;">
@@ -23,5 +23,5 @@
             <br/>
         </c:otherwise>
     </c:choose>
-</body>
-</html>
+<%--</body>--%>
+<%--</html>--%>

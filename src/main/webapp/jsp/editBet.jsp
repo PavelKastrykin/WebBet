@@ -19,6 +19,7 @@
             <form id="editBetForm" action="webBetController" method="post">
                 <input type="hidden" name="command" value="CONFIRM_EDIT_BET_COMMAND">
                 <input type="hidden" name="betid" value="${betToEdit.betId}">
+                <h3><em><mark><fmt:message key="edit.bet.header"/></mark></em></h3>
                 <table class="table">
                     <tr>
                         <th>#id</th>

@@ -58,10 +58,11 @@ public class BetDao extends DaoJdbcResource implements IBetDao {
             }
         }
         catch (ConnectionPoolException e) {
-            throw new MysqlDaoException(e.getMessage(), e);
+            throw new MysqlDaoException(e.getMessage());
         }
 
-        catch (SQLException e){throw new MysqlDaoException("Error retrieving data from database", e);
+        catch (SQLException e){
+            throw new MysqlDaoException("Error retrieving data from database");
         }
         finally {
             releaseJDBCResources();
@@ -77,10 +78,12 @@ public class BetDao extends DaoJdbcResource implements IBetDao {
             statement.executeUpdate(QueryConstant.queryForBetInsert(bean));
         }
         catch (ConnectionPoolException e){
-            throw new MysqlDaoException(e.getMessage(), e);
+            throw new MysqlDaoException(e.getMessage());
         }
 
-        catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
+        catch (SQLException e){
+            throw new MysqlDaoException("Bet was not added, please try again.");
+        }
         finally {
             releaseJDBCResources();
         }
@@ -109,8 +112,10 @@ public class BetDao extends DaoJdbcResource implements IBetDao {
             rs.close();
 
         }
-        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage(), e);}
-        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database", e);}
+        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage());}
+        catch (SQLException e) {
+            throw new MysqlDaoException("Problem appeared while connecting to database, please try later");
+        }
         finally {
             releaseJDBCResources();
         }
@@ -141,10 +146,10 @@ public class BetDao extends DaoJdbcResource implements IBetDao {
             rs.close();
         }
         catch (ConnectionPoolException e){
-            throw new MysqlDaoException(e.getMessage(), e);
+            throw new MysqlDaoException(e.getMessage());
         }
         catch (SQLException e) {
-            throw new MysqlDaoException("Error retrieving data from database", e);
+            throw new MysqlDaoException("Problem appeared while connecting to database, please try later");
         }
         finally {
             releaseJDBCResources();
@@ -156,10 +161,12 @@ public class BetDao extends DaoJdbcResource implements IBetDao {
     public void updateBean(BetBean bet) throws MysqlDaoException {
         try {
             prepareConnection();
-            int x = statement.executeUpdate(QueryConstant.queryForBetUpdate((BetBean)bet));
+            int x = statement.executeUpdate(QueryConstant.queryForBetUpdate(bet));
         }
-        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
-        catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
+        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage());}
+        catch (SQLException e){
+            throw new MysqlDaoException("Bet was not updated, please try again.");
+        }
         finally {
             releaseJDBCResources();
         }
@@ -178,8 +185,10 @@ public class BetDao extends DaoJdbcResource implements IBetDao {
             rs.close();
             return false;
         }
-        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage(), e);}
-        catch (SQLException e){ throw new MysqlDaoException("Data was not inserted to database", e);}
+        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage());}
+        catch (SQLException e){
+            throw new MysqlDaoException("");
+        }
         finally {
             releaseJDBCResources();
         }

@@ -44,7 +44,7 @@ public class DoEditMatchCommand implements ICommand {
         try{
             dao.updateBean(match);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
+        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
         return UrlConstant.REQUEST_MATCH_LIST;
     }
 }

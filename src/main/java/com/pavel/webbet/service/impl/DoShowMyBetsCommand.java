@@ -30,7 +30,7 @@ public class DoShowMyBetsCommand implements ICommand{
         try{
             myBets = dao.getListByName(login);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
+        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
         request.setAttribute(ATTRIBUTE_MY_BETS, myBets);
         return UrlConstant.URL_MY_BETS;
     }

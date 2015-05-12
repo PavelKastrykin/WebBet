@@ -46,7 +46,7 @@ public class DoRegisterCommand implements ICommand {
         try {
             checkLogin = dao.getBeanByName(login);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
+        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
         if (checkLogin == null){
             UserBean newUserBean = new UserBean();
             newUserBean.setLogin(login);

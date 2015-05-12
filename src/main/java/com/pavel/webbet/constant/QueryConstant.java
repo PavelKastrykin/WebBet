@@ -25,7 +25,7 @@ public class QueryConstant {
             "`sum`, `current_coef`) VALUES (''{0}'', {1}, ''{2}'', {3}, {4})";
     private static final String MYSQL_GET_BETS_BY_LOGIN = "select football_match.name, football_match.time_start, " +
             "bet_prediction, sum, current_coef, is_won, bet_status, money_charge from bets join football_match " +
-            "on bets.football_matchid = football_match.football_matchid where login = ''{0}''";
+            "on bets.football_matchid = football_match.football_matchid where login = ''{0}'' order by betid desc";
     private static final String MYSQL_UPDATE_MATCH_QUERY = "UPDATE football_match SET `score`=''{0}'', `coef_win`={1}," +
             " `coef_draw`={2}, `coef_lost`={3}, `status`=''{4}'' WHERE `football_matchid`={5};";
     private static final String MYSQL_ALL_BETS_LIST_QUERY = "select SQL_CALC_FOUND_ROWS betid, login, name, time_start, score, " +

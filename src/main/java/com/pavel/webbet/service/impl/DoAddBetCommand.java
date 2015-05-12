@@ -47,7 +47,7 @@ public class DoAddBetCommand implements ICommand {
         try {
             dao.insert(betBean);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
+        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
         return UrlConstant.REQUEST_MATCH_LIST;
     }
 }

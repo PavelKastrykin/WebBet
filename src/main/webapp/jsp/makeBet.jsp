@@ -47,6 +47,7 @@
                 <input type="hidden" id="selectedBetNum" name="selectedBetNum">
                 <input type="hidden" id="selectedBetCoef" name="selectedBetCoef">
                 <input type="hidden" id="idOfMatch" name="idOfMatch" value="${matchToBet.matchId}">
+                <h3><em><mark><fmt:message key="make.bet.header"/></mark></em></h3>
                 <table class="table">
                     <tr>
                         <th><fmt:message key="matches.table.match" /></th>

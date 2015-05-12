@@ -31,7 +31,7 @@ public class DoLoginCommand implements ICommand{
         try{
             bean = dao.getBeanByNameAndPassword(userName, password);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
+        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
         if (bean != null && bean.getUserRole() == UserRole.BLOCKED){
             return UrlConstant.URL_BLOCKED;
         }

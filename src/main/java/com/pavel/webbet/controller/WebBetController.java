@@ -31,7 +31,7 @@ public class WebBetController extends HttpServlet{
         request.setCharacterEncoding(REQUEST_ENCODING);
         String commandName = request.getParameter(PARAMETER_COMMAND);
         ICommand command = CommandDispatcher.getInstance().getCommand(commandName);
-        String page = null;
+        String page;
 
         try {
             page = command.execute(request);
