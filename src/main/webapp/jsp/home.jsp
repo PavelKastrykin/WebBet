@@ -15,9 +15,7 @@
     <div class="navbar-inner">
         <div class="container">
             <c:set var="pageID" value="webBetController?command=DISPLAY_MATCHES_COMMAND" scope="request" />
-            <br/><jsp:include page="header.jsp"/><br/>
-            <jsp:include page="loginLogoutHeader.jsp" />
-            <br/><br/>
+            <jsp:include page="header.jsp"/>
 
             <c:if test="${sessionScope.userValue.userRole == 'ADMIN' || sessionScope.userValue.userRole == 'BOOKMAKER'}" >
                 <jsp:include page="bookmakerPanel.jsp" />
@@ -28,12 +26,12 @@
             <c:if test="${sessionScope.userValue.userRole == 'ADMIN'}" >
                 <jsp:include page="adminHeader.jsp"/>
             </c:if>
-            <form action="webBetController" name="allmatches" id="allmatches" method="get">
-                <input type="hidden" name="command" value="DISPLAY_MATCHES_COMMAND" />
-                <fmt:message key="matches.button.show" var="buttonShow" />
-                <input type="submit" name="submit" value="${buttonShow}" class="btn btn-primary"/>
-            </form>
-                <br/><br/>
+            <%--<form action="webBetController" name="allmatches" id="allmatches" method="get">--%>
+                <%--<input type="hidden" name="command" value="DISPLAY_MATCHES_COMMAND" />--%>
+                <%--<fmt:message key="matches.button.show" var="buttonShow" />--%>
+                <%--<input type="submit" name="submit" value="${buttonShow}" class="btn btn-primary"/>--%>
+            <%--</form>--%>
+                <br/>
                 <table class="table">
                     <thead>
                     <tr>
@@ -79,7 +77,7 @@
                 <c:if test="${currentPage != 1}">
                     <td><a href="webBetController?command=DISPLAY_MATCHES_COMMAND&page=${currentPage - 1}"><fmt:message key="matches.table.previous" /></a> </td>
                 </c:if>
-                <table class="table">
+                <table class="table" style="width: auto !important;">
                     <tr>
                         <c:forEach begin="1" end="${numberOfPages}" var="i">
                             <c:choose>

@@ -12,6 +12,5 @@
 </head>
 <body>
     <h1><fmt:message key="blocked" /></h1>
-    <br/><a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a><br/>
 </body>
 </html>

@@ -16,7 +16,6 @@
         <div class="container">
             <c:set var="pageID" value="webBetController?command=CREATE_USER_LIST" scope="request" />
             <br/><jsp:include page="header.jsp"/><br/>
-            <jsp:include page="loginLogoutHeader.jsp" />
             <table class="table">
                 <tr>
                     <th>#id</th>
@@ -37,7 +36,7 @@
             <c:if test="${currentPage != 1}">
                 <td><a href="webBetController?command=CREATE_USER_LIST&page=${currentPage - 1}"><fmt:message key="matches.table.previous" /></a> </td>
             </c:if>
-            <table class="table">
+            <table class="table" style="width: auto !important;">
                 <tr>
                     <c:forEach begin="1" end="${numberOfPages}" var="i">
                         <c:choose>

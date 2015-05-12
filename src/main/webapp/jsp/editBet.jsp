@@ -16,7 +16,6 @@
         <div class="container">
             <c:set var="pageID" value="jsp/editBet.jsp" scope="request" />
             <br/><jsp:include page="header.jsp"/><br/>
-            <jsp:include page="loginLogoutHeader.jsp" />
             <form id="editBetForm" action="webBetController" method="post">
                 <input type="hidden" name="command" value="CONFIRM_EDIT_BET_COMMAND">
                 <input type="hidden" name="betid" value="${betToEdit.betId}">
@@ -67,7 +66,6 @@
                 <fmt:message key="editbet.button.edit" var="buttonValue"/>
                 <input type="submit" name="submit" value="${buttonValue}" onclick="return confirm('Confirm?')" class="btn btn-primary" />
             </form>
-            <br/><a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a><br/>
         </div>
     </div>
 </div>

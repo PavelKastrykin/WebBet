@@ -16,7 +16,6 @@
         <div class="container">
             <c:set var="pageID" value="webBetController?userLogin=${userToEdit.login}&command=EDIT_USER_COMMAND" scope="request" />
             <br/><jsp:include page="header.jsp"/><br/>
-            <jsp:include page="loginLogoutHeader.jsp" />
             <form id="editUserForm" action="webBetController" method="post">
                 <input type="hidden" name="command" value="CONFIRM_EDIT_USER_COMMAND">
                 <input type="hidden" name="userLogin" value="${userToEdit.login}">
@@ -44,7 +43,6 @@
                 <fmt:message key="edituser.button.edit" var="buttonValue"/>
                 <input type="submit" name="submit" value="${buttonValue}" onclick="return confirm('Confirm?')" class="btn btn-primary" />
             </form>
-            <br/><a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a><br/>
         </div>
     </div>
 </div>

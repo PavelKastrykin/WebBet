@@ -16,7 +16,6 @@
         <div class="container">
             <c:set var="pageID" value="jsp/myBets.jsp" scope="request" />
             <br/><jsp:include page="header.jsp"/><br/>
-            <jsp:include page="loginLogoutHeader.jsp" />
             <table class="table">
                 <tr>
                     <th><fmt:message key="bets.table.matchname" /></th>
@@ -41,7 +40,6 @@
                     </tr>
                 </c:forEach>
             </table>
-            <br/><a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a><br/>
         </div>
     </div>
 </div>

@@ -19,10 +19,9 @@
             <c:set var="pageID" value="jsp/addMatch.jsp" scope="request" />
             <c:set var="addMatchWarning" value="project.empty" scope="application" />
             <br/><jsp:include page="header.jsp"/><br/>
-            <jsp:include page="loginLogoutHeader.jsp" />
             <form action="webBetController" method="post">
                 <input type="hidden" name="command" value="ADD_MATCH_COMMAND"/>
-                <table>
+                <table class="table" style="width: auto !important;">
                     <tr>
                         <td><label for="matchName"><fmt:message key="addmatch.label.match"/> </label> </td>
                         <td><input type="text" id="matchName" name="matchName" /></td>
@@ -31,11 +30,10 @@
                         <td><label for="matchDate"><fmt:message key="addmatch.label.date"/> </label> </td>
                         <td><input type="date" id="matchDate" name="matchDate" /></td>
                     </tr>
-                <table/>
+                </table>
                 <fmt:message key="addmatch.button.add" var="buttonValue"/>
                 <input type="submit" name="submit" value="${buttonValue}" onclick="return confirm('Confirm?')" class="btn btn-primary" />
             </form><br/>
-            <a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a><br/>
             <label><fmt:message key="${addMatchWarning}"/></label>
         </div>
     </div>

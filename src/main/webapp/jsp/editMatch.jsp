@@ -37,7 +37,6 @@
         <div class="container">
             <c:set var="pageID" value="webBetController?matchId=${matchToEdit.matchId}&command=CREATE_MATCH_EDIT_FORM_COMMAND" scope="request" />
             <br/><jsp:include page="header.jsp"/><br/>
-            <jsp:include page="loginLogoutHeader.jsp" />
             <form id="editMatchForm" action="webBetController" method="post" onsubmit="return validate()">
                 <input type="hidden" name="command" value="EDIT_MATCH_COMMAND">
                 <input type="hidden" name="matchId" value="${matchToEdit.matchId}">
@@ -73,7 +72,6 @@
                 <input type="submit" name="submit" id="submitSave" value="${buttonValue}" onclick="return confirm('Confirm?')" class="btn btn-primary"/>
                 <label id="validationWarning" > </label>
             </form>
-            <br/><a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a><br/>
         </div>
     </div>
 </div>

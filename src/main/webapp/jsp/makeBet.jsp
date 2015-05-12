@@ -42,7 +42,6 @@
         <div class="container">
             <c:set var="pageID" value="webBetController?matchId=${matchToBet.matchId}&command=CREATE_BET_FORM_COMMAND" scope="request" />
             <br/><jsp:include page="header.jsp"/><br/>
-            <jsp:include page="loginLogoutHeader.jsp" />
             <form id="betForm" action="webBetController" method="post">
                 <input type="hidden" name="command" value="ADD_BET_COMMAND">
                 <input type="hidden" id="selectedBetNum" name="selectedBetNum">
@@ -77,7 +76,6 @@
                         }, 1000
                 );
             </script><br/><br/>
-            <a href="webBetController?command=DISPLAY_MATCHES_COMMAND"><fmt:message key="login.home.reff" /> </a>
         </div>
     </div>
 </div>
