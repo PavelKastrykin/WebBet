@@ -29,9 +29,13 @@ public class DoDeleteMatchCommand implements ICommand{
             if (!betDao.containBetOnMatchId(id)){
                 dao.deleteBean(id);
             }
-            else throw new CommandException("This match cannot be deleted: bets are done.");
+            else{
+                logger.info("Match " + id + " cannot be deleted: bets are done");
+                throw new CommandException("This match cannot be deleted: bets are done.");
+            }
         }
         catch (MysqlDaoException e){
+            logger.info(e.getMessage(), e);
             throw new CommandException(e.getMessage());
         }
         return UrlConstant.REQUEST_MATCH_LIST;

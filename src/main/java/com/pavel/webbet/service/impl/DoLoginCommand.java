@@ -27,11 +27,14 @@ public class DoLoginCommand implements ICommand{
         String userName = request.getParameter(PARAMETER_USERNAME);
         String password = request.getParameter(PARAMETER_PASSWORD);
         IUserBeanDao dao = DaoFactory.getDao(DaoType.USER);
-        UserBean bean = null;
+        UserBean bean;
         try{
             bean = dao.getBeanByNameAndPassword(userName, password);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
+        catch (MysqlDaoException e){
+            logger.info(e.getMessage(), e);
+            throw new CommandException(e.getMessage());
+        }
         if (bean != null && bean.getUserRole() == UserRole.BLOCKED){
             return UrlConstant.URL_BLOCKED;
         }

@@ -40,7 +40,7 @@ public class CommandDispatcher {
 
     public ICommand getCommand(String commandName){
         ICommand command;
-        CommandType commandType = null;
+        CommandType commandType;
         try{
             commandType = CommandType.valueOf(commandName);
         }

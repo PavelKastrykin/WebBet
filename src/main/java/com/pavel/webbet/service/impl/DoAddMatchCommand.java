@@ -34,12 +34,12 @@ public class DoAddMatchCommand implements ICommand {
         String matchName = request.getParameter(PARAMETER_MATCH_NAME);
         String matchDateAsString = request.getParameter(PARAMETER_MATCH_DATE);
         DateFormat df = new SimpleDateFormat(DATE_FORMAT);
-        Date matchDate = null;
+        Date matchDate;
         try {
             matchDate = df.parse(matchDateAsString);
         }
         catch (ParseException e){
-            e.printStackTrace();
+            logger.error(e.getMessage(), e);
             throw new CommandException("Invalid Date");
         }
 
@@ -61,7 +61,10 @@ public class DoAddMatchCommand implements ICommand {
         try {
             dao.insert(match);
         }
-        catch (MysqlDaoException e){throw  new CommandException(e.getMessage());}
+        catch (MysqlDaoException e){
+            logger.error(e.getMessage(), e);
+            throw  new CommandException(e.getMessage());
+        }
 
         request.setAttribute(ATTRIBUTE_ADD_MATCH_WARNING, CommandConstant.MATCH_ADDED_WARNING);
 

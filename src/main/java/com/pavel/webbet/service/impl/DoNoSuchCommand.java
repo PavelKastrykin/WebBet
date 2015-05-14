@@ -12,6 +12,7 @@ public class DoNoSuchCommand implements ICommand{
 
     @Override
     public String execute(HttpServletRequest request) throws CommandException{
+        logger.info("Jsp" + request.getRequestURI() + "sends illegal command");
         throw new CommandException("Error while processing request");
     }
 }

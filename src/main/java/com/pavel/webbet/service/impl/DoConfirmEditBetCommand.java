@@ -34,7 +34,10 @@ public class DoConfirmEditBetCommand implements ICommand {
         try{
             dao.updateBean(bet);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
+        catch (MysqlDaoException e){
+            logger.error(e.getMessage(), e);
+            throw new CommandException(e.getMessage());
+        }
         return UrlConstant.REQUEST_BET_LIST;
     }
 }

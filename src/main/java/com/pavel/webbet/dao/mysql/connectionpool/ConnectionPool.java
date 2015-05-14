@@ -47,11 +47,14 @@ public final class ConnectionPool {
         }
         catch (NumberFormatException e){
             poolSize = 5;
+            logger.info("Connection pool size properties corrupted, size set to 5");
         }
         try{
             initPoolData();
         }
-        catch (ConnectionPoolException e){};
+        catch (ConnectionPoolException e){
+            logger.error("Connection pool was not initialized", e);
+        }
 
     }
 
@@ -60,8 +63,8 @@ public final class ConnectionPool {
 
         try{
             Class.forName(driverName);
-            givenAwayConQueue = new ArrayBlockingQueue<Connection>(poolSize);
-            connectionQueue = new ArrayBlockingQueue<Connection>(poolSize);
+            givenAwayConQueue = new ArrayBlockingQueue<>(poolSize);
+            connectionQueue = new ArrayBlockingQueue<>(poolSize);
 
             Properties properties = new Properties();
             properties.setProperty(PROPERTY_USER, user);
@@ -75,12 +78,12 @@ public final class ConnectionPool {
             }
         }
         catch (SQLException e){
+            logger.error("SQLException in Connection pool", e);
             throw new ConnectionPoolException("No connection to database. Try later");
-//            "SQLException in Connection pool"
         }
         catch (ClassNotFoundException e){
+            logger.error("Can't find database driver class", e);
             throw new ConnectionPoolException("No connection to database. Try later");
-//            "Can't find database driver class"
         }
     }
 
@@ -94,22 +97,20 @@ public final class ConnectionPool {
             closeConnectionsQueue(connectionQueue);
         }
         catch (SQLException e){
+            logger.error("Unable to clear connection queue", e);
             throw new ConnectionPoolException("WebBet works unstable, please reopen it");
-//            "Unable to clear connection queue"
-
         }
-
     }
 
     public Connection takeConnection() throws ConnectionPoolException {
-        Connection connection = null;
+        Connection connection;
         try{
             connection = connectionQueue.take();
             givenAwayConQueue.add(connection);
         }
         catch (InterruptedException e){
+            logger.error("Error connecting to the data source", e);
             throw new ConnectionPoolException("No connection to database. Try later");
-//            "Error connecting to the data source"
         }
         return connection;
     }
@@ -119,22 +120,22 @@ public final class ConnectionPool {
             con.close();
         }
         catch (SQLException e){
+            logger.error("Failed to close connection", e);
             throw new ConnectionPoolException("WebBet works unstable, please reopen it");
-//            "Failed to close connection"
         }
         try{
             rs.close();
         }
         catch (SQLException e){
+            logger.error("Failed to close resultset", e);
             throw new ConnectionPoolException("");
-//            "Failed to close resultset"
         }
         try{
             st.close();
         }
         catch (SQLException e){
+            logger.error("Failed to close statement", e);
             throw new ConnectionPoolException("");
-//            "Failed to close statement"
         }
     }
 
@@ -143,15 +144,15 @@ public final class ConnectionPool {
             con.close();
         }
         catch (SQLException e){
+            logger.error("Failed to close connection", e);
             throw new ConnectionPoolException("WebBet works unstable, please reopen it");
-//            "Failed to close connection"
         }
         try{
             st.close();
         }
         catch (SQLException e){
+            logger.error("Failed to close statement", e);
             throw new ConnectionPoolException("");
-//            "Failed to close statement"
         }
     }
 
@@ -211,8 +212,8 @@ public final class ConnectionPool {
         @Override
         public void close() throws SQLException {
             if(connection.isClosed()){
+                logger.info("Attempting to close closed connection.");
                 throw new SQLException("");
-//                "Attempting to close closed connection."
             }
 
             if(connection.isReadOnly()){
@@ -220,13 +221,14 @@ public final class ConnectionPool {
             }
 
             if (!givenAwayConQueue.remove(this)){
+                logger.info("Error deleting connection from the given away connections pool");
                 throw new SQLException("");
-//                "Error deleting connection from the given away connections pool"
             }
 
             if (!connectionQueue.offer(this)){
+                logger.info("Error allocating connection in the pool");
                 throw new SQLException();
-//                "Error allocating connection in the pool"
+//
             }
         }
         @Override

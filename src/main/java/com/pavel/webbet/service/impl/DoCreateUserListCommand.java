@@ -29,11 +29,14 @@ public class DoCreateUserListCommand implements ICommand {
             page = Integer.parseInt(request.getParameter(RequestParameterConstant.PARAMETER_PAGINATION_PAGE));
         }
         IUserBeanDao dao = DaoFactory.getDao(DaoType.USER);
-        List<UserBean> list = null;
+        List<UserBean> list;
         try{
             list = dao.getList((page - 1) * recordsPerPage, recordsPerPage);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
+        catch (MysqlDaoException e){
+            logger.error(e.getMessage(), e);
+            throw new CommandException(e.getMessage());
+        }
         int numberOfRecords = dao.getNumberOfRecords();
         int numberOfPages = (int)Math.ceil(numberOfRecords * 1.0 / recordsPerPage);
         request.setAttribute(ATTRIBUTE_USER_LIST, list);

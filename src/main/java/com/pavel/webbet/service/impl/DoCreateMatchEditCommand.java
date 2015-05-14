@@ -27,7 +27,10 @@ public class DoCreateMatchEditCommand implements ICommand {
         try{
             match = dao.getBeanById(id);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
+        catch (MysqlDaoException e){
+            logger.error(e.getMessage(), e);
+            throw new CommandException(e.getMessage());
+        }
         request.setAttribute(ATTRIBUTE_MATCH_TO_EDIT, match);
         return UrlConstant.URL_EDIT_MATCH;
     }

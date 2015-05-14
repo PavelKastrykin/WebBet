@@ -3,6 +3,7 @@ package com.pavel.webbet.controller.filter;
 import com.pavel.webbet.constant.RequestParameterConstant;
 import com.pavel.webbet.constant.UrlConstant;
 import com.pavel.webbet.entity.userbean.UserBean;
+import org.apache.log4j.Logger;
 
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
@@ -11,6 +12,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class AccessFilter implements Filter {
+
+    public static final Logger logger = Logger.getLogger(AccessFilter.class);
 
     protected ServletContext servletContext;
     private FilterConfig config;
@@ -35,6 +38,7 @@ public class AccessFilter implements Filter {
 
         if (!manager.isUserAuthorized(uri, user)){
             config.getServletContext().getRequestDispatcher(DASH + UrlConstant.URL_INDEX).forward(request, response);
+            logger.info(user.getLogin() + " tried to access " + uri + " page.");
             return;
         }
         filterChain.doFilter(servletRequest, servletResponse);

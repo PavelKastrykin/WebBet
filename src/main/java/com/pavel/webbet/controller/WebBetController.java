@@ -32,17 +32,29 @@ public class WebBetController extends HttpServlet{
         String commandName = request.getParameter(PARAMETER_COMMAND);
         ICommand command = CommandDispatcher.getInstance().getCommand(commandName);
         String page;
-
+        RequestDispatcher dispatcher;
         try {
             page = command.execute(request);
+            dispatcher = request.getRequestDispatcher(page);
+            if (dispatcher != null){
+                dispatcher.forward(request, response);
+            }
         }
         catch (CommandException e){
-            page = UrlConstant.URL_ERROR_PAGE;
             request.setAttribute(ERROR_MESSAGE, e.getMessage());
+            dispatcher = request.getRequestDispatcher(UrlConstant.URL_ERROR_PAGE);
+            if (dispatcher != null){
+                dispatcher.forward(request, response);
+            }
+            logger.error(e.getMessage(), e);
         }
-        RequestDispatcher dispatcher = request.getRequestDispatcher(page);
-        if (dispatcher != null){
-            dispatcher.forward(request, response);
+        catch (Exception e){
+            request.setAttribute(ERROR_MESSAGE, "Unknown error, please reopen the website");
+            dispatcher = request.getRequestDispatcher(UrlConstant.URL_ERROR_PAGE);
+            if (dispatcher != null){
+                dispatcher.forward(request, response);
+            }
+            logger.error(e.getMessage(), e);
         }
     }
 }

@@ -23,11 +23,14 @@ public class DoCreateUserEditCommand implements ICommand {
     public String execute(HttpServletRequest request) throws CommandException {
         String login = request.getParameter(RequestParameterConstant.PARAMETER_USER_LOGIN);
         IUserBeanDao dao = DaoFactory.getDao(DaoType.USER);
-        UserBean user = null;
+        UserBean user;
         try {
             user = dao.getBeanByName(login);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
+        catch (MysqlDaoException e){
+            logger.error(e.getMessage(), e);
+            throw new CommandException(e.getMessage());
+        }
         request.setAttribute(ATTRIBUTE_USER_TO_EDIT, user);
         return UrlConstant.URL_EDIT_USER;
     }

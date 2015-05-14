@@ -11,9 +11,8 @@ import java.util.ResourceBundle;
 
 public class DaoFactory {
 
-    private static DaoFactory instance = new DaoFactory();
     private static ResourceBundle bundle = ResourceBundle.getBundle("properties.project");
-    private static String DAO_TYPE = bundle.getString("dao.data.type");
+    private static String DAO_TYPE = bundle.getString("data.access.key");
     private static Map<DaoType, ICommonDao> mysqlSuitability = new HashMap<>();
     private static final String CASE_MYSQL = "mysql";
 
@@ -22,8 +21,6 @@ public class DaoFactory {
         mysqlSuitability.put(DaoType.MATCH, FootballMatchDAO.getInstance());
         mysqlSuitability.put(DaoType.USER, UserBeanDao.getInstance());
     }
-
-    public static DaoFactory getInstance(){ return instance; }
 
     public static <T extends ICommonDao> T getDao(DaoType type){
         switch (DAO_TYPE){

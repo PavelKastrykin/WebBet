@@ -46,7 +46,10 @@ public class DoRegisterCommand implements ICommand {
         try {
             checkLogin = dao.getBeanByName(login);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
+        catch (MysqlDaoException e){
+            logger.info(e.getMessage(), e);
+            throw new CommandException(e.getMessage());
+        }
         if (checkLogin == null){
             UserBean newUserBean = new UserBean();
             newUserBean.setLogin(login);
@@ -55,7 +58,10 @@ public class DoRegisterCommand implements ICommand {
             try {
                 dao.insert(newUserBean);
             }
-            catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
+            catch (MysqlDaoException e){
+                logger.info(e.getMessage(), e);
+                throw new CommandException(e.getMessage(), e);
+            }
             request.setAttribute(PARAMETER_REGISTER_WARNING, "project.empty");
             return UrlConstant.URL_INDEX;
         }

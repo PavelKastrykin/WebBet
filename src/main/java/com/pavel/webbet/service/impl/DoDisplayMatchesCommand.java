@@ -33,7 +33,10 @@ public class DoDisplayMatchesCommand implements ICommand {
         try {
             list = dao.getList((page - 1) * recordsPerPage, recordsPerPage);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage(), e);}
+        catch (MysqlDaoException e){
+            logger.info(e.getMessage(), e);
+            throw new CommandException(e.getMessage(), e);
+        }
         int numberOfRecords = dao.getNumberOfRecords();
         int numberOfPages = (int)Math.ceil(numberOfRecords * 1.0 / recordsPerPage);
         request.setAttribute(ATTRIBUTE_MATCHES_LIST, list);

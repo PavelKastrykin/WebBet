@@ -17,7 +17,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserBeanDao extends DaoJdbcResource implements IUserBeanDao {
+public class UserBeanDao implements IUserBeanDao {
 
     public static final Logger logger = Logger.getLogger(UserBeanDao.class);
 
@@ -29,10 +29,14 @@ public class UserBeanDao extends DaoJdbcResource implements IUserBeanDao {
 
     @Override
     public UserBean getBeanByName(String login) throws MysqlDaoException{
-        UserBean userBean = null;
-        ResultSet resultSet = null;
+
+        Connection connection = null;
+        Statement statement = null;
+        UserBean userBean;
+        ResultSet resultSet;
         try {
-            prepareConnection();
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
             userBean = new UserBean();
             resultSet = statement.executeQuery(QueryConstant.queryForLogin(login));
             boolean hasResult = resultSet.next();
@@ -48,20 +52,44 @@ public class UserBeanDao extends DaoJdbcResource implements IUserBeanDao {
                 return userBean;
             }
         }
-        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage());}
-        catch (SQLException e) {throw new MysqlDaoException("Problem appeared while connecting to database, please try later");}
+        catch (ConnectionPoolException e){
+            logger.info(e.getMessage(), e);
+            throw new MysqlDaoException(e.getMessage());
+        }
+        catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+            throw new MysqlDaoException("Problem appeared while connecting to database, please try later");
+        }
         finally {
-            releaseJDBCResources();
+            try {
+                if (statement != null){
+                    statement.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
+            try{
+                if(connection != null){
+                    connection.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
         }
     }
 
     @Override
     public UserBean getBeanByNameAndPassword(String login, String password) throws MysqlDaoException {
 
-        UserBean userBean = null;
-        ResultSet resultSet = null;
+        Connection connection = null;
+        Statement statement = null;
+        UserBean userBean;
+        ResultSet resultSet;
         try {
-            prepareConnection();
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
             userBean = new UserBean();
             resultSet = statement.executeQuery(QueryConstant.queryForLoginAndPassword(login, password));
             boolean hasResult = resultSet.next();
@@ -77,20 +105,44 @@ public class UserBeanDao extends DaoJdbcResource implements IUserBeanDao {
                 return userBean;
             }
         }
-        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage());}
-        catch (SQLException e) {throw new MysqlDaoException("Problem appeared while connecting to database, please try later");}
+        catch (ConnectionPoolException e){
+            logger.info(e.getMessage(), e);
+            throw new MysqlDaoException(e.getMessage());
+        }
+        catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+            throw new MysqlDaoException("Problem appeared while connecting to database, please try later");
+        }
         finally {
-            releaseJDBCResources();
+            try {
+                if (statement != null){
+                    statement.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
+            try{
+                if(connection != null){
+                    connection.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
         }
     }
 
     @Override
     public List<UserBean> getListByName(String type) throws MysqlDaoException {
 
-        ResultSet resultSet = null;
-        List<UserBean> userList = new ArrayList<UserBean>();
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet;
+        List<UserBean> userList = new ArrayList<>();
         try {
-            prepareConnection();
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
             resultSet = statement.executeQuery(QueryConstant.queryForUserType(type));
             while (resultSet.next()){
                 UserBean userBean = new UserBean();
@@ -103,20 +155,44 @@ public class UserBeanDao extends DaoJdbcResource implements IUserBeanDao {
             }
             return userList;
         }
-        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage());}
-        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database");}
+        catch (ConnectionPoolException e){
+            logger.info(e.getMessage(), e);
+            throw new MysqlDaoException(e.getMessage());
+        }
+        catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+            throw new MysqlDaoException("Error retrieving data from database");
+        }
         finally {
-            releaseJDBCResources();
+            try {
+                if (statement != null){
+                    statement.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
+            try{
+                if(connection != null){
+                    connection.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
         }
     }
 
     @Override
     public List<UserBean> getList(int offset, int noOfRecords) throws MysqlDaoException{
 
+        Connection connection = null;
+        Statement statement = null;
         List<UserBean> userList = new ArrayList<>();
-        UserBean user = null;
+        UserBean user;
         try {
-            prepareConnection();
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(QueryConstant.queryForAllUsersWithLimit(offset, noOfRecords));
             while (resultSet.next()){
                 user = new UserBean();
@@ -132,10 +208,31 @@ public class UserBeanDao extends DaoJdbcResource implements IUserBeanDao {
                 numberOfRecords = resultSet.getInt(1);
             }
         }
-        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage());}
-        catch (SQLException e) {throw new MysqlDaoException("Error retrieving data from database");}
+        catch (ConnectionPoolException e){
+            logger.info(e.getMessage(), e);
+            throw new MysqlDaoException(e.getMessage());
+        }
+        catch (SQLException e) {
+            logger.error(e.getMessage(), e);
+            throw new MysqlDaoException("Error retrieving data from database");
+        }
         finally {
-            releaseJDBCResources();
+            try {
+                if (statement != null){
+                    statement.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
+            try{
+                if(connection != null){
+                    connection.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
         }
         return userList;
     }
@@ -143,42 +240,112 @@ public class UserBeanDao extends DaoJdbcResource implements IUserBeanDao {
     @Override
     public void insert(UserBean bean) throws MysqlDaoException {
 
+        Connection connection = null;
+        Statement statement = null;
         try {
-            prepareConnection();
-            int x = statement.executeUpdate(QueryConstant.queryForUserInsert(bean));
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
+            statement.executeUpdate(QueryConstant.queryForUserInsert(bean));
         }
-        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage());}
-        catch (SQLException e){ throw new MysqlDaoException("Registering was not performed, please try again.");}
+        catch (ConnectionPoolException e){
+            logger.info(e.getMessage(), e);
+            throw new MysqlDaoException(e.getMessage());
+        }
+        catch (SQLException e){
+            logger.error(e.getMessage(), e);
+            throw new MysqlDaoException("Registering was not performed, please try again.");
+        }
         finally {
-            releaseJDBCResources();
+            try {
+                if (statement != null){
+                    statement.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
+            try{
+                if(connection != null){
+                    connection.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
         }
     }
 
     @Override
     public void deleteBean(int id) throws MysqlDaoException {
 
+        Connection connection = null;
+        Statement statement = null;
         try {
-            prepareConnection();
-            int x = statement.executeUpdate(QueryConstant.queryForUserDelete(id));
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
+            statement.executeUpdate(QueryConstant.queryForUserDelete(id));
         }
-        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage());}
-        catch (SQLException e){ throw new MysqlDaoException("User was not deleted from database");}
+        catch (ConnectionPoolException e){
+            logger.info(e.getMessage(), e);
+            throw new MysqlDaoException(e.getMessage());
+        }
+        catch (SQLException e){
+            logger.info(e.getMessage(), e);
+            throw new MysqlDaoException("User was not deleted from database");
+        }
         finally {
-            releaseJDBCResources();
+            try {
+                if (statement != null){
+                    statement.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
+            try{
+                if(connection != null){
+                    connection.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
         }
     }
 
     @Override
     public void updateBean(UserBean bean) throws MysqlDaoException {
 
+        Connection connection = null;
+        Statement statement = null;
         try {
-            prepareConnection();
-            int x = statement.executeUpdate(QueryConstant.queryForUserUpdate(bean));
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
+            statement.executeUpdate(QueryConstant.queryForUserUpdate(bean));
         }
-        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage());}
-        catch (SQLException e){ throw new MysqlDaoException("User was not updated, please try again.");}
+        catch (ConnectionPoolException e){
+            logger.info(e.getMessage(), e);
+            throw new MysqlDaoException(e.getMessage());
+        }
+        catch (SQLException e){
+            logger.error(e.getMessage(), e);
+            throw new MysqlDaoException("User was not updated, please try again.");
+        }
         finally {
-            releaseJDBCResources();
+            try {
+                if (statement != null){
+                    statement.close();
+                }
+            }
+            catch (SQLException e){}
+            try{
+                if(connection != null){
+                    connection.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
         }
     }
 

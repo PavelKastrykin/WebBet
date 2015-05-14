@@ -37,6 +37,7 @@ public class DoEditMatchCommand implements ICommand {
             match.setStatus(MatchStatus.valueOf(request.getParameter(PARAMETER_MATCH_STATUS)));
         }
         catch (NumberFormatException e){
+            logger.info(e.getMessage(), e);
             throw new CommandException("Illegal data was inserted");
         }
 
@@ -44,7 +45,10 @@ public class DoEditMatchCommand implements ICommand {
         try{
             dao.updateBean(match);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
+        catch (MysqlDaoException e){
+            logger.info(e.getMessage(), e);
+            throw new CommandException(e.getMessage());
+        }
         return UrlConstant.REQUEST_MATCH_LIST;
     }
 }

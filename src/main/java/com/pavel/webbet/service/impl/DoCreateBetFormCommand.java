@@ -27,7 +27,10 @@ public class DoCreateBetFormCommand implements ICommand {
         try {
             match = dao.getBeanById(id);
         }
-        catch (MysqlDaoException e){throw new CommandException(e.getMessage());}
+        catch (MysqlDaoException e){
+            logger.error(e.getMessage(), e);
+            throw new CommandException(e.getMessage());
+        }
         request.setAttribute(PARAMETER_MATCH_TO_BET, match);
         return UrlConstant.URL_MAKE_BET;
     }

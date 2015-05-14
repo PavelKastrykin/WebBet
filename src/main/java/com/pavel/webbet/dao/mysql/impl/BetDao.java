@@ -11,28 +11,33 @@ import com.pavel.webbet.entity.bet.BetBean;
 import com.pavel.webbet.entity.bet.BetStatus;
 import org.apache.log4j.Logger;
 
+import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class BetDao extends DaoJdbcResource implements IBetDao {
+public class BetDao  implements IBetDao {
 
     public static final Logger logger = Logger.getLogger(BetDao.class);
-
     private static final BetDao instance = new BetDao();
+    private int numberOfRecords;
+
     public static BetDao getInstance() {
         return instance;
     }
-    private int numberOfRecords;
 
     @Override
     public List<BetBean> getList(int offset, int noOfRecords) throws MysqlDaoException{
 
+        Connection connection = null;
+        Statement statement = null;
         List<BetBean> list = new ArrayList<>();
-        BetBean bet = null;
+        BetBean bet;
         try {
-            prepareConnection();
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
 
             ResultSet rs = statement.executeQuery(QueryConstant.queryForAllBetsWithLimit(offset, noOfRecords));
             while (rs.next()){
@@ -58,14 +63,31 @@ public class BetDao extends DaoJdbcResource implements IBetDao {
             }
         }
         catch (ConnectionPoolException e) {
-            throw new MysqlDaoException(e.getMessage());
+            logger.info(e.getMessage(), e);
+            throw new MysqlDaoException("", e);
         }
 
         catch (SQLException e){
+            logger.error(e.getMessage(), e);
             throw new MysqlDaoException("Error retrieving data from database");
         }
         finally {
-            releaseJDBCResources();
+            try {
+                if (statement != null){
+                    statement.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
+            try{
+                if(connection != null){
+                    connection.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
         }
         return list;
     }
@@ -73,29 +95,52 @@ public class BetDao extends DaoJdbcResource implements IBetDao {
     @Override
     public void insert(BetBean bean) throws MysqlDaoException{
 
+        Connection connection = null;
+        Statement statement = null;
         try {
-            prepareConnection();
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
             statement.executeUpdate(QueryConstant.queryForBetInsert(bean));
         }
         catch (ConnectionPoolException e){
+            logger.info(e.getMessage(), e);
             throw new MysqlDaoException(e.getMessage());
         }
 
         catch (SQLException e){
+            logger.error(e.getMessage(), e);
             throw new MysqlDaoException("Bet was not added, please try again.");
         }
         finally {
-            releaseJDBCResources();
+            try {
+                if (statement != null){
+                    statement.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
+            try{
+                if(connection != null){
+                    connection.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
         }
     }
 
     @Override
     public List<BetBean> getListByName(String login) throws MysqlDaoException {
 
+        Connection connection = null;
+        Statement statement = null;
         List<BetBean> list = new ArrayList<>();
-        BetBean bean = null;
+        BetBean bean;
         try {
-            prepareConnection();
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(QueryConstant.queryForGetBetsByLogin(login));
             while (rs.next()){
                 bean = new BetBean();
@@ -112,12 +157,31 @@ public class BetDao extends DaoJdbcResource implements IBetDao {
             rs.close();
 
         }
-        catch (ConnectionPoolException e){ throw new MysqlDaoException(e.getMessage());}
+        catch (ConnectionPoolException e){
+            logger.info(e.getMessage(), e);
+            throw new MysqlDaoException(e.getMessage());
+        }
         catch (SQLException e) {
+            logger.error(e.getMessage(), e);
             throw new MysqlDaoException("Problem appeared while connecting to database, please try later");
         }
         finally {
-            releaseJDBCResources();
+            try {
+                if (statement != null){
+                    statement.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
+            try{
+                if(connection != null){
+                    connection.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
         }
         return list;
     }
@@ -125,9 +189,12 @@ public class BetDao extends DaoJdbcResource implements IBetDao {
     @Override
     public BetBean getBeanById(int id) throws MysqlDaoException {
 
+        Connection connection = null;
+        Statement statement = null;
         BetBean bet = null;
         try {
-            prepareConnection();
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(QueryConstant.queryForGetBetById(id));
             while (rs.next()){
                 bet = new BetBean();
@@ -146,37 +213,80 @@ public class BetDao extends DaoJdbcResource implements IBetDao {
             rs.close();
         }
         catch (ConnectionPoolException e){
+            logger.info(e.getMessage(), e);
             throw new MysqlDaoException(e.getMessage());
         }
         catch (SQLException e) {
+            logger.error(e.getMessage(), e);
             throw new MysqlDaoException("Problem appeared while connecting to database, please try later");
         }
         finally {
-            releaseJDBCResources();
+            try {
+                if (statement != null){
+                    statement.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
+            try{
+                if(connection != null){
+                    connection.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
         }
         return bet;
     }
 
     @Override
     public void updateBean(BetBean bet) throws MysqlDaoException {
+
+        Connection connection = null;
+        Statement statement = null;
         try {
-            prepareConnection();
-            int x = statement.executeUpdate(QueryConstant.queryForBetUpdate(bet));
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
+            statement.executeUpdate(QueryConstant.queryForBetUpdate(bet));
         }
-        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage());}
+        catch (ConnectionPoolException e){
+            logger.info(e.getMessage(), e);
+            throw new MysqlDaoException(e.getMessage());
+        }
         catch (SQLException e){
+            logger.error(e.getMessage(), e);
             throw new MysqlDaoException("Bet was not updated, please try again.");
         }
         finally {
-            releaseJDBCResources();
+            try {
+                if (statement != null){
+                    statement.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
+            try{
+                if(connection != null){
+                    connection.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
         }
     }
 
     @Override
     public boolean containBetOnMatchId(int id) throws MysqlDaoException {
 
+        Connection connection = null;
+        Statement statement = null;
         try{
-            prepareConnection();
+            connection = ConnectionPool.getInstance().takeConnection();
+            statement = connection.createStatement();
             ResultSet rs = statement.executeQuery(QueryConstant.queryForMatchDeletionValidation(id));
             if (rs.next()){
                 rs.close();
@@ -185,12 +295,31 @@ public class BetDao extends DaoJdbcResource implements IBetDao {
             rs.close();
             return false;
         }
-        catch (ConnectionPoolException e){throw new MysqlDaoException(e.getMessage());}
+        catch (ConnectionPoolException e){
+            logger.info(e.getMessage(), e);
+            throw new MysqlDaoException(e.getMessage());
+        }
         catch (SQLException e){
+            logger.error(e.getMessage(), e);
             throw new MysqlDaoException("");
         }
         finally {
-            releaseJDBCResources();
+            try {
+                if (statement != null){
+                    statement.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
+            try{
+                if(connection != null){
+                    connection.close();
+                }
+            }
+            catch (SQLException e){
+                logger.error(e.getMessage(), e);
+            }
         }
     }
 
